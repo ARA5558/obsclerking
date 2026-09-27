@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<!-- KOD ANTI CACHE SUPAYA PHONE SENTIASA GUNA VERSI TERBARU -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<title>Antenatal Health Form / Borang Kesihatan Antenatal</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<!-- QR Code Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+<style>
+:root {
+  --rose: #ff9fb8; --rose-d: #f54271; --rose-pale: #fff0f4;
+  --purple: #7b42f6; --purple-pale: #f2edff;
+  --blue: #4299f5; --blue-pale: #eff6ff;
+  --teal: #10b981; --teal-pale: #ecfdf5;
+  --gray50: #f8fafc; --gray100: #f1f5f9; --gray200: #e2e8f0;
+  --gray400: #94a3b8; --gray600: #475569; --gray800: #1e293b;
+  --font: 'Nunito', sans-serif; --r: 20px; --rsm: 14px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{font-family:var(--font); background: linear-gradient(145deg, #fff0f4 0%, #eff6ff 100%); background-attachment: fixed; color:var(--gray800); min-height:100vh; scroll-behavior: smooth;}
+
+/* LANGUAGE PICKER */
+.lang-screen{ min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:32px 24px; text-align:center; }
+.lang-logo{font-size:72px;margin-bottom:12px; animation: float 3s ease-in-out infinite;}
+@keyframes float { 0% {transform: translateY(0px);} 50% {transform: translateY(-8px);} 100% {transform: translateY(0px);} }
+.lang-title{font-size:28px;font-weight:900;color:var(--rose-d);letter-spacing:-0.5px;line-height:1.2}
+.lang-sub{font-size:16px;color:var(--gray600);font-weight:700;margin-top:8px;margin-bottom:12px}
+.lang-benefit{background: white; padding: 20px; border-radius: 18px; font-size: 14px; font-weight: 700; color: var(--gray800); margin-bottom: 30px; box-shadow: 0 8px 24px rgba(123,66,246,0.12); border: 2px solid var(--purple-pale); line-height: 1.5; text-align:left;}
+.lang-btns{display:flex;flex-direction:column;gap:14px;width:100%;max-width:380px}
+.lang-btn{ padding:20px; border-radius:var(--r); border:none; background:white; font-family:var(--font); cursor:pointer; display:flex;align-items:center;gap:16px; box-shadow:0 6px 16px rgba(0,0,0,0.05); transition:all 0.2s; touch-action: manipulation;}
+.lang-btn:hover,.lang-btn:active{transform:scale(0.97); box-shadow:0 4px 10px rgba(0,0,0,0.04); background:var(--rose-pale);}
+.lang-flag{font-size:36px;flex-shrink:0}
+.lang-name{text-align:left}
+.lang-name strong{display:block;font-size:18px;font-weight:900;color:var(--gray800)}
+.lang-name span{font-size:14px;color:var(--gray400);font-weight:600}
+
+/* MAIN APP */
+.app{display:none}
+.app.show{display:block}
+.header{ background: white; padding:calc(20px + env(safe-area-inset-top)) 20px 24px; color:var(--gray800); position:sticky; top:0; z-index:50; overflow:hidden; border-bottom-left-radius: 28px; border-bottom-right-radius: 28px; box-shadow: 0 8px 24px rgba(245,66,113,0.06); }
+.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.header h1{font-size:22px;font-weight:900; color: var(--rose-d);}
+.header p{font-size:13px; color:var(--gray600); margin-top:2px; font-weight:700;}
+.lang-switch-btn{ background:var(--rose-pale);border:none; color:var(--rose-d); border-radius:20px;padding:8px 14px;font-family:var(--font);font-size:13px; font-weight:800;cursor:pointer; touch-action: manipulation;}
+.progress-track{background:var(--gray100);border-radius:10px;height:10px;overflow:hidden; margin-top: 10px;}
+.progress-fill{height:100%;background:linear-gradient(90deg, var(--rose), var(--purple));border-radius:10px;transition:width 0.4s cubic-bezier(0.4, 0, 0.2, 1)}
+.progress-info{display:flex;justify-content:space-between;margin-top:8px;font-size:12px;font-weight:800;color:var(--gray400)}
+
+.steps-wrap{padding:24px 16px calc(100px + env(safe-area-inset-bottom));max-width:560px;margin:0 auto}
+.step{display:none;animation:stepIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.1)}
+.step.active{display:block}
+@keyframes stepIn{from{opacity:0;transform:translateY(15px) scale(0.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+.step-card{background:white;border-radius:var(--r);padding:26px 20px;box-shadow:0 8px 24px rgba(0,0,0,0.04);border:1px solid rgba(255,255,255,0.5);}
+.step-emoji{font-size:42px;margin-bottom:12px;display:block; text-align:center;}
+.sec-badge{display:table; margin: 0 auto 16px; background:var(--purple-pale);color:var(--purple);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:0.8px;}
+.q-text{font-size:22px;font-weight:900;color:var(--gray800);line-height:1.3;margin-bottom:10px; text-align:center;}
+.q-sub{font-size:14px;color:var(--gray400);margin-bottom:24px;font-weight:700; text-align:center;}
+
+/* CHECKBOX / RADIO BUTTON STYLING */
+.big-opt{ padding:16px 18px;border:2px solid var(--gray100);border-radius:var(--rsm); background:white;font-family:var(--font);font-size:16px;font-weight:800; color:var(--gray800);cursor:pointer;text-align:left;display:flex;align-items:center; gap:16px;transition:all 0.2s;width:100%;margin-bottom:12px; touch-action: manipulation; user-select:none;}
+.big-opt:last-child{margin-bottom:0}
+.big-opt:active{transform:scale(0.97)}
+.radio-box { width:24px; height:24px; border-radius:6px; border:2px solid var(--gray200); display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all 0.2s; font-size:15px; font-weight:900; color:transparent; background:white; }
+.big-opt.sel { background:var(--rose-pale);border-color:var(--rose);color:var(--rose-d); box-shadow: 0 4px 12px rgba(245,66,113,0.1);}
+.big-opt.sel .radio-box { background:var(--rose-d); border-color:var(--rose-d); color:white; }
+
+.grid2{display:grid;grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));gap:12px;margin-bottom:0}
+.grid2 .big-opt{margin-bottom:0}
+
+/* MOBILE OPTIMIZED INPUTS - Auto Capitalize display */
+.big-input{ width:100%;padding:16px 18px;border:2px solid var(--gray200);border-radius:var(--rsm); font-family:var(--font);font-size:16px;font-weight:700;color:var(--gray800); background:var(--gray50);transition:all 0.2s;appearance:none;-webkit-appearance:none; touch-action: manipulation;}
+input[type="text"].big-input, textarea.big-input { text-transform: capitalize; }
+.big-input:focus{outline:none;border-color:var(--purple);background:white;box-shadow:0 0 0 4px var(--purple-pale)}
+.big-input::placeholder{color:var(--gray400);font-weight:600; text-transform:none;}
+.big-textarea{min-height:90px;resize:vertical}
+select.big-input { background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2394a3b8%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E"); background-repeat: no-repeat; background-position: right 18px top 50%; background-size: 14px auto; }
+
+.num-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.num-group .nl{font-size:13px;font-weight:900;color:var(--gray600);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;display:block}
+
+.result-box{background:linear-gradient(135deg,var(--teal-pale),#e0f2fe);border:2px solid var(--teal);border-radius:var(--rsm);padding:16px;margin-top:16px;display:none; text-align:center;}
+.result-box.show{display:block}
+.rl{font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:0.6px;color:var(--teal)}
+.rv{font-size:24px;font-weight:900;color:var(--teal);margin-top:4px}
+.rs{font-size:13px;color:var(--teal);font-weight:700;opacity:0.8;margin-top:4px}
+
+.check-grid{display:grid;grid-template-columns:1fr;gap:10px}
+.ci{padding:16px;border:2px solid var(--gray200);border-radius:var(--rsm);cursor:pointer;display:flex;align-items:center;gap:14px;font-weight:800;font-size:15px;color:var(--gray800);background:white;transition:all 0.2s;user-select:none; touch-action: manipulation;}
+.ci.checked{background:var(--rose-pale);border-color:var(--rose);color:var(--rose-d); box-shadow: 0 4px 12px rgba(245,66,113,0.1);}
+.cd{width:24px;height:24px;border-radius:6px;border:2px solid var(--gray200);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:15px;transition:all 0.2s; color:transparent; background:white;}
+.ci.checked .cd{background:var(--rose-d);border-color:var(--rose-d);color:white}
+
+.reveal{display:none;margin-top:16px;animation:fadeIn 0.2s ease}
+.reveal.show{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:translateY(0)}}
+.mini-lbl{font-size:13px;font-weight:900;color:var(--gray600);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;display:block;margin-top:16px}
+.divider{height:2px;background:var(--gray100);margin:20px 0; border-radius:2px;}
+
+.birth-row{background:white;border:2px solid var(--gray200);border-radius:var(--rsm);padding:18px;margin-bottom:14px; box-shadow: 0 4px 10px rgba(0,0,0,0.03);}
+.brt{font-size:14px;font-weight:900;text-transform:uppercase;letter-spacing:0.8px;color:var(--purple);margin-bottom:14px}
+.birth-fields{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mf label{font-size:11px;font-weight:900;color:var(--gray600);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;display:block}
+.mf input,.mf select{width:100%;padding:12px;border:2px solid var(--gray200);border-radius:8px;font-family:var(--font);font-size:14px;font-weight:800;color:var(--gray800);background:var(--gray50);appearance:none}
+.mf input:focus, .mf select:focus{background:white; border-color:var(--purple);}
+.mf.full{grid-column:1/-1}
+input[type="text"].mf-text { text-transform: capitalize; }
+
+.add-birth-btn{width:100%;padding:16px;border:2px dashed var(--purple);border-radius:var(--rsm);background:var(--purple-pale);font-family:var(--font);font-size:15px;font-weight:900;color:var(--purple);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all 0.2s; touch-action: manipulation;}
+.add-birth-btn:hover{background:#e2d4f8;border-style:solid}
+
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid var(--gray200);padding:14px 16px calc(14px + env(safe-area-inset-bottom));display:flex;gap:12px;z-index:100;box-shadow:0 -8px 30px rgba(0,0,0,0.06)}
+.btn-back{padding:16px 22px;border-radius:var(--rsm);border:2px solid var(--gray200);background:white;font-family:var(--font);font-size:16px;font-weight:900;color:var(--gray600);cursor:pointer;flex-shrink:0; touch-action: manipulation;}
+.btn-next{flex:1;padding:16px;border-radius:var(--rsm);border:none;background:linear-gradient(135deg, var(--rose-d) 0%, var(--purple) 100%);font-family:var(--font);font-size:17px;font-weight:900;color:white;cursor:pointer;box-shadow:0 8px 20px rgba(123,66,246,0.3); touch-action: manipulation;}
+.btn-next:active{transform:scale(0.97)}
+
+/* SUMMARY & SPLIT QR SCREEN */
+.sum-hero{text-align:center;padding:10px 0 20px}
+.sum-hero .he{font-size:64px; animation: float 3s ease-in-out infinite;}
+.sum-hero h2{font-size:26px;font-weight:900;margin-top:12px; color:var(--purple);}
+.sum-hero p{font-size:15px;color:var(--gray600);font-weight:700;margin-top:6px}
+.qr-box { background:white; border-radius:var(--r); border:3px dashed var(--blue); padding:24px 16px; margin-bottom:20px; text-align:center; box-shadow:0 8px 24px rgba(66, 153, 245,0.1); }
+.qr-title { font-size:18px; font-weight:900; color:var(--blue); margin-bottom:4px; }
+.act-btns{display:flex; flex-direction:column; gap:12px; margin-bottom:20px}
+.act-btn{width:100%;padding:16px;border-radius:var(--rsm);border:none;background:var(--gray200);font-family:var(--font);font-size:16px;font-weight:900;color:var(--gray800);cursor:pointer;text-align:center;transition:all 0.2s; touch-action: manipulation;}
+
+@media(max-width:380px){
+  .grid2{grid-template-columns:1fr;} 
+  .num-row{grid-template-columns:1fr;}
+}
+
+/* PRINT STYLES FOR SAVING AS PDF */
+@media print {
+  body { background: white !important; }
+  .lang-screen, .header, .bottom-bar, .act-btns, .progress-track, .progress-info { display: none !important; }
+  .app, .step-card { box-shadow: none !important; border: none !important; padding: 0 !important; }
+  .sum-hero { padding-top: 0; }
+  .qr-box { break-inside: avoid; border: 1px solid #ccc; margin-bottom: 20px; }
+  .steps-wrap { padding: 0; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-screen" id="langScreen">
+  <div class="lang-logo">🤰👶</div>
+  <div class="lang-title">Welcome! / Selamat Datang!</div>
+  <div class="lang-sub">Antenatal Health Form<br>Borang Kesihatan Ibu Hamil</div>
+  <div class="lang-benefit">
+    <span style="color:var(--rose-d); font-weight:900;">💡 PENTING / IMPORTANT:</span><br><br>
+    Sila rujuk <strong>Buku Antenatal (Buku Pink)</strong> anda untuk mengisi borang ini. Jika tidak pasti maklumat tersebut, biarkan kosong atau abaikan sahaja.<br><br>
+    <em>Please refer to your <strong>Antenatal / Pink Book</strong>. If you are unsure about a question, just leave it blank.</em>
+  </div>
+  <div class="lang-btns">
+    <button class="lang-btn" onclick="chooseLang('en')">
+      <div class="lang-flag">🇬🇧</div>
+      <div class="lang-name"><strong>English</strong><span>Continue in English</span></div>
+    </button>
+    <button class="lang-btn" onclick="chooseLang('ms')">
+      <div class="lang-flag">🇲🇾</div>
+      <div class="lang-name"><strong>Bahasa Melayu</strong><span>Teruskan dalam Bahasa Melayu</span></div>
+    </button>
+  </div>
+</div>
+
+<div class="app" id="appWrap">
+  <div class="header">
+    <div class="header-top">
+      <div>
+        <h1 id="hTitle">👋 Hello Mommy!</h1>
+        <p id="hSub">Let's check on you and baby</p>
+      </div>
+      <button class="lang-switch-btn" onclick="switchLang()" id="langToggle">🇲🇾 BM</button>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="pFill" style="width:2%"></div></div>
+    <div class="progress-info"><span id="pLabel">…</span><span id="pPct">0%</span></div>
+  </div>
+  <div class="steps-wrap" id="stepsWrap"></div>
+</div>
+
+<div class="bottom-bar" id="bottomBar" style="display:none">
+  <button class="btn-back" id="btnBack" onclick="prev()">←</button>
+  <button class="btn-next" id="btnNext" onclick="nextBtn()">…</button>
+</div>
+
+<script>
+const T = {
+  en: {
+    hTitle:"👋 Hello Mommy!", hSub:"Let's check on you and baby 💕",
+    langToggle:"🇲🇾 BM", btnNext:"Next →", btnStart:"Let's start →", btnBack:"← Back", btnYes:"Yes", btnNo:"No",
+    pLabels:["Welcome","Name","Age","Race","Religion","Clinic","Measurements","Birth History","Dates","Scan Date","Periods","Birth Control","Health History","Surgery","Mental Health","Food Allergies","Med Allergies","Current Illness","Blood","Rhesus","HIV","Hepatitis","Syphilis","GBS","MGTT","Medicine","Vitamins","Family Health","Occupations","Income","Wife Lifestyle","Husband Lifestyle","Symptoms","Fetal Move","Summary"],
+    sAbout:"👤 About You", sClinic:"🏥 Clinic Details", sMeasure:"📏 Measurements",
+    sPreg:"📅 Your Pregnancy", sSymp:"🩺 Current Symptoms", sBlood:"🩸 Blood & Tests",
+    sAllergy:"⚠️ Allergies", sHealth:"🏥 Your Health", sMental:"🧠 Mental Health",
+    sMeds:"💊 Medicine", sSurg:"🏥 Surgery", sFamily:"👨‍👩‍👧 Family Health",
+    sObstet:"🤰 Pregnancy History", sBirth:"👶 Past Deliveries",
+    sPeriod:"🔄 Period History", sContra:"🔄 Birth Control",
+    sWork:"💼 Occupations", sHousehold:"💰 Household", sLife:"🌿 Lifestyle",
+    
+    s0q:"Ready to fill in the form?",
+    s0h:"✨ Your help allows doctors to review your details instantly!<br><br>💡 <strong>Tip:</strong> You can find most of this information in your <strong>Antenatal / Pink Book</strong>. Please try your best to look for it and fill it in. If you are unsure, just skip and leave it blank.",
+    s0btn:"I'm ready to start",
+    
+    s1q:"What is your full name?", s1h:"As written on your IC or passport", s1p:"e.g. Siti Aminah",
+    s3q:"How old are you?", s3h:"Select your age", ageUnit:" years",
+    s4q:"What is your nationality / race?", races:["Malay","Chinese","Indian","Others","Non-Malaysian"], s4country:"Which country?",
+    s5q:"What is your religion?", religions:["Islam","Christianity","Buddhism","Hinduism","Sikhism","Others"],
+    
+    s6q:"Clinic & Booking Details", s6h:"Where do you follow up?", 
+    lblCurrClinic:"Current Follow-up Clinic", lblBookClinic:"Booking Clinic", lblBookPOA:"Booking POA (Weeks)", lblBookHb:"Booking Hb",
+    
+    s7q:"Measurements", s7h:"Your booking and current weight",
+    s7hgt:"Height (cm)", s7bookWgt:"Booking Weight (kg)", s7currWgt:"Current Weight (kg)", 
+    bmiLabel:"Booking BMI", bmiCats:["⚠️ Underweight","✅ Healthy weight","⚠️ Overweight","🔴 Obese"],
+    
+    s8q:"When did your last period start?", s8h:"Pick the date (LMP). Tap Next to skip if unsure.",
+    eddLabel:"📅 Expected Due Date", gaPrefix:"📅 You are now: ",
+    lblPOG: "Current POG (Scan)",
+    
+    sSympQ:"How are you feeling today?", sSympH:"Tick any symptoms you are having right now.",
+    sympAbd:"Stomach pain", sympContraction:"Contractions", sympLiquor:"Leaking water",
+    sympBld:"Vaginal bleeding", sympHeadache:"Severe headache", sympVision:"Blurred vision",
+    sympDizzy:"Dizziness", sympPalp:"Palpitations", sympFatigue:"Fatigue",
+    sympUri:"Painful / Frequent urination", sympNau:"Severe nausea / Vomiting", sympLaborOtherLbl:"Other symptoms:", sympNone:"I feel fine (No symptoms)",
+    
+    sympFetalQ:"How is your baby moving today?", sympFetalActive:"Moving actively", sympFetalLess:"Less movement / Inactive",
+    fmTimeQ:"Usually completes 10 movements by what time?", fmTimeP:"e.g. 9:00 PM", fmCountQ:"How many movements so far today?",
+    
+    s9q:"Do you have a Revised Expected Due Date (REDD) from an ultrasound scan?", s9scanLbl:"REVISED EXPECTED DUE DATE (REDD)", s9no:"No / Not sure",
+    s10q:"What is your blood group?", bgOpts:["Type A|A","Type B|B","Type AB|AB","Type O|O","Not sure|Unknown"],
+    s11q:"Are you Rhesus positive or negative?", s11h:"The + or − after your blood type",
+    s11pos:"Positive (+)", s11neg:"Negative (−)", s11unk:"Not sure",
+    s12q:"Do you know your HIV status?", s12h:"This is routine and confidential.", s12pos:"Yes — Positive", s12neg:"Negative", s12unk:"Not sure / Never tested",
+    s13q:"Do you have Hepatitis B?", s13pos:"Yes — I have Hepatitis B", s13neg:"No", s13unk:"Not sure",
+    s14q:"Have you been diagnosed with syphilis?", s14pos:"Yes — Positive", s14neg:"No — Negative", s14unk:"Not sure",
+    
+    s15q:"Were you ever told you have GBS?", s15h:"Group B Strep bacteria", s15pos:"Yes", s15neg:"No", s15unk:"Not sure", 
+    gbsWhenLbl:"WHEN WAS IT DETECTED?", gbsThis:"This pregnancy", gbsPrev:"Previous pregnancy", 
+    gbsWhereLbl:"FROM WHICH TEST?", gbsUrine:"Urine (Urine C&S)", gbsHVS:"Vagina (HVS)",
+    gbsWardQ:"Was the baby admitted to the ward?", gbsAbxQ:"Did the baby need antibiotics?", gbsSepsisQ:"Did doctor confirm GBS sepsis?",
+    gbsDurQ:"How long was the admission?", gbsDurP:"e.g. 5 days", gbsOutQ:"Child's condition?", optHealthy:"Healthy", optNotHealthy:"Not Healthy", pSpecify:"Please specify...",
+    
+    sMgttQ:"Have you done the MGTT (glucose test)?",
+    sMgtt1:"1st MGTT", sMgtt2:"2nd MGTT (Optional)", lblWks:"Weeks", lblRes:"Result", optNorm:"Normal", optAbn:"Abnormal",
+    lblMgttTx:"Treatment for Abnormal MGTT?", optDiet:"Diet Control", optMetformin:"Metformin", optInsulin:"Insulin",
+
+    s16q:"Do you have any food allergies?", s16lbl:"WHAT ARE YOU ALLERGIC TO?", s16p:"e.g. Seafood, Peanuts",
+    s17q:"Are you allergic to any medicine?", s17lbl:"WHICH MEDICINE?", s17p:"e.g. Penicillin",
+    
+    s18q:"Past Medical History", s18h:"Medical history before pregnancy.",
+    lblChron:"Chronic Diseases (Before Pregnancy)", pmiChron:["High Blood Pressure","Diabetes","Asthma","Thyroid Problem","Heart Disease","Anemia","Thalassemia","Eczema"], 
+    lblSince:"Since when? (Year)", pSince:"e.g. 2018", lblChronMeds:"Medications taken?", pChronMeds:"e.g. Amlodipine",
+    s18other:"Other conditions:", s18none:"None of the above",
+
+    s18bq:"Current Medical Problem", s18bh:"Any new conditions during this pregnancy?",
+    lblNew:"New Conditions (During this Pregnancy)", pmiNew:["Gestational Diabetes (GDM)","Pregnancy Hypertension (PIH)","Anemia","Thalassemia","Thyroid","Asthma"],
+    
+    s19q:"Have you ever been treated for psychiatric/mental health problems?", s19lbl:"WHICH CONDITION?", s19p:"Other condition...",
+    psychList:["Anxiety", "Adjustment disorder", "Depression", "Schizophrenia"],
+    
+    s20q:"Has a doctor prescribed you any medication during this pregnancy?", s20lbl:"LIST YOUR MEDICINE", s20p:"e.g. Metformin",
+    s21q:"Are you taking Aspirin or Calcium?", 
+    
+    s22q:"Do you have any past surgeries?", s22lbl:"PLEASE STATE SURGERY AND YEAR", s22p:"e.g. Appendicectomy 2015",
+    
+    s23q:"Do close family members have these conditions?", s23h:"Parents, siblings, grandparents.",
+    fhx:["High Blood Pressure","Diabetes","Cancer","Heart Disease","Thyroid Disease","Mental Illness","Stroke","Asthma","Anemia"], s23cp:"If cancer — what type?", s23none:"None of the above",
+    
+    s25q:"Past Obstetric History", s25h:"Add records of your past deliveries.",
+    btnAddChild: "+ Add Child Record", lblNoChild: "No child records. Tap button below to add.",
+    lblChild:"Child", lblYear:"Year", lblMisc:"Total Miscarriages", lblEct:"Ectopic Pregnancies",
+    optBoy:"Boy", optGirl:"Girl",
+    lblGender:"Gender", lblWgt:"Weight (kg)", lblHosp:"Hospital", lblMode:"Mode of Delivery", lblComp:"Birth complications?",
+    lblTerm:"Gestational age at birth", optTerm1:"< 37 weeks", optTerm2:"37 - 40 weeks", optTerm3:"> 40 weeks", 
+    lblAdmit:"Baby admitted to ward?", lblAdmitDur:"How long?", lblOutcome:"Child's condition?",
+    
+    s26q:"Before this pregnancy, were your periods regular?", s26reg:"Yes, regular", s26irr:"No, irregular",
+    s27q:"Have you used birth control?", contraLbl:"WHICH TYPE?",
+    contra:["Pill (OCP)","Intrauterine Contraceptive Device (IUCD)","Injection","Implant","Condom","Others"],
+    
+    s28q:"Occupations", s28h:"What do you and your partner do?",
+    s28hw:"Housewife", s28wk:"Working", s28st:"Student", s28lbl:"YOUR JOB TITLE", s28p:"e.g. Teacher",
+    s29lbl:"PARTNER's JOB TITLE", s29p:"e.g. Engineer",
+    
+    s30q:"What is your household income?", income:["Less than RM1,500","RM1,500 – RM3,000","RM3,001 – RM5,000","RM5,001 – RM10,000","More than RM10,000","Prefer not to say"],
+    
+    s31q:"Your Lifestyle", s31h:"Honest answers help us care for you better.",
+    vapeQ:"Do you vape?", vapeEx:"Ex-vaper",
+    smokeQ:"Do you smoke?", smokeEx:"Ex-smoker",
+    alcoholQ:"Do you drink alcohol?", alcoholEx:"Ex-drinker",
+    drugsQ:"Do you use recreational drugs?", drugsEx:"Ex-user",
+
+    sHusbLifeQ:"Husband's Lifestyle",
+    husbVapeQ:"Does he vape?", husbSmokeQ:"Does he smoke?", husbAlcQ:"Does he drink alcohol?", husbDrugQ:"Does he use recreational drugs?",
+    
+    sumTitle:"Congratulations! You're all done! 🎉💕", sumSub:"Please Screenshot this page or tap 'Save' below to keep a copy of your record.",
+    sumRestart:"🔄 Start Over (Clear Data)", sumHero:"🎊",
+    sumBoxLbl:"📝 EDITABLE TEXT (Edit before scanning if needed)\nNote: Keep the [SCAN] tags intact.", sumCopyBtn:"📋 Copy All Text", sumSaveBtn:"💾 Save / Print (PDF)"
+  },
+
+  ms: {
+    hTitle:"👋 Hai Mommy!", hSub:"Mari periksa kesihatan ibu dan bayi 💕",
+    langToggle:"🇬🇧 EN", btnNext:"Seterusnya →", btnStart:"Mari mulakan →", btnBack:"← Kembali", btnYes:"Ya", btnNo:"Tidak",
+    pLabels:["Mula","Nama","Umur","Bangsa","Agama","Klinik","Ukuran","Sejarah Bersalin","Tarikh Penentuan","Tarikh Scan","Haid","Perancang","Penyakit Kronik","Pembedahan","Kesihatan Mental","Alahan Makanan","Alahan Ubat","Penyakit Hamil","Darah","Rhesus","Ujian HIV","Hepatitis","Sifilis","GBS","MGTT","Ubat","Vitamin","Keluarga","Pekerjaan","Pendapatan","Gaya Hidup Isteri", "Gaya Hidup Suami", "Simptom", "Gerak Bayi", "Siap!"],
+    sAbout:"👤 Tentang Anda", sClinic:"🏥 Maklumat Klinik", sMeasure:"📏 Ukuran",
+    sPreg:"📅 Kehamilan Anda", sSymp:"🩺 Simptom Semasa", sBlood:"🩸 Ujian Darah", sTests:"🧫 Ujian",
+    sAllergy:"⚠️ Alahan", sHealth:"🏥 Kesihatan", sMental:"🧠 Mental",
+    sMeds:"💊 Ubat", sSurg:"🏥 Pembedahan", sFamily:"👨‍👩‍👧 Keluarga",
+    sObstet:"🤰 Sejarah Hamil", sBirth:"👶 Kelahiran Lepas",
+    sPeriod:"🔄 Haid", sContra:"🔄 Perancang",
+    sWork:"💼 Pekerjaan", sHousehold:"💰 Kewangan", sLife:"🌿 Gaya Hidup",
+    
+    s0q:"Sedia untuk mula isikan borang?",
+    s0h:"✨ Bantuan anda membolehkan doktor merawat anda dengan lebih pantas!<br><br>💡 <strong>Tips:</strong> Anda boleh dapati maklumat ini daripada <strong>buku antenatal (buku pink)</strong> anda. Sila cuba cari dan isikan maklumat jika boleh. Jika anda tidak pasti, abaikan sahaja dan terus ke soalan seterusnya.",
+    s0btn:"Saya bersedia",
+    
+    s1q:"Apakah nama penuh anda?", s1h:"Seperti dalam kad pengenalan", s1p:"cth. Siti Aminah",
+    s3q:"Umur anda?", s3h:"Pilih umur", ageUnit:" tahun",
+    s4q:"Bangsa?", races:["Melayu","Cina","India","Lain-lain","Bukan Warganegara"], s4country:"Negara asal?",
+    s5q:"Agama?", religions:["Islam","Kristian","Buddha","Hindu","Sikh","Lain-lain"],
+    
+    s6q:"Maklumat Klinik & Buka Buku", s6h:"Di manakah klinik anda?", 
+    lblCurrClinic:"Klinik Rawatan Semasa", lblBookClinic:"Klinik Buka Buku", lblBookPOA:"Berapa minggu buka buku?", lblBookHb:"Hb semasa buka buku",
+
+    s7q:"Ukuran Timbangan", s7h:"Timbangan buka buku dan terkini",
+    s7hgt:"Tinggi (cm)", s7bookWgt:"Berat semasa buka buku (kg)", s7currWgt:"Berat Terkini (kg)",
+    bmiLabel:"BMI Buka Buku", bmiCats:["⚠️ Kurang berat","✅ Normal","⚠️ Berlebihan berat","🔴 Obes"],
+    
+    s8q:"Bila tarikh hari pertama haid terakhir?", s8h:"Pilih tarikh (LMP). Abaikan jika tak pasti.",
+    eddLabel:"📅 Jangkaan Bersalin", gaPrefix:"📅 Usia kehamilan: ",
+    lblPOG: "Usia Kandungan (Scan)",
+    
+    sSympQ:"Bagaimana keadaan anda hari ini?", sSympH:"Tandakan jika ada simptom ini SEKARANG.",
+    sympAbd:"Sakit perut", sympContraction:"Kontraksi", sympLiquor:"Keluar air ketuban (Leaking water)",
+    sympBld:"Pendarahan vagina", sympHeadache:"Sakit kepala yang teruk", sympVision:"Penglihatan kabur",
+    sympDizzy:"Pening", sympPalp:"Berdebar-debar", sympFatigue:"Letih",
+    sympUri:"Sakit / Kerap kencing", sympNau:"Loya / Muntah teruk", sympLaborOtherLbl:"Simptom lain:", sympNone:"Saya rasa sihat (Tiada simptom)",
+    
+    sympFetalQ:"Bagaimana pergerakan bayi hari ini?", sympFetalActive:"Aktif bergerak", sympFetalLess:"Kurang bergerak / Tak aktif",
+    fmTimeQ:"Selalu cukup pergerakan 10 kali pukul berapa?", fmTimeP:"cth. 9:00 PM / Malam", fmCountQ:"Hari ini sudah berapa kali?",
+    
+    s9q:"Adakah tarikh jangka lahir anda (REDD) diperolehi daripada laporan scan ataupun imbasan scan?", s9scanLbl:"TARIKH IMBASAN (REDD)", s9no:"Tidak / Tidak pasti",
+    s10q:"Kumpulan darah?", bgOpts:["Kumpulan A|A","Kumpulan B|B","Kumpulan AB|AB","Kumpulan O|O","Tak pasti|Unknown"],
+    s11q:"Rhesus darah?", s11h:"Simbol + atau −", s11pos:"Positif (+)", s11neg:"Negatif (−)", s11unk:"Tak pasti",
+    s12q:"Status HIV?", s12h:"Ujian rutin ibu hamil.", s12pos:"Ya — Positif", s12neg:"Negatif", s12unk:"Tak pasti",
+    s13q:"Menghidap Hepatitis B?", s13pos:"Ya", s13neg:"Tidak", s13unk:"Tak pasti",
+    s14q:"Pernah didiagnosis Sifilis?", s14pos:"Ya — Positif", s14neg:"Tidak", s14unk:"Tak pasti",
+    
+    s15q:"Pernah dijangkiti GBS?", s15h:"Bakteria Group B Strep", s15pos:"Ya", s15neg:"Tidak", s15unk:"Tak pasti", 
+    gbsWhenLbl:"DIPEROLEH BILA?", gbsThis:"Kehamilan ini", gbsPrev:"Kehamilan lepas", 
+    gbsWhereLbl:"DARI UJIAN MANA?", gbsUrine:"Air kencing (Urine C&S)", gbsHVS:"Vagina (HVS)",
+    gbsWardQ:"Adakah anak masuk wad?", gbsAbxQ:"Perlu antibiotik?", gbsSepsisQ:"Doktor sahkan anak GBS sepsis?",
+    gbsDurQ:"Berapa lama masuk wad?", gbsDurP:"cth. 5 hari", gbsOutQ:"Keadaan anak sekarang?", optHealthy:"Sihat", optNotHealthy:"Tidak Sihat", pSpecify:"Sila nyatakan...",
+    
+    sMgttQ:"Adakah anda telah minum air gula (MGTT)?", 
+    sMgtt1:"MGTT Pertama", sMgtt2:"MGTT Kedua (Jika ada)", lblWks:"Minggu", lblRes:"Keputusan", optNorm:"Normal", optAbn:"Tidak normal",
+    lblMgttTx:"Rawatan untuk MGTT tidak normal?", optDiet:"Kawal Diet", optMetformin:"Metformin", optInsulin:"Insulin",
+
+    s16q:"Ada alahan makanan?", s16lbl:"ALAH KEPADA?", s16p:"cth. Makanan laut",
+    s17q:"Ada alahan ubat?", s17lbl:"UBAT APA?", s17p:"cth. Penicillin",
+    
+    s18q:"Penyakit Kronik", s18h:"Sejarah perubatan sebelum kehamilan ini.",
+    lblChron:"Penyakit Kronik (Sebelum Hamil)", pmiChron:["Darah Tinggi","Kencing Manis","Asma","Tiroid","Sakit Jantung","Anemia","Talasemia","Ekzema"], 
+    lblSince:"Sejak bila? (Tahun)", pSince:"cth. 2018", lblChronMeds:"Ubat-ubatan diambil?", pChronMeds:"cth. Amlodipine",
+    s18other:"Penyakit lain:", s18none:"Tiada di atas",
+
+    s18bq:"Masalah Semasa Hamil", s18bh:"Penyakit baru yang dikesan semasa kehamilan ini.",
+    lblNew:"Penyakit Baru (Semasa Hamil Ini)", pmiNew:["Kencing Manis Hamil (GDM)","Darah Tinggi Hamil (PIH)","Anemia","Talasemia","Tiroid","Asma"],
+    
+    s19q:"Pernahkah anda mendapat rawatan untuk masalah kesihatan mental / psikiatri?", s19lbl:"MASALAH APA?", s19p:"Lain-lain...",
+    psychList:["Kebimbangan (Anxiety)", "Kecelaruan Penyesuaian", "Kemurungan (Depression)", "Skizofrenia"],
+    
+    s20q:"Adakah doktor memberi anda apa-apa ubat semasa hamil?", s20lbl:"SENARAI UBAT", s20p:"cth. Metformin",
+    s21q:"Ada ambil Aspirin atau Kalsium?", 
+    
+    s22q:"Anda ada apa-apa pembedahan sebelum ini?", s22lbl:"SILA NYATAKAN PEMBEDAHAN DAN TAHUN", s22p:"cth. C-Sect 2020",
+    
+    s23q:"Penyakit keluarga terdekat?", s23h:"Ibu bapa, adik-beradik, datuk, nenek.",
+    fhx:["Darah Tinggi","Kencing Manis","Kanser","Sakit Jantung","Tiroid","Penyakit Mental","Strok","Asma","Anemia"], s23cp:"Kanser apa?", s23none:"Tiada di atas",
+    
+    s25q:"Sejarah Bersalin (Obstetrik)", s25h:"Sila isikan ringkasan anak anda yang lepas.",
+    btnAddChild: "+ Tambah Rekod Bersalin", lblNoChild: "Belum ada rekod. Tekan butang di bawah.",
+    lblChild:"Anak", lblYear:"Tahun", lblMisc:"Jumlah Keguguran", lblEct:"Luar Rahim (Ectopic)",
+    optBoy:"Lelaki", optGirl:"Perempuan",
+    lblGender:"Jantina", lblWgt:"Berat (kg)", lblHosp:"Hospital", lblMode:"Kaedah bersalin", lblComp:"Komplikasi bersalin?",
+    lblTerm:"Usia kandungan masa lahir", optTerm1:"< 37 minggu", optTerm2:"37 - 40 minggu", optTerm3:"> 40 minggu", 
+    lblAdmit:"Bayi masuk wad?", lblAdmitDur:"Berapa lama?", lblOutcome:"Keadaan anak?",
+    
+    s26q:"Haid anda teratur sebelum ini?", s26reg:"Ya, teratur", s26irr:"Tak teratur",
+    s27q:"Pernah guna perancang keluarga?", contraLbl:"JENIS APA?",
+    contra:["Pil (OCP)","Alat dalam rahim (IUCD)","Suntikan (Depo)","Implanon","Kondom","Lain-lain"],
+    
+    s28q:"Pekerjaan", s28h:"Pekerjaan anda dan pasangan?",
+    s28hw:"Surirumah", s28wk:"Bekerja", s28st:"Pelajar", s28lbl:"JAWATAN ANDA", s28p:"cth. Guru",
+    s29lbl:"JAWATAN PASANGAN / SUAMI", s29p:"cth. Jurutera",
+    
+    s30q:"Pendapatan isi rumah?", income:["Bawah RM1,500","RM1,500 – RM3,000","RM3,001 – RM5,000","RM5,001 – RM10,000","Lebih RM10,000","Rahsia"],
+    
+    s31q:"Gaya Hidup Anda", s31h:"Sila jawab jujur untuk rawatan tepat.",
+    vapeQ:"Menghisap vape?", vapeEx:"Bekas pengguna",
+    smokeQ:"Anda merokok?", smokeEx:"Bekas perokok",
+    alcoholQ:"Anda minum alkohol?", alcoholEx:"Pernah",
+    drugsQ:"Ambil dadah rekreasi?", drugsEx:"Pernah",
+
+    sHusbLifeQ:"Gaya Hidup Suami",
+    husbVapeQ:"Adakah suami menghisap vape?", husbSmokeQ:"Adakah suami merokok?", husbAlcQ:"Adakah suami minum alkohol?", husbDrugQ:"Adakah suami ambil dadah?",
+    
+    sumTitle:"Tahniah! Anda dah siap! 🎉💕", sumSub:"Sila \"Screenshot\" atau tekan butang Save di bawah untuk menyimpan rekod anda.",
+    sumRestart:"🔄 Mula Semula (Padam Data)", sumHero:"🎊",
+    sumBoxLbl:"📝 DRAF NOTA (Boleh diedit. Jangan buang tag [SCAN])", sumCopyBtn:"📋 Salin Semua Teks", sumSaveBtn:"💾 Save / Print (PDF)"
+  }
+};
+
+let lang = 'en';
+let cur = 0;
+let TOTAL = 0;
+let stepsArr = []; 
+
+const D = {
+  name:'', age:'', race:'', raceCountry:'', religion:'', currentClinic:'', bookingClinic:'', bookingPOA:'', bookingHb:'',
+  height:'', bookingWeight:'', currentWeight:'', bmi:'',
+  lmp:'', edd:'', ga:'', gaWeeks:NaN, scanDate:'', scanYN:'',
+  sympAbd:false, sympContraction:false, sympLiquor:false, sympBld:false, 
+  sympHeadache:false, sympVision:false, sympDizzy:false, sympPalp:false, 
+  sympFatigue:false, sympUri:false, sympNau:false, sympLaborOther:'', sympFetal:'',
+  fmTime:'', fmCount:'',
+  bloodGroup:'', rhesus:'', hiv:'', hepB:'', vdrl:'',
+  gbsYN:'', gbsWhen:[], gbsWhere:'', gbsWard:'', gbsAbx:'', gbsSepsis:'', gbsDur:'', gbsOutBtn:'', gbsOutText:'',
+  mgttYN:'', mgtt1Wks:'', mgtt1Res:'', mgtt2Wks:'', mgtt2Res:'', mgttTx:[],
+  foodAllergyYN:'', foodAllergy:'', medAllergyYN:'', medAllergy:'',
+  pmiChron:[], pmiNew:[], pmiOthers:'', pmiNewOthers:'', 
+  chronDetails:{}, 
+  psychYN:'', psychDxList:[], psychOthers:'',
+  medsYN:'', medications:'', aspirinCa:'',
+  surgYN:'', surgDetails:'',
+  fhx:[], fhxCancerType:'',
+  misc:'', ect:'', obsList:[], 
+  menses:'', contraYN:'', contra:[],
+  empStatus:'', patientOccupation:'', husbandOccupation:'', income:'',
+  vape:'', smoker:'', alcohol:'', drugs:'',
+  husbVape:'', husbSmoker:'', husbAlcohol:'', husbDrugs:''
+};
+
+// AUTO CAPITALIZE HELPER
+function tc(str) {
+  if(!str || typeof str !== 'string') return str;
+  return str.replace(/(^\w)|(\s\w)/g, function(m){ return m.toUpperCase(); });
+}
+
+// SMART OUTCOME TRANSLATOR
+function txOutcome(val) {
+   if(!val) return '?';
+   let l = val.toLowerCase().trim();
+   if(l==='baik' || l==='sihat' || l==='ok' || l==='normal' || l==='healthy') return 'Healthy';
+   if(l==='meninggal' || l==='meninggal dunia' || l==='mati' || l==='deceased') return 'Deceased';
+   if(l==='gugur' || l==='miscarriage') return 'Miscarriage';
+   if(l==='sakit' || l==='not healthy' || l==='tidak sihat') return 'Not Healthy';
+   return tc(val);
+}
+
+const BM_TO_EN = {
+  'Melayu':'Malay','Cina':'Chinese','India':'Indian','Lain-lain':'Others','Bukan Warganegara':'Non-Msian',
+  'Kristian':'Christian','Buddha':'Buddhist','Hindu':'Hindu','Sikh':'Sikh',
+  'Positif (+)':'Pos(+)','Negatif (−)':'Neg(-)',
+  'Ya':'Yes', 'Tidak':'No', 'Tiada':'Nil', 'Tak pasti':'Unknown', 'Tidak / Tidak pasti':'No',
+  'Kehamilan ini':'Current', 'Kehamilan lepas':'Previous', 'Previous pregnancy':'Previous', 'Current pregnancy':'Current',
+  'Air kencing (Urine C&S)':'Urine', 'Vagina (HVS)':'HVS',
+  'Ya, teratur':'Reg','Tak teratur':'Irreg',
+  'Suntikan (Depo)':'Depo', 'Alat dalam rahim (IUCD)':'IUCD', 'Intrauterine Contraceptive Device (IUCD)':'IUCD',
+  'Surirumah':'Housewife','Bekerja':'Working','Pelajar':'Student',
+  'Bawah RM1,500':'<1.5k','Lebih RM10,000':'>10k','RM1,500 – RM3,000':'1.5-3k','RM3,001 – RM5,000':'3-5k','RM5,001 – RM10,000':'5-10k','Rahsia':'Undisclosed',
+  'Less than RM1,500':'<1.5k','More than RM10,000':'>10k','Prefer not to say':'Undisclosed',
+  'Bekas pengguna':'Ex', 'Bekas perokok':'Ex', 'Pernah':'Ex',
+  'Darah Tinggi':'HPT','Kencing Manis':'DM','Asma':'Asthma','Tiroid':'Thyroid','Sakit Jantung':'Heart','Kanser':'Cancer', 'Talasemia':'Thalassemia', 'Ekzema':'Eczema',
+  'Kencing Manis Hamil (GDM)':'GDM','Darah Tinggi Hamil (PIH)':'PIH',
+  'Kebimbangan (Anxiety)':'Anxiety', 'Kecelaruan Penyesuaian':'Adjustment', 'Kemurungan (Depression)':'Depression', 'Skizofrenia':'Schizophrenia',
+  'Aktif bergerak':'good','Moving actively':'good','Kurang bergerak / Tak aktif':'Less','Less movement / Inactive':'Less',
+  'Boy':'Boy', 'Girl':'Girl', 'Lelaki':'Boy', 'Perempuan':'Girl', 'Tidak normal':'Abnormal',
+  '< 37 minggu':'< 37', '37 - 40 minggu':'37-40', 'Lebih 40 minggu':'> 40',
+  'Kawal Diet':'Diet Control', 'Diet Control':'Diet Control', 'Metformin':'Metformin', 'Insulin':'Insulin',
+  'Sihat':'Healthy', 'Tidak Sihat':'Not Healthy'
+};
+
+function txVal(val) {
+  if (!val || typeof val !== 'string') return val;
+  if (BM_TO_EN[val]) return BM_TO_EN[val];
+  return val;
+}
+function txArr(arr) {
+  if (!Array.isArray(arr)) return arr;
+  return arr.map(function(v){ return txVal(v) || v; });
+}
+
+function pick(key, val, btn) { 
+  D[key] = val; 
+  if (btn) { 
+    var grp = btn.closest('.grid2, .reveal, #fetalMoveSect, #mgttYNRev, #gbsPrevRev') || btn.parentElement;
+    if (grp) {
+      var opts = grp.querySelectorAll('.big-opt');
+      for(var i=0; i<opts.length; i++) {
+        opts[i].classList.remove('sel');
+      }
+    }
+    btn.classList.add('sel'); 
+  } 
+}
+
+function toggleCheck(el, key, val) { 
+  if (!el) return;
+  var isChecked = el.classList.contains('checked');
+  if (isChecked) {
+    el.classList.remove('checked');
+  } else {
+    el.classList.add('checked');
+  }
+  
+  if (!Array.isArray(D[key])) {
+    D[key] = [];
+  }
+  
+  if (!isChecked) { 
+    if (D[key].indexOf(val) === -1) {
+      D[key].push(val);
+    }
+  } else { 
+    var idx = D[key].indexOf(val);
+    if (idx !== -1) {
+      D[key].splice(idx, 1);
+    }
+  }
+}
+
+function clearChecks(key) { 
+  var els = document.querySelectorAll('.ci');
+  for(var i=0; i<els.length; i++) {
+    var attr = els[i].getAttribute('onclick');
+    if (attr && attr.indexOf("'" + key + "'") !== -1) { 
+      els[i].classList.remove('checked'); 
+    } 
+  }
+  D[key] = []; 
+}
+
+function pickRace(val, btn) {
+  pick('race', val, btn);
+  let rev = document.getElementById('countryRev');
+  if (val.indexOf('Non-Malaysian') !== -1 || val.indexOf('Bukan Warganegara') !== -1) {
+    if(rev) rev.classList.add('show');
+  } else {
+    if(rev) rev.classList.remove('show');
+    D.raceCountry = '';
+    setTimeout(next, 300);
+  }
+}
+
+function toggleGbsWhen(val, el) {
+  if (!el) return;
+  var isChecked = el.classList.contains('checked');
+  if (isChecked) {
+    el.classList.remove('checked');
+  } else {
+    el.classList.add('checked');
+  }
+  
+  if (!Array.isArray(D.gbsWhen)) D.gbsWhen = [];
+  
+  if (!isChecked) { 
+    if (D.gbsWhen.indexOf(val) === -1) D.gbsWhen.push(val);
+  } else { 
+    var idx = D.gbsWhen.indexOf(val);
+    if (idx !== -1) D.gbsWhen.splice(idx, 1);
+  }
+  
+  var rev = document.getElementById('gbsPrevRev');
+  var hasPrev = false;
+  for(var i=0; i<D.gbsWhen.length; i++){
+     var w = D.gbsWhen[i];
+     if(w && (w.indexOf('Previous') !== -1 || w.indexOf('lepas') !== -1)) hasPrev = true;
+  }
+  if(hasPrev) {
+     if(rev) rev.classList.add('show');
+  } else {
+     if(rev) rev.classList.remove('show');
+  }
+}
+
+function pickGbsWard(val, btn) {
+  pick('gbsWard', val, btn);
+  let rev = document.getElementById('gbsWardRev');
+  if(val === 'Yes' || val === 'Ya') {
+     if(rev) rev.classList.add('show');
+  } else {
+     if(rev) rev.classList.remove('show');
+  }
+}
+
+function pickGbsOut(val, btn) {
+  pick('gbsOutBtn', val, btn);
+  let rev = document.getElementById('gbsOutTextRev');
+  if(val === 'Not Healthy' || val === 'Tidak Sihat') {
+     if(rev) rev.classList.add('show');
+     D.gbsOutText = '';
+  } else {
+     if(rev) rev.classList.remove('show');
+     D.gbsOutText = 'Healthy';
+  }
+}
+
+function chooseLang(l) {
+  try {
+    lang = l; 
+    document.getElementById('langScreen').style.display = 'none';
+    document.getElementById('appWrap').classList.add('show');
+    document.getElementById('bottomBar').style.display = 'flex';
+    buildAllSteps(); 
+    document.getElementById('s' + cur).classList.add('active');
+    updateUI();
+  } catch(e) {
+    alert("System Error: " + e.message + "\nSila guna mod Incognito/Private dan muat semula (Refresh).");
+  }
+}
+
+function switchLang() {
+  lang = lang === 'en' ? 'ms' : 'en';
+  collectInputs(); buildAllSteps(); 
+  document.getElementById('s' + cur).classList.add('active');
+  updateUI();
+  restoreInputs();
+}
+
+function buildAllSteps() {
+  const L = T[lang];
+  const wrap = document.getElementById('stepsWrap');
+  wrap.innerHTML = '';
+  
+  // NEW CORRECTED SEQUENCE (Symp & Fetal moved to end)
+  stepsArr = [
+    buildS0, buildS1, buildS3, buildS4, buildS5, buildS6, buildS7, buildS25, buildS8, buildS9, buildS26, buildS27, buildS18, buildS22, buildS19, buildS16, buildS17, buildS18b, buildS10, buildS11, buildS12, buildS13, buildS14, buildS15, buildS_MGTT, buildS20, buildS21, buildS23, buildS28, buildS30, buildS31, buildS_HusbLife, buildS_Symp, buildS_Fetal, buildS32
+  ];
+  
+  TOTAL = stepsArr.length;
+
+  stepsArr.forEach((fn, i) => {
+    try {
+      const div = document.createElement('div');
+      div.className = 'step'; div.id = 's' + i;
+      div.innerHTML = fn(L);
+      wrap.appendChild(div);
+    } catch(err) {
+      console.error("Bypass Error Step " + i + ": ", err);
+    }
+  });
+  
+  document.getElementById('hTitle').textContent = L.hTitle;
+  document.getElementById('hSub').textContent = L.hSub;
+  document.getElementById('langToggle').textContent = L.langToggle;
+  
+  renderObsList();
+  restoreDynamicUI();
+}
+
+function restoreDynamicUI() {
+  D.pmiChron.forEach(c => {
+    let cleanId = c.replace(/[^A-Za-z0-9]/g, '');
+    let btn = document.getElementById('btnChron_' + cleanId);
+    let rev = document.getElementById('revChron_' + cleanId);
+    if(btn) btn.classList.add('checked');
+    if(rev) {
+       rev.classList.add('show');
+       let det = D.chronDetails[c] || {};
+       let y = document.getElementById('yr_' + cleanId);
+       let m = document.getElementById('meds_' + cleanId);
+       if(y && det.since) y.value = det.since;
+       if(m && det.meds) m.value = det.meds;
+    }
+  });
+  
+  D.mgttTx.forEach(c => {
+    let cleanId = c.replace(/[^A-Za-z0-9]/g, '');
+    let btn = document.getElementById('btnMgttTx_' + cleanId);
+    if(btn) btn.classList.add('checked');
+  });
+}
+
+function card(badge, emoji, q, sub, body) {
+  return `<div class="step-card"><div class="sec-badge">${badge}</div><span class="step-emoji">${emoji}</span><div class="q-text">${q}</div>${sub?`<div class="q-sub">${sub}</div>`:''}<div class="q-body">${body}</div></div>`;
+}
+
+function optBtn(label, value, key, autoNext=false, revealId='') {
+  let selClass = (D[key] === value) ? 'sel' : '';
+  let clickLogic = `pick('${key}', '${value}', this);`;
+  if (revealId === 'show') clickLogic += `let r1=document.getElementById('${key}Rev'); if(r1) r1.classList.add('show');`;
+  if (revealId === 'hide') clickLogic += `let r2=document.getElementById('${key}Rev'); if(r2) r2.classList.remove('show');`;
+  if (autoNext) clickLogic += `setTimeout(next, 300);`;
+  
+  return `<button class="big-opt ${selClass}" onclick="${clickLogic}"><div class="radio-box">✓</div><div style="text-align:left"><span>${label}</span></div></button>`;
+}
+
+function buildS0(L) { return card(L.sAbout,'🌸',L.s0q,L.s0h, `<button class="big-opt" onclick="next()" style="border-color:var(--rose-d); background:var(--rose-pale); color:var(--rose-d); justify-content:center;">${L.s0btn}</button>`); }
+function buildS1(L) { return card(L.sAbout,'📝',L.s1q,L.s1h, `<input class="big-input" type="text" id="name" placeholder="${L.s1p}" autocomplete="name" oninput="D.name=this.value">`); }
+function buildS3(L) { 
+  let opts = `<select class="big-input" id="age" style="margin-bottom:12px; font-size:18px; padding:16px; font-weight:800;" onchange="D.age=this.value; setTimeout(next, 300);">`;
+  opts += `<option value="" disabled selected>${L.s3h}...</option>`;
+  for (let i=14; i<=55; i++) { opts += `<option value="${i}">${i}</option>`; }
+  opts += `</select>`;
+  return card(L.sAbout,'🎂',L.s3q,'',opts); 
+}
+
+function buildS4(L) { 
+  let html = `<div class="grid2" style="grid-template-columns:1fr;">`;
+  L.races.forEach(r => {
+    let selC = (D.race === r) ? 'sel' : '';
+    html += `<button class="big-opt ${selC}" onclick="pickRace('${r}', this)"><div class="radio-box">✓</div><div style="text-align:left"><span>${r}</span></div></button>`;
+  });
+  let isRev = (D.race && (D.race.indexOf('Non-Malaysian') !== -1 || D.race.indexOf('Bukan Warganegara') !== -1)) ? 'show' : '';
+  html += `</div><div class="reveal ${isRev}" id="countryRev"><span class="mini-lbl">${L.s4country}</span><input class="big-input" type="text" id="raceCountry" placeholder="e.g. Indonesia" oninput="D.raceCountry=this.value"></div>`;
+  return card(L.sAbout,'🌏',L.s4q,'', html); 
+}
+
+function buildS5(L) { return card(L.sAbout,'🕌',L.s5q,'', `<div class="grid2">${L.religions.map((r)=>optBtn(r, r, 'religion', true)).join('')}</div>`); }
+
+function buildS6(L) { 
+  return card(L.sClinic,'🏥',L.s6q,L.s6h,`
+    <span class="mini-lbl">${L.lblCurrClinic}</span>
+    <input class="big-input" type="text" id="currentClinic" placeholder="e.g. KK Cheras" oninput="D.currentClinic=this.value" style="margin-bottom:12px">
+    <span class="mini-lbl">${L.lblBookClinic}</span>
+    <input class="big-input" type="text" id="bookingClinic" placeholder="e.g. KK Kajang" oninput="D.bookingClinic=this.value" style="margin-bottom:12px">
+    <div class="num-row">
+      <div class="num-group"><span class="nl">${L.lblBookPOA}</span><input class="big-input" type="number" inputmode="numeric" pattern="[0-9]*" id="bookingPOA" placeholder="${L.lblWks}" oninput="D.bookingPOA=this.value"></div>
+      <div class="num-group"><span class="nl">${L.lblBookHb}</span><input class="big-input" type="number" inputmode="decimal" step="0.1" id="bookingHb" placeholder="g/dL" oninput="D.bookingHb=this.value"></div>
+    </div>
+  `); 
+}
+
+function buildS7(L) { 
+  return card(L.sMeasure,'⚖️',L.s7q,L.s7h,` 
+    <div class="num-row" style="margin-bottom:12px;"> 
+      <div class="num-group full" style="grid-column:1/-1"><span class="nl">${L.s7hgt}</span><input class="big-input" type="number" inputmode="numeric" pattern="[0-9]*" id="height" placeholder="158" oninput="calcBMI()"></div> 
+    </div> 
+    <div class="num-row">
+      <div class="num-group"><span class="nl">${L.s7bookWgt}</span><input class="big-input" type="number" inputmode="decimal" step="0.1" id="bookingWeight" placeholder="kg" oninput="calcBMI()"></div>
+      <div class="num-group"><span class="nl">${L.s7currWgt}</span><input class="big-input" type="number" inputmode="decimal" step="0.1" id="currentWeight" placeholder="kg" oninput="D.currentWeight=this.value"></div>
+    </div>
+    <div class="result-box" id="bmiBox"><div class="rl">${L.bmiLabel}</div><div class="rv" id="bmiVal">—</div><div class="rs" id="bmiCat"></div></div>
+  `); 
+}
+
+function buildS8(L) { return card(L.sPreg,'🗓️',L.s8q,L.s8h,` <input class="big-input" type="date" id="lmp" onchange="calcEDD()"> <div class="result-box" id="eddBox"><div class="rl">${L.eddLabel}</div><div class="rv" id="eddVal">—</div><div class="rs" id="gaVal"></div></div>`); }
+
+function buildS_Symp(L) { 
+  return card(L.sSymp,'🩺',L.sSympQ,L.sSympH,`
+    <div class="check-grid" style="grid-template-columns:1fr 1fr">
+      <div class="ci ${D.sympAbd?'checked':''}" onclick="toggleSymp(this,'sympAbd')"><div class="cd">✓</div>${L.sympAbd}</div>
+      <div class="ci ${D.sympContraction?'checked':''}" onclick="toggleSymp(this,'sympContraction')"><div class="cd">✓</div>${L.sympContraction}</div>
+      <div class="ci ${D.sympBld?'checked':''}" onclick="toggleSymp(this,'sympBld')"><div class="cd">✓</div>${L.sympBld}</div>
+      <div class="ci ${D.sympLiquor?'checked':''}" onclick="toggleSymp(this,'sympLiquor')"><div class="cd">✓</div>${L.sympLiquor}</div>
+      <div class="ci ${D.sympHeadache?'checked':''}" onclick="toggleSymp(this,'sympHeadache')"><div class="cd">✓</div>${L.sympHeadache}</div>
+      <div class="ci ${D.sympVision?'checked':''}" onclick="toggleSymp(this,'sympVision')"><div class="cd">✓</div>${L.sympVision}</div>
+      <div class="ci ${D.sympDizzy?'checked':''}" onclick="toggleSymp(this,'sympDizzy')"><div class="cd">✓</div>${L.sympDizzy}</div>
+      <div class="ci ${D.sympPalp?'checked':''}" onclick="toggleSymp(this,'sympPalp')"><div class="cd">✓</div>${L.sympPalp}</div>
+      <div class="ci ${D.sympFatigue?'checked':''}" onclick="toggleSymp(this,'sympFatigue')"><div class="cd">✓</div>${L.sympFatigue}</div>
+      <div class="ci ${D.sympUri?'checked':''}" onclick="toggleSymp(this,'sympUri')"><div class="cd">✓</div>${L.sympUri}</div>
+      <div class="ci ${D.sympNau?'checked':''}" onclick="toggleSymp(this,'sympNau')"><div class="cd">✓</div>${L.sympNau}</div>
+    </div>
+    <div class="check-grid" style="grid-template-columns:1fr; margin-top:8px;">
+      <div class="ci" id="btnSympNone" onclick="clearSymp(this)"><div class="cd">✓</div>${L.sympNone}</div>
+    </div>
+    <span class="mini-lbl" style="margin-top:10px;">${L.sympLaborOtherLbl}</span>
+    <input class="big-input" type="text" id="sympLaborOther" oninput="D.sympLaborOther=this.value" style="margin-top:5px; padding:10px; font-size:14px;">
+  `); 
+}
+function toggleSymp(el, key) { 
+  el.classList.toggle('checked'); 
+  D[key] = el.classList.contains('checked');
+  if(D[key]) { document.getElementById('btnSympNone').classList.remove('checked'); }
+}
+function clearSymp(el) {
+  el.classList.add('checked'); 
+  D.sympAbd=false; D.sympContraction=false; D.sympBld=false; D.sympLiquor=false; D.sympHeadache=false; D.sympVision=false; D.sympDizzy=false; D.sympPalp=false; D.sympFatigue=false; D.sympUri=false; D.sympNau=false;
+  let checks = el.parentElement.parentElement.querySelectorAll('.ci');
+  for(let i=0; i<checks.length; i++) { if(checks[i].id !== 'btnSympNone') { checks[i].classList.remove('checked'); } }
+  setTimeout(next, 400);
+}
+
+function buildS_Fetal(L) {
+  return card(L.sPreg,'👶',L.sympFetalQ,'',`
+    ${optBtn(L.sympFetalActive, L.sympFetalActive, 'sympFetal', false)}
+    ${optBtn(L.sympFetalLess, L.sympFetalLess, 'sympFetal', false)}
+    <div style="margin-top:16px; padding:16px; background:var(--gray50); border:2px dashed var(--gray200); border-radius:12px;">
+      <span class="mini-lbl" style="margin-top:0;">${L.fmTimeQ}</span>
+      <input class="big-input" type="text" id="fmTime" placeholder="${L.fmTimeP}" oninput="D.fmTime=this.value" style="margin-bottom:12px; background:white; text-transform:none;">
+      <span class="mini-lbl">${L.fmCountQ}</span>
+      <input class="big-input" type="number" inputmode="numeric" id="fmCount" oninput="D.fmCount=this.value" style="background:white;">
+    </div>
+  `);
+}
+
+function calcPOG() {
+  const sdVal = document.getElementById('scanDate')?.value;
+  if (!sdVal) return;
+  D.scanDate = sdVal;
+  
+  let sd = new Date(sdVal);
+  sd.setHours(0,0,0,0);
+  let td = new Date();
+  td.setHours(0,0,0,0);
+  
+  let diff = Math.round((sd.getTime() - td.getTime()) / 86400000);
+  let pD = 280 - diff;
+  let pW = Math.floor(pD / 7);
+  let pDays = pD % 7;
+  
+  const bx = document.getElementById('pogBox');
+  const pv = document.getElementById('pogVal');
+  if (pD >= 0 && pv && bx) {
+    pv.textContent = pW + "w " + pDays + "d";
+    bx.classList.add('show');
+  } else if (pv && bx) {
+    pv.textContent = "—";
+    bx.classList.add('show');
+  }
+}
+
+function buildS9(L) { 
+  return card(L.sPreg,'🔬',L.s9q,'',` 
+    ${optBtn(L.btnYes,'Yes','scanYN',false,'show')} 
+    ${optBtn(L.s9no,'No','scanYN',true,'hide')} 
+    <div class="reveal ${D.scanYN==='Yes'?'show':''}" id="scanYNRev"> 
+      <span class="mini-lbl">${L.s9scanLbl}</span> 
+      <input class="big-input" type="date" id="scanDate" onchange="calcPOG()"> 
+      <div class="result-box" id="pogBox"><div class="rl">${L.lblPOG || 'CURRENT POG'}</div><div class="rv" id="pogVal">—</div></div>
+    </div>`); 
+}
+function buildS10(L) { return card(L.sBlood,'🩸',L.s10q,'', `<div class="grid2">${L.bgOpts.map(o=>{const[lbl,val]=o.split('|');return optBtn(lbl, val, 'bloodGroup', true);}).join('')}</div>`); }
+function buildS11(L) { return card(L.sBlood,'➕',L.s11q,L.s11h,` ${optBtn(L.s11pos, 'Positive (+ve)', 'rhesus', true)} ${optBtn(L.s11neg, 'Negative (−)', 'rhesus', true)} ${optBtn(L.s11unk, 'Unknown', 'rhesus', true)} `); }
+function buildS12(L) { return card(L.sTests,'🔴',L.s12q,L.s12h,` ${optBtn(L.s12pos, 'Positive', 'hiv', true)} ${optBtn(L.s12neg, 'Negative', 'hiv', true)} ${optBtn(L.s12unk, 'Unknown', 'hiv', true)} `); }
+function buildS13(L) { return card(L.sTests,'🟡',L.s13q,'',` ${optBtn(L.s13pos, 'Positive', 'hepB', true)} ${optBtn(L.s13neg, 'Negative', 'hepB', true)} ${optBtn(L.s13unk, 'Unknown', 'hepB', true)} `); }
+function buildS14(L) { return card(L.sTests,'🧪',L.s14q,'',` ${optBtn(L.s14pos, 'Reactive', 'vdrl', true)} ${optBtn(L.s14neg, 'Non-reactive', 'vdrl', true)} ${optBtn(L.s14unk, 'Unknown', 'vdrl', true)} `); }
+
+function buildS15(L) { 
+  let html = card(L.sTests,'🦠',L.s15q,L.s15h,
+    optBtn(L.btnYes, 'Yes', 'gbsYN', false, 'show') + " " +
+    optBtn(L.btnNo, 'No', 'gbsYN', true, 'hide') + " " +
+    optBtn(L.s15unk, 'Unknown', 'gbsYN', true, 'hide') +
+    '<div class="reveal ' + (D.gbsYN==='Yes'?'show':'') + '" id="gbsYNRev">' +
+      '<span class="mini-lbl">' + L.gbsWhenLbl + '</span>' +
+      '<div class="grid2">' +
+        `<div class="ci ${D.gbsWhen.indexOf(L.gbsThis)!==-1?'checked':''}" onclick="toggleGbsWhen('${L.gbsThis}', this)"><div class="cd">✓</div>${L.gbsThis}</div>` +
+        `<div class="ci ${D.gbsWhen.indexOf(L.gbsPrev)!==-1?'checked':''}" onclick="toggleGbsWhen('${L.gbsPrev}', this)"><div class="cd">✓</div>${L.gbsPrev}</div>` +
+      '</div>' +
+      '<div class="reveal ' + (D.gbsWhen && (D.gbsWhen.indexOf('Previous') !== -1 || D.gbsWhen.indexOf('lepas') !== -1) ? 'show' : '') + '" id="gbsPrevRev" style="margin-top:16px; padding:12px; border:2px dashed var(--rose); border-radius:12px; background:white;">' +
+         '<span class="mini-lbl">' + L.gbsWardQ + '</span>' +
+         '<div class="grid2">' + 
+           `<button class="big-opt ${D.gbsWard==='Yes'?'sel':''}" onclick="pickGbsWard('Yes', this)"><div class="radio-box">✓</div><div style="text-align:left"><span>${L.btnYes}</span></div></button>` +
+           `<button class="big-opt ${D.gbsWard==='No'?'sel':''}" onclick="pickGbsWard('No', this)"><div class="radio-box">✓</div><div style="text-align:left"><span>${L.btnNo}</span></div></button>` +
+         '</div>' +
+         '<div class="reveal ' + (D.gbsWard==='Yes'?'show':'') + '" id="gbsWardRev">' +
+           '<span class="mini-lbl" style="margin-top:12px;">' + L.gbsSepsisQ + '</span>' +
+           '<div class="grid2">' + optBtn(L.btnYes, 'Yes', 'gbsSepsis') + ' ' + optBtn(L.btnNo, 'No', 'gbsSepsis') + ' ' + optBtn(L.s15unk, 'Unknown', 'gbsSepsis') + '</div>' +
+           '<span class="mini-lbl" style="margin-top:12px;">' + L.gbsDurQ + '</span>' +
+           '<input class="big-input" type="text" placeholder="' + L.gbsDurP + '" id="gbsDur" oninput="D.gbsDur=this.value">' +
+           '<span class="mini-lbl" style="margin-top:12px;">' + L.gbsOutQ + '</span>' +
+           '<div class="grid2">' +
+             `<button class="big-opt ${D.gbsOutBtn==='Healthy'?'sel':''}" onclick="pickGbsOut('Healthy', this)"><div class="radio-box">✓</div><div style="text-align:left"><span>${L.optHealthy}</span></div></button>` +
+             `<button class="big-opt ${D.gbsOutBtn==='Not Healthy'?'sel':''}" onclick="pickGbsOut('Not Healthy', this)"><div class="radio-box">✓</div><div style="text-align:left"><span>${L.optNotHealthy}</span></div></button>` +
+           '</div>' +
+           '<div class="reveal ' + (D.gbsOutBtn==='Not Healthy'?'show':'') + '" id="gbsOutTextRev" style="margin-top:8px;">' +
+             '<input class="big-input mf-text" type="text" placeholder="' + L.pSpecify + '" oninput="D.gbsOutText=this.value">' +
+           '</div>' +
+         '</div>' +
+      '</div>' +
+      '<span class="mini-lbl" style="margin-top:16px;">' + L.gbsWhereLbl + '</span>' +
+      '<div class="grid2">' + optBtn(L.gbsUrine, L.gbsUrine, 'gbsWhere') + ' ' + optBtn(L.gbsHVS, L.gbsHVS, 'gbsWhere') + '</div>' +
+    '</div>'
+  );
+  return html;
+}
+
+function checkMgtt() {
+  let r1 = document.getElementById('mgtt1Res') ? document.getElementById('mgtt1Res').value : '';
+  let r2 = document.getElementById('mgtt2Res') ? document.getElementById('mgtt2Res').value : '';
+  if (r1 === 'Abnormal' || r1 === 'Tidak normal' || r2 === 'Abnormal' || r2 === 'Tidak normal') {
+    document.getElementById('mgttTxRev').classList.add('show');
+  } else {
+    document.getElementById('mgttTxRev').classList.remove('show');
+  }
+}
+
+function buildS_MGTT(L) {
+  let mgttShow = D.mgttYN === 'Yes' ? 'show' : '';
+  let r1 = D.mgtt1Res; let r2 = D.mgtt2Res;
+  let txShow = (r1 === 'Abnormal' || r1 === 'Tidak normal' || r2 === 'Abnormal' || r2 === 'Tidak normal') ? 'show' : '';
+  return card(L.sTests,'🥤',L.sMgttQ,'',`
+    ${optBtn(L.btnYes, 'Yes', 'mgttYN', false, 'show')}
+    ${optBtn(L.btnNo, 'No', 'mgttYN', true, 'hide')}
+    <div class="reveal ${mgttShow}" id="mgttYNRev">
+      <span class="mini-lbl">${L.sMgtt1}</span>
+      <div class="num-row">
+        <div class="num-group"><input class="big-input" type="number" inputmode="numeric" placeholder="${L.lblWks}" oninput="D.mgtt1Wks=this.value" id="mgtt1Wks"></div>
+        <div class="num-group">
+          <select class="big-input" onchange="D.mgtt1Res=this.value; checkMgtt();" id="mgtt1Res">
+            <option value="" disabled selected>${L.lblRes}...</option>
+            <option value="Normal" ${D.mgtt1Res==='Normal'?'selected':''}>${L.optNorm}</option>
+            <option value="Abnormal" ${D.mgtt1Res==='Abnormal'?'selected':''}>${L.optAbn}</option>
+          </select>
+        </div>
+      </div>
+      <span class="mini-lbl" style="margin-top:10px;">${L.sMgtt2}</span>
+      <div class="num-row">
+        <div class="num-group"><input class="big-input" type="number" inputmode="numeric" placeholder="${L.lblWks}" oninput="D.mgtt2Wks=this.value" id="mgtt2Wks"></div>
+        <div class="num-group">
+          <select class="big-input" onchange="D.mgtt2Res=this.value; checkMgtt();" id="mgtt2Res">
+            <option value="" disabled selected>${L.lblRes}...</option>
+            <option value="Normal" ${D.mgtt2Res==='Normal'?'selected':''}>${L.optNorm}</option>
+            <option value="Abnormal" ${D.mgtt2Res==='Abnormal'?'selected':''}>${L.optAbn}</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="reveal ${txShow}" id="mgttTxRev" style="margin-top:16px; padding:12px; border:2px dashed var(--rose); border-radius:12px; background:white;">
+         <span class="mini-lbl">${L.lblMgttTx}</span>
+         <div class="check-grid" style="grid-template-columns:1fr;">
+           <div class="ci ${D.mgttTx.indexOf(L.optDiet)!==-1?'checked':''}" id="btnMgttTx_Diet" onclick="toggleCheck(this,'mgttTx','${L.optDiet}')"><div class="cd">✓</div>${L.optDiet}</div>
+           <div class="ci ${D.mgttTx.indexOf(L.optMetformin)!==-1?'checked':''}" id="btnMgttTx_Metformin" onclick="toggleCheck(this,'mgttTx','${L.optMetformin}')"><div class="cd">✓</div>${L.optMetformin}</div>
+           <div class="ci ${D.mgttTx.indexOf(L.optInsulin)!==-1?'checked':''}" id="btnMgttTx_Insulin" onclick="toggleCheck(this,'mgttTx','${L.optInsulin}')"><div class="cd">✓</div>${L.optInsulin}</div>
+         </div>
+      </div>
+    </div>
+  `);
+}
+
+function buildS16(L) { return card(L.sAllergy,'🥜',L.s16q,'',` ${optBtn(L.btnYes, 'Yes', 'foodAllergyYN', false, 'show')} ${optBtn(L.btnNo, 'No', 'foodAllergyYN', true, 'hide')} <div class="reveal ${D.foodAllergyYN==='Yes'?'show':''}" id="foodAllergyYNRev"> <span class="mini-lbl">${L.s16lbl}</span> <input class="big-input" type="text" id="foodAllergy" placeholder="${L.s16p}" oninput="D.foodAllergy=this.value"> </div>`); }
+function buildS17(L) { return card(L.sAllergy,'💊',L.s17q,'',` ${optBtn(L.btnYes, 'Yes', 'medAllergyYN', false, 'show')} ${optBtn(L.btnNo, 'No', 'medAllergyYN', true, 'hide')} <div class="reveal ${D.medAllergyYN==='Yes'?'show':''}" id="medAllergyYNRev"> <span class="mini-lbl">${L.s17lbl}</span> <input class="big-input" type="text" id="medAllergy" placeholder="${L.s17p}" oninput="D.medAllergy=this.value"> </div>`); }
+
+function toggleChron(el, key) {
+  el.classList.toggle('checked');
+  let cleanId = key.replace(/[^A-Za-z0-9]/g, '');
+  let rev = document.getElementById('revChron_' + cleanId);
+  if(el.classList.contains('checked')) {
+     if(D.pmiChron.indexOf(key) === -1) D.pmiChron.push(key);
+     if(!D.chronDetails[key]) D.chronDetails[key] = {since:'', meds:''};
+     if(rev) rev.classList.add('show');
+  } else {
+     var idx = D.pmiChron.indexOf(key);
+     if(idx !== -1) D.pmiChron.splice(idx, 1);
+     if(rev) rev.classList.remove('show');
+  }
+}
+
+function clearChronChecks() {
+  D.pmiChron = [];
+  var els1 = document.querySelectorAll('.ci-chron');
+  for(var i=0; i<els1.length; i++) els1[i].classList.remove('checked');
+  var els2 = document.querySelectorAll('[id^="revChron_"]');
+  for(var j=0; j<els2.length; j++) els2[j].classList.remove('show');
+}
+
+function buildS18(L) { 
+  let html = `<span class="mini-lbl">${L.lblChron}</span><div class="check-grid" style="grid-template-columns:1fr;">`;
+  L.pmiChron.forEach(p => {
+    let cleanId = p.replace(/[^A-Za-z0-9]/g, '');
+    let isChked = D.pmiChron.indexOf(p) !== -1 ? 'checked' : '';
+    let isRev = D.pmiChron.indexOf(p) !== -1 ? 'show' : '';
+    html += '<div style="background:white; border-radius:12px; margin-bottom:4px; box-shadow:0 2px 8px rgba(0,0,0,0.03);">' +
+              '<div class="ci ci-chron ' + isChked + '" id="btnChron_' + cleanId + '" onclick="toggleChron(this,\'' + p + '\')" style="border:none; margin:0;"><div class="cd">✓</div>' + p + '</div>' +
+              '<div class="reveal ' + isRev + '" id="revChron_' + cleanId + '" style="padding:0 16px 16px;">' +
+                '<div class="divider" style="margin:0 0 12px 0;"></div>' +
+                '<span class="mini-lbl" style="margin-top:0;">' + L.lblSince + '</span>' +
+                '<input class="big-input" type="number" inputmode="numeric" pattern="[0-9]*" id="yr_' + cleanId + '" placeholder="' + L.pSince + '" oninput="if(D.chronDetails[\'' + p + '\']) D.chronDetails[\'' + p + '\'].since=this.value" style="margin-bottom:12px; background:var(--gray50);">' +
+                '<span class="mini-lbl">' + L.lblChronMeds + '</span>' +
+                '<input class="big-input" type="text" id="meds_' + cleanId + '" placeholder="' + L.pChronMeds + '" oninput="if(D.chronDetails[\'' + p + '\']) D.chronDetails[\'' + p + '\'].meds=this.value" style="background:var(--gray50);">' +
+              '</div>' +
+            '</div>';
+  });
+  html += `</div>
+    <input class="big-input" type="text" id="pmiOthers" placeholder="${L.s18other}" style="margin-top:16px" oninput="D.pmiOthers=this.value"> 
+    <button class="big-opt" style="margin-top:12px" onclick="clearChronChecks();setTimeout(next,300);"><div class="radio-box">✓</div><span>${L.s18none}</span></button>
+  `;
+  return card(L.sHealth,'📝',L.s18q,L.s18h, html); 
+}
+
+function buildS18b(L) {
+  return card(L.sHealth,'🤰',L.s18bq,L.s18bh,`
+    <span class="mini-lbl">${L.lblNew}</span>
+    <div class="check-grid" style="grid-template-columns:1fr 1fr">${L.pmiNew.map(p=>`<div class="ci ${D.pmiNew.indexOf(p)!==-1?'checked':''}" onclick="toggleCheck(this,'pmiNew','${p}')"><div class="cd">✓</div>${p}</div>`).join('')}</div>
+    <input class="big-input" type="text" id="pmiNewOthers" placeholder="${L.s18other}" style="margin-top:16px" oninput="D.pmiNewOthers=this.value"> 
+    <button class="big-opt" style="margin-top:12px" onclick="clearChecks('pmiNew');setTimeout(next,300);"><div class="radio-box">✓</div><span>${L.s18none}</span></button>
+  `);
+}
+
+function buildS19(L) { 
+  return card(L.sMental,'🧠',L.s19q,'',` 
+    ${optBtn(L.btnYes, 'Yes', 'psychYN', false, 'show')} 
+    ${optBtn(L.btnNo, 'No', 'psychYN', true, 'hide')} 
+    <div class="reveal ${D.psychYN==='Yes'?'show':''}" id="psychYNRev"> 
+      <span class="mini-lbl">${L.s19lbl}</span> 
+      <div class="check-grid" style="grid-template-columns:1fr 1fr">
+        ${L.psychList.map(p=>`<div class="ci ${D.psychDxList.indexOf(p)!==-1?'checked':''}" onclick="toggleCheck(this,'psychDxList','${p}')"><div class="cd">✓</div>${p}</div>`).join('')}
+      </div>
+      <input class="big-input" type="text" id="psychOthers" placeholder="${L.s19p}" style="margin-top:12px" oninput="D.psychOthers=this.value"> 
+    </div>
+  `); 
+}
+function buildS20(L) { return card(L.sMeds,'💊',L.s20q,'',` ${optBtn(L.btnYes, 'Yes', 'medsYN', false, 'show')} ${optBtn(L.btnNo, 'No', 'medsYN', true, 'hide')} <div class="reveal ${D.medsYN==='Yes'?'show':''}" id="medsYNRev"> <span class="mini-lbl">${L.s20lbl}</span> <textarea class="big-input big-textarea" id="medications" placeholder="${L.s20p}" oninput="D.medications=this.value"></textarea> </div>`); }
+function buildS21(L) { return card(L.sMeds,'🔵',L.s21q,'',` ${optBtn(L.btnYes, 'Yes', 'aspirinCa', true)} ${optBtn(L.btnNo, 'No', 'aspirinCa', true)} `); }
+
+function buildS22(L) { 
+  return card(L.sSurg,'🏥',L.s22q,'',` 
+    ${optBtn(L.btnYes, 'Yes', 'surgYN', false, 'show')} 
+    ${optBtn(L.btnNo, 'No', 'surgYN', true, 'hide')} 
+    <div class="reveal ${D.surgYN==='Yes'?'show':''}" id="surgYNRev"> 
+      <span class="mini-lbl">${L.s22lbl}</span> 
+      <input class="big-input mf-text" type="text" id="surgDetails" placeholder="${L.s22p}" oninput="D.surgDetails=this.value" value="${D.surgDetails||''}"> 
+    </div>
+  `); 
+}
+
+function buildS23(L) { return card(L.sFamily,'👨‍👩‍👧',L.s23q,L.s23h,` <div class="check-grid" style="grid-template-columns:1fr 1fr">${L.fhx.map(f=>`<div class="ci ${D.fhx.indexOf(f)!==-1?'checked':''}" onclick="toggleCheck(this,'fhx','${f}')"><div class="cd">✓</div>${f}</div>`).join('')}</div> <input class="big-input" type="text" id="fhxCancerType" placeholder="${L.s23cp}" style="margin-top:10px" oninput="D.fhxCancerType=this.value"> <button class="big-opt" style="margin-top:10px" onclick="clearChecks('fhx');setTimeout(next,300);"><div class="radio-box">✓</div><span>${L.s23none}</span></button>`); }
+
+function renderObsList() {
+  const wrap = document.getElementById('obsListWrap');
+  if(!wrap) return;
+  const L = T[lang];
+  if(D.obsList.length === 0) {
+     wrap.innerHTML = `<div style="text-align:center; padding:16px; margin-bottom:16px; border:2px dashed var(--gray200); border-radius:12px; color:var(--gray400); font-weight:700; font-size:14px;">${L.lblNoChild}</div>`;
+     return;
+  }
+  let html = '';
+  D.obsList.forEach((r, i) => {
+     let selBoy = r.sex==='Boy' ? 'selected' : '';
+     let selGirl = r.sex==='Girl' ? 'selected' : '';
+     
+     let t1 = r.term==='< 37' ? 'selected' : '';
+     let t2 = r.term==='37-40' ? 'selected' : '';
+     let t3 = r.term==='> 40' ? 'selected' : '';
+     
+     let admitOpt = r.nicuYN==='Yes' ? 'selected' : '';
+     let noAdmitOpt = r.nicuYN==='No' ? 'selected' : '';
+
+     let nicuHtml = r.nicuYN === 'Yes' ? '<div class="mf full" style="animation:fadeIn 0.2s ease;"><label>' + L.lblAdmitDur + '</label><input type="text" placeholder="e.g. 5 Hari / Days" value="' + (r.nicuDur||'') + '" oninput="D.obsList[' + i + '].nicuDur=this.value"></div>' : '<div style="display:none;"></div>';
+
+     html += '<div style="background:var(--gray50); border:2px solid var(--gray200); border-radius:12px; padding:16px; margin-bottom:16px; box-shadow: 0 4px 10px rgba(0,0,0,0.02);">' +
+        '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">' +
+           '<div style="font-size:15px; font-weight:900; color:var(--purple); text-transform:uppercase; letter-spacing:0.5px;">' + L.lblChild + ' ' + (i+1) + '</div>' +
+           '<button onclick="removeObsRecord(' + i + ')" style="background:var(--rose-pale); color:var(--rose-d); border:none; border-radius:50%; width:30px; height:30px; font-size:18px; font-weight:bold; cursor:pointer; touch-action:manipulation;">×</button>' +
+        '</div>' +
+        '<div class="birth-fields">' +
+           '<div class="mf"><label>' + L.lblYear + '</label><input type="number" inputmode="numeric" placeholder="YYYY" value="' + r.year + '" oninput="D.obsList[' + i + '].year=this.value"></div>' +
+           '<div class="mf"><label>' + L.lblGender + '</label>' +
+              '<select onchange="D.obsList[' + i + '].sex=this.value">' +
+                 '<option value="" ' + (r.sex===''?'selected':'') + '>-</option>' +
+                 '<option value="Boy" ' + selBoy + '>' + L.optBoy + '</option>' +
+                 '<option value="Girl" ' + selGirl + '>' + L.optGirl + '</option>' +
+              '</select>' +
+           '</div>' +
+           '<div class="mf full"><label>' + L.lblHosp + '</label><input type="text" class="mf-text" placeholder="e.g. HKL" value="' + r.hosp + '" oninput="D.obsList[' + i + '].hosp=this.value"></div>' +
+           '<div class="mf"><label>' + L.lblMode + '</label>' +
+              '<select onchange="D.obsList[' + i + '].mode=this.value">' +
+                 '<option value="" ' + (r.mode===''?'selected':'') + '>-</option>' +
+                 '<option value="SVD" ' + (r.mode==='SVD'?'selected':'') + '>SVD</option>' +
+                 '<option value="LSCS" ' + (r.mode==='LSCS'?'selected':'') + '>LSCS</option>' +
+                 '<option value="Forceps" ' + (r.mode==='Forceps'?'selected':'') + '>Forceps</option>' +
+                 '<option value="Vacuum" ' + (r.mode==='Vacuum'?'selected':'') + '>Vacuum</option>' +
+              '</select>' +
+           '</div>' +
+           '<div class="mf"><label>' + L.lblWgt + '</label><input type="number" inputmode="decimal" step="0.01" placeholder="3.2" value="' + r.wgt + '" oninput="D.obsList[' + i + '].wgt=this.value"></div>' +
+           
+           '<div class="mf full"><label>' + L.lblTerm + '</label>' +
+              '<select onchange="D.obsList[' + i + '].term=this.value;">' +
+                 '<option value="" ' + (r.term===''?'selected':'') + '>-</option>' +
+                 '<option value="< 37" ' + t1 + '>' + (L.optTerm1 || '< 37 weeks') + '</option>' +
+                 '<option value="37-40" ' + t2 + '>' + (L.optTerm2 || '37 - 40 weeks') + '</option>' +
+                 '<option value="> 40" ' + t3 + '>' + (L.optTerm3 || '> 40 weeks') + '</option>' +
+              '</select>' +
+           '</div>' +
+           
+           '<div class="mf full"><label>' + L.lblAdmit + '</label>' +
+              '<select onchange="D.obsList[' + i + '].nicuYN=this.value; renderObsList();">' +
+                 '<option value="" ' + (r.nicuYN===''?'selected':'') + '>-</option>' +
+                 '<option value="Yes" ' + admitOpt + '>' + L.btnYes + '</option>' +
+                 '<option value="No" ' + noAdmitOpt + '>' + L.btnNo + '</option>' +
+              '</select>' +
+           '</div>' +
+           nicuHtml +
+           
+           '<div class="mf full"><label>' + (L.lblOutcome || "Keadaan anak?") + '</label>' +
+              '<select onchange="D.obsList[' + i + '].outcBtn=this.value; renderObsList();">' +
+                 '<option value="" ' + (r.outcBtn===''?'selected':'') + '>-</option>' +
+                 '<option value="Healthy" ' + (r.outcBtn==='Healthy'?'selected':'') + '>' + L.optHealthy + '</option>' +
+                 '<option value="Not Healthy" ' + (r.outcBtn==='Not Healthy'?'selected':'') + '>' + L.optNotHealthy + '</option>' +
+              '</select>' +
+           '</div>' +
+           (r.outcBtn==='Not Healthy' ? '<div class="mf full" style="animation:fadeIn 0.2s ease;"><label>' + L.pSpecify + '</label><input type="text" class="mf-text" value="' + (r.outcText||'') + '" oninput="D.obsList[' + i + '].outcText=this.value"></div>' : '') +
+           
+           '<div class="mf full"><label>' + L.lblComp + '</label><input type="text" class="mf-text" placeholder="e.g. None / GDM / PPH" value="' + r.comp + '" oninput="D.obsList[' + i + '].comp=this.value"></div>' +
+        '</div>' +
+     '</div>';
+  });
+  wrap.innerHTML = html;
+}
+
+function addObsRecord() {
+  D.obsList.push({year:'', hosp:'', mode:'', sex:'', wgt:'', comp:'', term:'', nicuYN:'', nicuDur:'', outcBtn:'', outcText:''});
+  renderObsList();
+}
+
+function removeObsRecord(idx) {
+  D.obsList.splice(idx, 1);
+  renderObsList();
+}
+
+function buildS25(L) { 
+  return card(L.sBirth,'👶',L.s25q,L.s25h,` 
+    <div id="obsListWrap"></div>
+    <button class="add-birth-btn" onclick="addObsRecord()">${L.btnAddChild}</button>
+
+    <div class="divider"></div>
+    <div class="num-row"> 
+      <div class="num-group"><span class="nl" style="color:var(--rose-d);">${L.lblMisc}</span><input class="big-input" type="number" inputmode="numeric" pattern="[0-9]*" id="misc" oninput="D.misc=this.value"></div>
+      <div class="num-group"><span class="nl" style="color:var(--rose-d);">${L.lblEct}</span><input class="big-input" type="number" inputmode="numeric" pattern="[0-9]*" id="ect" oninput="D.ect=this.value"></div>
+    </div>
+  `); 
+}
+
+function buildS26(L) { return card(L.sPeriod,'🔄',L.s26q,'',` ${optBtn(L.s26reg, 'Regular', 'menses', true)} ${optBtn(L.s26irr, 'Irregular', 'menses', true)} `); }
+function buildS27(L) { return card(L.sContra,'💉',L.s27q,'',` ${optBtn(L.btnYes, 'Yes', 'contraYN', false, 'show')} ${optBtn(L.btnNo, 'No', 'contraYN', true, 'hide')} <div class="reveal ${D.contraYN==='Yes'?'show':''}" id="contraYNRev"> <span class="mini-lbl">${L.contraLbl}</span> <div class="check-grid" style="grid-template-columns:1fr 1fr">${L.contra.map(c=>`<div class="ci ${D.contra.indexOf(c)!==-1?'checked':''}" onclick="toggleCheck(this,'contra','${c}')"><div class="cd">✓</div>${c}</div>`).join('')}</div> </div>`); }
+
+function buildS28(L) { 
+  return card(L.sWork,'💼',L.s28q,L.s28h,` 
+    <div class="grid2" style="grid-template-columns:1fr;">
+      ${optBtn(L.s28hw, L.s28hw, 'empStatus', false, 'hide')}
+      ${optBtn(L.s28wk, L.s28wk, 'empStatus', false, 'show')}
+      ${optBtn(L.s28st, L.s28st, 'empStatus', false, 'hide')}
+    </div>
+    <div class="reveal ${D.empStatus==='Working' || D.empStatus==='Bekerja'?'show':''}" id="empStatusRev">
+      <span class="mini-lbl">${L.s28lbl}</span>
+      <input class="big-input" type="text" id="patientOcc" placeholder="${L.s28p}" oninput="D.patientOccupation=this.value" style="margin-bottom:16px;"> 
+    </div>
+    <span class="mini-lbl" style="margin-top:16px;">${L.s29lbl}</span>
+    <input class="big-input" type="text" id="husbOcc" placeholder="${L.s29p}" oninput="D.husbandOccupation=this.value">
+  `); 
+}
+
+function buildS30(L) { return card(L.sHousehold,'💰',L.s30q,'', L.income.map((inc)=>optBtn(inc, inc, 'income', true)).join('')); }
+
+function buildS31(L) { 
+  return card(L.sLife,'🌿',L.s31q,L.s31h,` 
+    <span class="mini-lbl">${L.vapeQ}</span> 
+    <div class="grid2"> ${optBtn(L.btnNo,'No','vape')} ${optBtn(L.btnYes,'Yes','vape')} ${optBtn(L.vapeEx,'Ex','vape')} </div> 
+    <div class="divider"></div> 
+    <span class="mini-lbl">${L.smokeQ}</span> 
+    <div class="grid2"> ${optBtn(L.btnNo,'No','smoker')} ${optBtn(L.btnYes,'Yes','smoker')} ${optBtn(L.smokeEx,'Ex','smoker')} </div> 
+    <div class="divider"></div> 
+    <span class="mini-lbl">${L.alcoholQ}</span> 
+    <div class="grid2"> ${optBtn(L.btnNo,'No','alcohol')} ${optBtn(L.btnYes,'Yes','alcohol')} ${optBtn(L.alcoholEx,'Ex','alcohol')} </div> 
+    <div class="divider"></div> 
+    <span class="mini-lbl">${L.drugsQ}</span> 
+    <div class="grid2"> ${optBtn(L.btnNo,'No','drugs')} ${optBtn(L.btnYes,'Yes','drugs')} ${optBtn(L.drugsEx,'Ex','drugs')} </div>
+  `); 
+}
+
+function buildS_HusbLife(L) {
+  return card(L.sLife,'🤵',L.sHusbLifeQ,L.s31h,` 
+    <span class="mini-lbl">${L.husbVapeQ || L.vapeQ}</span> 
+    <div class="grid2"> ${optBtn(L.btnNo,'No','husbVape')} ${optBtn(L.btnYes,'Yes','husbVape')} ${optBtn(L.vapeEx,'Ex','husbVape')} </div> 
+    <div class="divider"></div> 
+    <span class="mini-lbl">${L.husbSmokeQ || L.smokeQ}</span> 
+    <div class="grid2"> ${optBtn(L.btnNo,'No','husbSmoker')} ${optBtn(L.btnYes,'Yes','husbSmoker')} ${optBtn(L.smokeEx,'Ex','husbSmoker')} </div> 
+    <div class="divider"></div> 
+    <span class="mini-lbl">${L.husbAlcQ || L.alcoholQ}</span> 
+    <div class="grid2"> ${optBtn(L.btnNo,'No','husbAlcohol')} ${optBtn(L.btnYes,'Yes','husbAlcohol')} ${optBtn(L.alcoholEx,'Ex','husbAlcohol')} </div> 
+    <div class="divider"></div> 
+    <span class="mini-lbl">${L.husbDrugQ || L.drugsQ}</span> 
+    <div class="grid2"> ${optBtn(L.btnNo,'No','husbDrugs')} ${optBtn(L.btnYes,'Yes','husbDrugs')} ${optBtn(L.drugsEx,'Ex','husbDrugs')} </div>
+  `);
+}
+
+function buildS32(L) {
+  return `<div class="sum-hero"><div class="he">${L.sumHero}</div><h2>${L.sumTitle}</h2><p>${L.sumSub}</p></div>
+  
+  <div class="act-btns" style="margin-bottom:20px;">
+    <button class="act-btn" style="background:var(--teal-pale); color:var(--teal); border:2px solid var(--teal);" onclick="window.print()">${L.sumSaveBtn}</button>
+  </div>
+
+  <div style="background:white; border-radius:12px; padding:16px; margin-bottom:20px; box-shadow:0 4px 12px rgba(0,0,0,0.05); text-align:left;">
+    <span class="mini-lbl" style="margin-top:0; color:var(--purple);">${L.sumBoxLbl}</span>
+    <textarea id="finalOutputText" class="big-input" style="height:350px; font-size:13px; line-height:1.5; font-family:monospace; margin-bottom:10px; padding:12px; text-transform:none;" oninput="updateQR()"></textarea>
+    <button class="act-btn" style="background:var(--blue-pale); color:var(--blue); border:2px solid var(--blue);" onclick="copyText()">${L.sumCopyBtn}</button>
+  </div>
+
+  <div id="qrContainer"></div>
+
+  <button class="act-btn" onclick="location.reload()">${L.sumRestart}</button>`;
+}
+
+// BUG-FREE NAVIGATION
+function next() { 
+  if (cur >= TOTAL-1) return; 
+  collectInputs(); 
+  
+  const currentStep = document.getElementById('s'+cur);
+  if (currentStep) currentStep.classList.remove('active'); 
+  
+  cur++; 
+  
+  let fetalIndex = stepsArr.indexOf(buildS_Fetal);
+  if (cur === fetalIndex) {
+    let tempWks = D.gaWeeks;
+    if ((isNaN(tempWks) || tempWks < 20) && (D.scanYN === 'Yes' || D.scanYN === 'Ya') && D.scanDate) {
+         let sd = new Date(D.scanDate);
+         sd.setHours(0,0,0,0);
+         let td = new Date();
+         td.setHours(0,0,0,0);
+         tempWks = Math.floor((280 - Math.round((sd.getTime() - td.getTime()) / 86400000)) / 7);
+    }
+    if (isNaN(tempWks) || tempWks < 20) {
+      cur++; 
+    }
+  }
+
+  const nextStep = document.getElementById('s'+cur);
+  if (nextStep) nextStep.classList.add('active'); 
+  
+  updateUI(); 
+  if (cur === TOTAL-1) buildSummary(); 
+  window.scrollTo(0,0); 
+}
+
+function prev() { 
+  if (cur <= 0) return; 
+  collectInputs(); 
+  
+  const currentStep = document.getElementById('s'+cur);
+  if (currentStep) currentStep.classList.remove('active'); 
+  
+  cur--; 
+  
+  let fetalIndex = stepsArr.indexOf(buildS_Fetal);
+  if (cur === fetalIndex) {
+    let tempWks = D.gaWeeks;
+    if ((isNaN(tempWks) || tempWks < 20) && (D.scanYN === 'Yes' || D.scanYN === 'Ya') && D.scanDate) {
+         let sd = new Date(D.scanDate);
+         sd.setHours(0,0,0,0);
+         let td = new Date();
+         td.setHours(0,0,0,0);
+         tempWks = Math.floor((280 - Math.round((sd.getTime() - td.getTime()) / 86400000)) / 7);
+    }
+    if (isNaN(tempWks) || tempWks < 20) {
+      cur--; 
+    }
+  }
+
+  const prevStep = document.getElementById('s'+cur);
+  if (prevStep) prevStep.classList.add('active'); 
+  
+  updateUI(); 
+  window.scrollTo(0,0); 
+}
+
+function nextBtn() { collectInputs(); next(); }
+
+function updateUI() { 
+  const L = T[lang]; const pct = Math.round((cur/(TOTAL-1))*100); 
+  document.getElementById('pFill').style.width = pct+'%'; 
+  
+  if (L.pLabels[cur]) {
+    document.getElementById('pLabel').textContent = L.pLabels[cur]; 
+  } else {
+    document.getElementById('pLabel').textContent = "..."; 
+  }
+  
+  document.getElementById('btnNext').textContent = cur===0 ? L.btnStart : L.btnNext; 
+  document.getElementById('btnBack').textContent = L.btnBack; 
+  document.getElementById('btnBack').style.display = cur===0 ? 'none' : ''; 
+  document.getElementById('btnNext').style.display = cur===TOTAL-1 ? 'none' : ''; 
+}
+
+function collectInputs() {
+  [['name','name'],['currentClinic','currentClinic'],['bookingClinic','bookingClinic'],['bookingPOA','bookingPOA'],['bookingHb','bookingHb'],['currentWeight','currentWeight'],['sympLaborOther','sympLaborOther'],['fmTime','fmTime'],['fmCount','fmCount'],['mgtt1Wks','mgtt1Wks'],['mgtt1Res','mgtt1Res'],['mgtt2Wks','mgtt2Wks'],['mgtt2Res','mgtt2Res'],['foodAllergy','foodAllergy'],['medAllergy','medAllergy'],['pmiOthers','pmiOthers'],['pmiNewOthers','pmiNewOthers'],['psychOthers','psychOthers'],['medications','medications'],['surgDetails','surgDetails'],['fhxCancerType','fhxCancerType'],['patientOcc','patientOccupation'],['husbOcc','husbandOccupation'],['misc','misc'],['ect','ect'],['age','age'],['gbsDur','gbsDur']].forEach(([id,key])=>{ const el = document.getElementById(id); if (el) D[key] = el.value; });
+  const lmpEl = document.getElementById('lmp'); if (lmpEl?.value) D.lmp = lmpEl.value;
+  const scanEl = document.getElementById('scanDate'); if (scanEl?.value) D.scanDate = scanEl.value;
+  const hEl = document.getElementById('height'), wEl = document.getElementById('bookingWeight');
+  if (hEl?.value) D.height = hEl.value; if (wEl?.value) D.bookingWeight = wEl.value;
+  
+  if(D.empStatus === 'Housewife' || D.empStatus === 'Surirumah') D.patientOccupation = 'Housewife';
+  if(D.empStatus === 'Student' || D.empStatus === 'Pelajar') D.patientOccupation = 'Student';
+}
+
+function restoreInputs() {
+  const map = {name:D.name,currentClinic:D.currentClinic,bookingClinic:D.bookingClinic,bookingPOA:D.bookingPOA,bookingHb:D.bookingHb,currentWeight:D.currentWeight,sympLaborOther:D.sympLaborOther,fmTime:D.fmTime,fmCount:D.fmCount,mgtt1Wks:D.mgtt1Wks,mgtt2Wks:D.mgtt2Wks,foodAllergy:D.foodAllergy,medAllergy:D.medAllergy,pmiOthers:D.pmiOthers,pmiNewOthers:D.pmiNewOthers,psychOthers:D.psychOthers,medications:D.medications,surgDetails:D.surgDetails,fhxCancerType:D.fhxCancerType,patientOcc:D.patientOccupation,husbOcc:D.husbandOccupation,height:D.height,bookingWeight:D.bookingWeight,lmp:D.lmp,scanDate:D.scanDate,misc:D.misc,ect:D.ect,age:D.age,gbsDur:D.gbsDur};
+  Object.entries(map).forEach(([id,val])=>{ const el = document.getElementById(id); if (el && val && id !== 'patientOcc') el.value = val; });
+  if (D.height && D.bookingWeight) calcBMI(); if (D.lmp) calcEDD();
+  if (D.scanDate) calcPOG();
+}
+
+function calcBMI() { const h = parseFloat(document.getElementById('height')?.value); const w = parseFloat(document.getElementById('bookingWeight')?.value); if (!h||!w||h<50) return; const bmi = (w/((h/100)**2)).toFixed(1); D.bmi = bmi; const L = T[lang]; const el = document.getElementById('bmiVal'), ce = document.getElementById('bmiCat'), bx = document.getElementById('bmiBox'); if (!el) return; el.textContent = bmi+' kg/m²'; const idx = bmi<18.5?0:bmi<25?1:bmi<30?2:3; ce.textContent = L.bmiCats[idx]; bx.classList.add('show'); }
+function calcEDD() { 
+  const lmp = document.getElementById('lmp')?.value; if (!lmp) return; D.lmp = lmp; 
+  const edd = new Date(new Date(lmp).getTime()+280*86400000); D.edd = fmt(edd); 
+  const days = Math.floor((new Date()-new Date(lmp))/86400000); 
+  D.gaWeeks = Math.floor(days/7); const d = days%7; 
+  D.ga = days>=0 ? `${D.gaWeeks}w ${d}d` : `EDD in ${Math.floor(Math.abs(days)/7)}w`; 
+  const L = T[lang]; const ev = document.getElementById('eddVal'), gv = document.getElementById('gaVal'), bx = document.getElementById('eddBox'); if (!ev) return; 
+  ev.textContent = D.edd; gv.textContent = L.gaPrefix + D.ga; bx.classList.add('show'); 
+}
+function fmt(d) { 
+  if (!(d instanceof Date) || isNaN(d)) return '-';
+  return d.toLocaleDateString('en-MY',{day:'2-digit',month:'short',year:'numeric'}); 
+}
+
+function calcPOG() {
+  const sdVal = document.getElementById('scanDate')?.value;
+  if (!sdVal) return;
+  D.scanDate = sdVal;
+  
+  let sd = new Date(sdVal);
+  sd.setHours(0,0,0,0);
+  let td = new Date();
+  td.setHours(0,0,0,0);
+  
+  let diff = Math.round((sd.getTime() - td.getTime()) / 86400000);
+  let pD = 280 - diff;
+  let pW = Math.floor(pD / 7);
+  let pDays = pD % 7;
+  
+  const bx = document.getElementById('pogBox');
+  const pv = document.getElementById('pogVal');
+  if (pD >= 0 && pv && bx) {
+    pv.textContent = pW + "w " + pDays + "d";
+    bx.classList.add('show');
+  } else if (pv && bx) {
+    pv.textContent = "—";
+    bx.classList.add('show');
+  }
+}
+
+function generateSplitSummaries() {
+  let finalWks = D.gaWeeks;
+  let reddPOG = "";
+  
+  if (D.scanYN === 'Yes' || D.scanYN === 'Ya') {
+    if (D.scanDate) {
+      let sd = new Date(D.scanDate);
+      sd.setHours(0,0,0,0);
+      let td = new Date();
+      td.setHours(0,0,0,0);
+      let diff = Math.round((sd.getTime() - td.getTime()) / 86400000);
+      let pD = 280 - diff;
+      let pW = Math.floor(pD / 7);
+      let pDays = pD % 7;
+      if(pD >= 0) reddPOG = "at " + pW + "w " + pDays + "d POG\n";
+      if(isNaN(finalWks)) finalWks = pW;
+    }
+  }
+
+  let displayRace = txVal(D.race) || '-';
+  if(D.race === 'Non-Malaysian' || D.race === 'Bukan Warganegara' || D.race === 'Non-Msian') { displayRace = tc(D.raceCountry) || 'Non-Msian'; }
+  
+  // BAHAGIAN 1: BIODATA, KLINIK & UKURAN
+  var s1 = tc(D.name||'-') + "\n";
+  s1 += (D.age||'-') + " " + displayRace + " " + (txVal(D.religion)||'-') + "\n";
+  
+  let P = D.obsList.length;
+  let M = parseInt(D.misc) || 0;
+  let G = P + M + 1;
+  s1 += `G${G} P${P}+${M}\n`;
+  s1 += "at " + (D.ga||'-') + " POA\n";
+  s1 += "LMP: " + (D.lmp?fmt(new Date(D.lmp)):'-') + ", EDD: " + (D.edd||'-') + "\n";
+  
+  if (D.scanYN === 'Yes' || D.scanYN === 'Ya') {
+    s1 += "REDD Scan: " + (D.scanDate ? fmt(new Date(D.scanDate)) : '?') + "\n";
+    if (reddPOG) s1 += reddPOG;
+  }
+  
+  s1 += "Menses: " + (txVal(D.menses)||'-') + "\n";
+  s1 += "Contraception: " + (D.contraYN==='Yes' || D.contraYN==='Ya'?(txArr(D.contra).join(', ')||'Yes'):(txVal(D.contraYN)||'-')) + "\n";
+  
+  s1 += "Current KK: " + tc(D.currentClinic||'-') + "\n";
+  s1 += "Booking KK: " + tc(D.bookingClinic||'-') + " at " + (D.bookingPOA||'-') + " wks, Hb: " + (D.bookingHb||'-') + "\n";
+  
+  let weightGainStr = '-';
+  if(D.bookingWeight && D.currentWeight) {
+    let diff = parseFloat(D.currentWeight) - parseFloat(D.bookingWeight);
+    if(!isNaN(diff)) weightGainStr = (diff > 0 ? '+' : '') + diff.toFixed(1) + 'kg';
+  }
+  s1 += "Ht: " + (D.height?D.height+'cm':'-') + ", Bk Wt: " + (D.bookingWeight?D.bookingWeight+'kg':'-') + " (BMI: " + (D.bmi||'-') + "), Curr Wt: " + (D.currentWeight?D.currentWeight+'kg':'-') + " (Gain: " + weightGainStr + ")";
+
+  // BAHAGIAN 2: UJIAN DARAH, GBS & MGTT
+  var s2 = "Bld: " + (txVal(D.bloodGroup)||'-') + " " + (txVal(D.rhesus)||'-') + "\n";
+  s2 += "HIV: " + (txVal(D.hiv)||'-') + ", HepB: " + (txVal(D.hepB)||'-') + ", VDRL: " + (txVal(D.vdrl)||'-') + "\n";
+  
+  var gbsStr = '-';
+  if(D.gbsYN === 'Yes' || D.gbsYN === 'Ya') { 
+    let whenStr = (D.gbsWhen && D.gbsWhen.length > 0) ? txArr(D.gbsWhen).join(' & ') : '?';
+    gbsStr = 'Yes(' + whenStr + ', ' + (txVal(D.gbsWhere)||'?') + ')'; 
+    
+    let hasPrev = false;
+    if (D.gbsWhen && Array.isArray(D.gbsWhen)) {
+      for(let i=0; i<D.gbsWhen.length; i++) {
+         if (D.gbsWhen[i].indexOf('Previous') !== -1 || D.gbsWhen[i].indexOf('lepas') !== -1) hasPrev = true;
+      }
+    }
+    
+    if (hasPrev) {
+       gbsStr += ` [Ward:${txVal(D.gbsWard)||'-'}`;
+       if (D.gbsWard === 'Yes' || D.gbsWard === 'Ya') {
+           let outc = D.gbsOutBtn === 'Healthy' ? 'Healthy' : (D.gbsOutText ? tc(D.gbsOutText) : '?');
+           gbsStr += `, Sepsis:${txVal(D.gbsSepsis)||'-'}, Dur:${tc(D.gbsDur)||'-'}, Outc:${outc}`;
+       }
+       gbsStr += `]`;
+    }
+  } else if(D.gbsYN) { gbsStr = txVal(D.gbsYN); }
+  
+  var mgttStr = txVal(D.mgttYN) || '-';
+  if (D.mgttYN === 'Yes' || D.mgttYN === 'Ya') {
+    let m1 = D.mgtt1Wks ? `${D.mgtt1Wks}w-${txVal(D.mgtt1Res)||'?'}` : '';
+    let m2 = D.mgtt2Wks ? `${D.mgtt2Wks}w-${txVal(D.mgtt2Res)||'?'}` : '';
+    let mArr = [];
+    if(m1) mArr.push("1st: " + m1);
+    if(m2) mArr.push("2nd: " + m2);
+    let txStr = (D.mgttTx && D.mgttTx.length) ? ` [Tx: ${txArr(D.mgttTx).join('+')}]` : '';
+    if(mArr.length > 0) mgttStr = "Yes (" + mArr.join(", ") + ")" + txStr;
+  }
+  
+  s2 += "GBS: " + gbsStr + "\nMGTT: " + mgttStr;
+
+  // BAHAGIAN 3: ALAHAN, PENYAKIT, UBAT, PEMBEDAHAN
+  let chronArr = [];
+  D.pmiChron.forEach(c => {
+     let det = D.chronDetails[c] || {};
+     let str = txVal(c);
+     if(det.since || det.meds) {
+       str += ` (${det.since||'?'}, ${tc(det.meds)||'No meds'})`;
+     }
+     chronArr.push(str);
+  });
+  var chronIll = chronArr.length ? chronArr.join(', ') : 'Nil';
+  if (D.pmiOthers) { chronIll = (chronIll === 'Nil') ? tc(D.pmiOthers) : chronIll + ', ' + tc(D.pmiOthers); }
+  
+  let surgStr = 'Nil';
+  if (D.surgYN === 'Yes' || D.surgYN === 'Ya') {
+      surgStr = D.surgDetails ? tc(D.surgDetails) : 'Yes';
+  }
+
+  var psychJoin = (D.psychDxList&&D.psychDxList.length?txArr(D.psychDxList).join(', '):'');
+  var psychStr = (D.psychYN==='Yes' || D.psychYN==='Ya' ? (psychJoin||'Yes') + (D.psychOthers?', '+tc(D.psychOthers):'') : 'Nil');
+
+  var s3 = "Past Med Hx: " + chronIll + "\nSurg: " + surgStr + "\nPsych: " + psychStr + "\n";
+  s3 += "Allergy: Food(" + (D.foodAllergyYN==='Yes'||D.foodAllergyYN==='Ya'?tc(D.foodAllergy):'Nil') + "), Med(" + (D.medAllergyYN==='Yes'||D.medAllergyYN==='Ya'?tc(D.medAllergy):'Nil') + ")\n";
+
+  var newIll = (D.pmiNew&&D.pmiNew.length?txArr(D.pmiNew).join(', '):'Nil');
+  if (D.pmiNewOthers) { newIll = (newIll === 'Nil') ? tc(D.pmiNewOthers) : newIll + ', ' + tc(D.pmiNewOthers); }
+  s3 += "Cur Med Prob: " + newIll + "\n";
+  
+  let peProph = (D.aspirinCa === 'Yes' || D.aspirinCa === 'Ya') ? "On PE prophylaxis" : "Not on PE prophylaxis";
+  s3 += "Meds: " + (D.medsYN==='Yes'||D.medsYN==='Ya'?tc(D.medications):'Nil') + ", " + peProph + "\n";
+  
+  var fhxJoin = (D.fhx&&D.fhx.length?txArr(D.fhx).join(', '):'');
+  s3 += "FamHx: " + (fhxJoin ? fhxJoin + (D.fhxCancerType ? ' - ' + tc(D.fhxCancerType) : '') : 'Nil');
+
+  // BAHAGIAN 4: REKOD BERSALIN
+  var s4 = "Past Obstetric History:\n";
+  
+  if (D.obsList.length > 0) {
+    D.obsList.forEach((r, i) => {
+      let cLow = r.comp ? r.comp.toLowerCase().trim() : '';
+      let compStr = (!cLow || cLow === 'none' || cLow === 'no' || cLow === 'tiada' || cLow === 'nil' || cLow === 'tidak' || cLow === 'takde') ? 'No complication' : 'Comp: ' + tc(r.comp);
+      let outc = r.outcBtn === 'Healthy' ? 'Healthy' : (r.outcText ? tc(r.outcText) : '?');
+      let termInfo = r.term ? txVal(r.term) + 'w' : '?';
+      let nicuInfo = (r.nicuYN === 'Yes' || r.nicuYN === 'Ya') ? `Ward(${tc(r.nicuDur)||'?'})` : ((r.nicuYN === 'No' || r.nicuYN === 'Tidak') ? 'Not warded' : '?');
+      s4 += `${r.year||'?'}, ${tc(r.hosp)||'?'}, ${r.mode||'?'}, ${txVal(r.sex)||'?'}, ${r.wgt||'?'}kg, ${termInfo}, ${nicuInfo}, Outc: ${outc}, ${compStr}\n`;
+    });
+  } else {
+    s4 += "Nil\n";
+  }
+  
+  s4 += "Miscarriage: " + (D.misc||'0');
+  if (parseInt(D.ect) > 0) {
+     s4 += ", Ectopic: " + D.ect;
+  }
+
+  // BAHAGIAN 5: SOSIAL, LIFESTYLE, SYMPTOM & FM
+  var s5 = "Wife Occ: " + tc(D.patientOccupation||'-') + ", Husb Occ: " + tc(D.husbandOccupation||'-') + "\n";
+  s5 += "Income: " + (txVal(D.income)||'-') + "\n";
+  s5 += "Wife: Vape:" + (txVal(D.vape)||'-') + ", Smoking:" + (txVal(D.smoker)||'-') + ", Alc:" + (txVal(D.alcohol)||'-') + ", Drug:" + (txVal(D.drugs)||'-') + "\n";
+  s5 += "Husb: Vape:" + (txVal(D.husbVape)||'-') + ", Smoking:" + (txVal(D.husbSmoker)||'-') + ", Alc:" + (txVal(D.husbAlcohol)||'-') + ", Drug:" + (txVal(D.husbDrugs)||'-') + "\n\n";
+
+  let symps = [];
+  if(D.sympAbd) symps.push("Stomach pain");
+  if(D.sympContraction) symps.push("Contractions");
+  if(D.sympBld) symps.push("Bleeding");
+  if(D.sympLiquor) symps.push("Leaking water");
+  if(D.sympHeadache) symps.push("Headache");
+  if(D.sympVision) symps.push("Blurred vision");
+  if(D.sympDizzy) symps.push("Dizziness");
+  if(D.sympPalp) symps.push("Palpitations");
+  if(D.sympFatigue) symps.push("Fatigue");
+  if(D.sympUri) symps.push("Urinary Symp");
+  if(D.sympNau) symps.push("Nausea/Vomit");
+  if(D.sympLaborOther) symps.push(tc(D.sympLaborOther));
+  if(symps.length===0) symps.push("Nil");
+  
+  s5 += "Symp: " + symps.join(', ') + "\n";
+  if(finalWks >= 20 && !isNaN(finalWks)) {
+     let fmStatus = txVal(D.sympFetal) || '-';
+     let time = D.fmTime ? tc(D.fmTime) : '?';
+     let count = D.fmCount ? D.fmCount : '?';
+     s5 += `FM: ${fmStatus} (10 kicks by ${time}, Today: ${count}x)\n`;
+  }
+  
+  let fullText = "[SCAN 1]\n" + s1 + "\n\n[SCAN 2]\n" + s2 + "\n\n[SCAN 3]\n" + s3 + "\n\n[SCAN 4]\n" + s4 + "\n\n[SCAN 5]\n" + s5;
+  return [s1, s2, s3, s4, s5, fullText];
+}
+
+function updateQR() {
+  let text = document.getElementById('finalOutputText').value;
+  text = text.replace(/\r\n/g, '\n');
+  
+  let parts = [];
+  if (text.indexOf("[SCAN 1]") !== -1) {
+     let rawParts = text.split(/\[SCAN \d+\]\n?/);
+     for(let i=1; i<rawParts.length; i++) {
+        if(rawParts[i].trim()) parts.push(rawParts[i].trim());
+     }
+  } else {
+     let lines = text.split('\n');
+     let chunk = Math.ceil(lines.length / 5);
+     parts.push(lines.slice(0, chunk).join('\n').trim());
+     parts.push(lines.slice(chunk, chunk*2).join('\n').trim());
+     parts.push(lines.slice(chunk*2, chunk*3).join('\n').trim());
+     parts.push(lines.slice(chunk*3, chunk*4).join('\n').trim());
+     parts.push(lines.slice(chunk*4).join('\n').trim());
+  }
+
+  let container = document.getElementById('qrContainer');
+  container.innerHTML = '';
+  
+  parts.forEach((chunk, idx) => {
+      let box = document.createElement('div');
+      box.className = 'qr-box';
+      box.innerHTML = '<div class="qr-title">SCAN ' + (idx+1) + ' / ' + parts.length + '</div>' +
+                      '<div style="background:white; display:inline-block; padding:10px; border-radius:10px;">' +
+                      '<canvas id="qrCanvas' + idx + '"></canvas></div>';
+      container.appendChild(box);
+      
+      let qrText = chunk.replace(/\n/g, "\r\n");
+      
+      try {
+         new QRious({ element: document.getElementById('qrCanvas'+idx), value: qrText, size: 300, level: 'L' });
+      } catch(e) { console.log(e); }
+  });
+}
+
+function copyText() {
+  var copyText = document.getElementById('finalOutputText');
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); 
+  document.execCommand("copy");
+  alert("Draf nota telah disalin! Boleh terus Paste.");
+}
+
+function buildSummary() {
+  exportLang = 'en'; 
+  var textArray = generateSplitSummaries();
+  var outArea = document.getElementById('finalOutputText');
+  if(outArea) { outArea.value = textArray[5]; }
+  updateQR();
+}
+</script>
+</body>
+</html>
