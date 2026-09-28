@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <!-- QR Code Library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
-<!-- Confetti Library -->
+<!-- Confetti Animation Library -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <style>
 :root {
@@ -25,6 +25,20 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{font-family:var(--font); background: linear-gradient(145deg, #fff0f4 0%, #eff6ff 100%); background-attachment: fixed; color:var(--gray800); min-height:100vh; scroll-behavior: smooth;}
+
+/* HALFWAY BANNER (TOAST) */
+.toast {
+  position: fixed; top: calc(20px + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%) translateY(-150px);
+  background: linear-gradient(135deg, var(--rose-d) 0%, var(--purple) 100%);
+  color: white; padding: 14px 28px; border-radius: 30px; font-weight: 800; font-family: var(--font); font-size: 15px;
+  box-shadow: 0 10px 25px rgba(123,66,246,0.3); z-index: 9999999;
+  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex; align-items: center; gap: 10px; white-space: nowrap;
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+
+/* HIDE NETLIFY BADGE FOREVER */
+a[href*="netlify.com"], #netlify-badge { display: none !important; opacity: 0 !important; pointer-events: none !important; }
 
 /* LANGUAGE PICKER */
 .lang-screen{ min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:32px 24px; text-align:center; }
@@ -75,7 +89,7 @@ html,body{font-family:var(--font); background: linear-gradient(145deg, #fff0f4 0
 .grid2{display:grid;grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));gap:12px;margin-bottom:0}
 .grid2 .big-opt{margin-bottom:0}
 
-/* MOBILE OPTIMIZED INPUTS */
+/* MOBILE OPTIMIZED INPUTS - Auto Capitalize display */
 .big-input{ width:100%;padding:16px 18px;border:2px solid var(--gray200);border-radius:var(--rsm); font-family:var(--font);font-size:16px;font-weight:700;color:var(--gray800); background:var(--gray50);transition:all 0.2s;appearance:none;-webkit-appearance:none; touch-action: manipulation;}
 input[type="text"].big-input, textarea.big-input { text-transform: capitalize; }
 .big-input:focus{outline:none;border-color:var(--purple);background:white;box-shadow:0 0 0 4px var(--purple-pale)}
@@ -116,7 +130,8 @@ input[type="text"].mf-text { text-transform: capitalize; }
 .add-birth-btn{width:100%;padding:16px;border:2px dashed var(--purple);border-radius:var(--rsm);background:var(--purple-pale);font-family:var(--font);font-size:15px;font-weight:900;color:var(--purple);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all 0.2s; touch-action: manipulation;}
 .add-birth-btn:hover{background:#e2d4f8;border-style:solid}
 
-.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid var(--gray200);padding:14px 16px calc(14px + env(safe-area-inset-bottom));display:flex;gap:12px;z-index:100;box-shadow:0 -8px 30px rgba(0,0,0,0.06)}
+/* Z-INDEX TINGGI SUPAYA BUTTON SENTIASA ATAS NETLIFY BADGE */
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid var(--gray200);padding:14px 16px calc(14px + env(safe-area-inset-bottom));display:flex;gap:12px;z-index:999999;box-shadow:0 -8px 30px rgba(0,0,0,0.06)}
 .btn-back{padding:16px 22px;border-radius:var(--rsm);border:2px solid var(--gray200);background:white;font-family:var(--font);font-size:16px;font-weight:900;color:var(--gray600);cursor:pointer;flex-shrink:0; touch-action: manipulation;}
 .btn-next{flex:1;padding:16px;border-radius:var(--rsm);border:none;background:linear-gradient(135deg, var(--rose-d) 0%, var(--purple) 100%);font-family:var(--font);font-size:17px;font-weight:900;color:white;cursor:pointer;box-shadow:0 8px 20px rgba(123,66,246,0.3); touch-action: manipulation;}
 .btn-next:active{transform:scale(0.97)}
@@ -124,24 +139,12 @@ input[type="text"].mf-text { text-transform: capitalize; }
 /* SUMMARY & SPLIT QR SCREEN */
 .sum-hero{text-align:center;padding:10px 0 20px}
 .sum-hero .he{font-size:64px; animation: float 3s ease-in-out infinite;}
-.sum-hero h2 {font-weight:900; margin-top:12px; padding:0 10px;}
-.sum-hero p{font-size:15px;color:var(--gray600);font-weight:700;margin-top:6px}
+.sum-hero h2{font-size:26px;font-weight:900;margin-top:12px; color:var(--purple);}
+.sum-hero p{font-size:15px;color:var(--gray600);font-weight:700;margin-top:6px; line-height:1.5;}
 .qr-box { background:white; border-radius:var(--r); border:3px dashed var(--blue); padding:24px 16px; margin-bottom:20px; text-align:center; box-shadow:0 8px 24px rgba(66, 153, 245,0.1); }
 .qr-title { font-size:18px; font-weight:900; color:var(--blue); margin-bottom:4px; }
 .act-btns{display:flex; flex-direction:column; gap:12px; margin-bottom:20px}
 .act-btn{width:100%;padding:16px;border-radius:var(--rsm);border:none;background:var(--gray200);font-family:var(--font);font-size:16px;font-weight:900;color:var(--gray800);cursor:pointer;text-align:center;transition:all 0.2s; touch-action: manipulation;}
-
-/* HALFWAY TOAST BANNER */
-.toast-banner {
-  position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
-  background: linear-gradient(135deg, var(--purple), var(--rose-d));
-  color: white; padding: 16px 24px; border-radius: 30px;
-  font-weight: 900; font-size: 15px; text-align: center;
-  box-shadow: 0 10px 25px rgba(123,66,246,0.4);
-  transition: top 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  z-index: 9999999; width: 90%; max-width: 400px;
-}
-.toast-banner.show { top: 30px; }
 
 @media(max-width:380px){
   .grid2{grid-template-columns:1fr;} 
@@ -161,7 +164,12 @@ input[type="text"].mf-text { text-transform: capitalize; }
 </head>
 <body>
 
-<div id="toastBanner" class="toast-banner"></div>
+<!-- AUDIO PELINDUNG UNTUK IOS/ANDROID (SUCCESS/TADA) -->
+<audio id="successSound" preload="auto">
+  <source src="https://www.myinstants.com/media/sounds/tada.mp3" type="audio/mpeg">
+</audio>
+
+<div class="toast" id="halfwayToast">🌟 You're halfway there!</div>
 
 <div class="lang-screen" id="langScreen">
   <div class="lang-logo">🤰👶</div>
@@ -209,8 +217,6 @@ const T = {
   en: {
     hTitle:"👋 Hello Mommy!", hSub:"Let's check on you and baby 💕",
     langToggle:"🇲🇾 BM", btnNext:"Next →", btnStart:"Let's start →", btnBack:"← Back", btnYes:"Yes", btnNo:"No",
-    halfwayMsg:"🎉 You're halfway there! Keep going! 💪",
-    cheerTitle:"Well Done, Mommy! 🎉", cheerSub:"You've successfully completed the form. Have a wonderful day ahead! 💕",
     pLabels:["Welcome","Name","Age","Race","Religion","Clinic","Measurements","Birth History","Dates","Scan Date","Periods","Birth Control","Health History","Surgery","Mental Health","Food Allergies","Med Allergies","Current Illness","Blood","Rhesus","HIV","Hepatitis","Syphilis","GBS","MGTT","Medicine","Vitamins","Family Health","Occupations","Income","Wife Lifestyle","Husband Lifestyle","Symptoms","Fetal Move","Summary"],
     sAbout:"👤 About You", sClinic:"🏥 Clinic Details", sMeasure:"📏 Measurements",
     sPreg:"📅 Your Pregnancy", sSymp:"🩺 Current Symptoms", sBlood:"🩸 Blood & Tests",
@@ -316,16 +322,15 @@ const T = {
     sHusbLifeQ:"Husband's Lifestyle",
     husbVapeQ:"Does he vape?", husbSmokeQ:"Does he smoke?", husbAlcQ:"Does he drink alcohol?", husbDrugQ:"Does he use recreational drugs?",
     
-    sumTitle:"All Done!", sumSub:"Please Screenshot this page or tap 'Save' below to keep a copy of your record.",
-    sumRestart:"🔄 Start Over (Clear Data)", sumHero:"🎉",
-    sumBoxLbl:"📝 EDITABLE TEXT (Edit before scanning if needed)\nNote: Keep the [SCAN] tags intact.", sumCopyBtn:"📋 Copy All Text", sumSaveBtn:"💾 Save / Print (PDF)"
+    sumTitle:"You're all done! Well done! 🎉", sumSub:"Have a lovely day! 💕 Please Screenshot this page or tap 'Save' below to keep a copy of your record.",
+    sumRestart:"🔄 Start Over (Clear Data)", sumHero:"🎊",
+    sumBoxLbl:"📝 EDITABLE TEXT (Edit before scanning if needed)\nNote: Keep the [SCAN] tags intact.", sumCopyBtn:"📋 Copy All Text", sumSaveBtn:"💾 Save / Print (PDF)",
+    halfwayMsg: "🌟 You're halfway there! Keep going!"
   },
 
   ms: {
     hTitle:"👋 Hai Mommy!", hSub:"Mari periksa kesihatan ibu dan bayi 💕",
     langToggle:"🇬🇧 EN", btnNext:"Seterusnya →", btnStart:"Mari mulakan →", btnBack:"← Kembali", btnYes:"Ya", btnNo:"Tidak",
-    halfwayMsg:"🎉 Sikit lagi! Anda dah separuh jalan! 💪",
-    cheerTitle:"Tahniah Mommy! 🎉", cheerSub:"Anda telah berjaya melengkapkan borang ini. Semoga dipermudahkan segalanya! 💕",
     pLabels:["Mula","Nama","Umur","Bangsa","Agama","Klinik","Ukuran","Sejarah Bersalin","Tarikh Penentuan","Tarikh Scan","Haid","Perancang","Penyakit Kronik","Pembedahan","Kesihatan Mental","Alahan Makanan","Alahan Ubat","Penyakit Hamil","Darah","Rhesus","Ujian HIV","Hepatitis","Sifilis","GBS","MGTT","Ubat","Vitamin","Keluarga","Pekerjaan","Pendapatan","Gaya Hidup Isteri", "Gaya Hidup Suami", "Simptom", "Gerak Bayi", "Siap!"],
     sAbout:"👤 Tentang Anda", sClinic:"🏥 Maklumat Klinik", sMeasure:"📏 Ukuran",
     sPreg:"📅 Kehamilan Anda", sSymp:"🩺 Simptom Semasa", sBlood:"🩸 Ujian Darah", sTests:"🧫 Ujian",
@@ -430,9 +435,10 @@ const T = {
     sHusbLifeQ:"Gaya Hidup Suami",
     husbVapeQ:"Adakah suami menghisap vape?", husbSmokeQ:"Adakah suami merokok?", husbAlcQ:"Adakah suami minum alkohol?", husbDrugQ:"Adakah suami ambil dadah?",
     
-    sumTitle:"Siap Selesai!", sumSub:"Sila \"Screenshot\" atau tekan butang Save di bawah untuk menyimpan rekod anda.",
+    sumTitle:"Syabas! Anda telah melengkapkan borang ini! 🎉", sumSub:"Semoga hari anda indah! 💕 Sila \"Screenshot\" halaman ini atau tekan butang Save di bawah untuk menyimpan rekod anda.",
     sumRestart:"🔄 Mula Semula (Padam Data)", sumHero:"🎊",
-    sumBoxLbl:"📝 DRAF NOTA (Boleh diedit. Jangan buang tag [SCAN])", sumCopyBtn:"📋 Salin Semua Teks", sumSaveBtn:"💾 Save / Print (PDF)"
+    sumBoxLbl:"📝 DRAF NOTA (Boleh diedit. Jangan buang tag [SCAN])", sumCopyBtn:"📋 Salin Semua Teks", sumSaveBtn:"💾 Save / Print (PDF)",
+    halfwayMsg: "🌟 Anda dah separuh jalan! Teruskan!"
   }
 };
 
@@ -440,6 +446,7 @@ let lang = 'en';
 let cur = 0;
 let TOTAL = 0;
 let stepsArr = []; 
+let halfwayShown = false; 
 
 const D = {
   name:'', age:'', race:'', raceCountry:'', religion:'', currentClinic:'', bookingClinic:'', bookingPOA:'', bookingHb:'',
@@ -466,13 +473,11 @@ const D = {
   husbVape:'', husbSmoker:'', husbAlcohol:'', husbDrugs:''
 };
 
-// AUTO CAPITALIZE HELPER
 function tc(str) {
   if(!str || typeof str !== 'string') return str;
   return str.replace(/(^\w)|(\s\w)/g, function(m){ return m.toUpperCase(); });
 }
 
-// SMART OUTCOME TRANSLATOR
 function txOutcome(val) {
    if(!val) return '?';
    let l = val.toLowerCase().trim();
@@ -533,25 +538,14 @@ function pick(key, val, btn) {
 function toggleCheck(el, key, val) { 
   if (!el) return;
   var isChecked = el.classList.contains('checked');
-  if (isChecked) {
-    el.classList.remove('checked');
-  } else {
-    el.classList.add('checked');
-  }
-  
-  if (!Array.isArray(D[key])) {
-    D[key] = [];
-  }
+  if (isChecked) { el.classList.remove('checked'); } else { el.classList.add('checked'); }
+  if (!Array.isArray(D[key])) { D[key] = []; }
   
   if (!isChecked) { 
-    if (D[key].indexOf(val) === -1) {
-      D[key].push(val);
-    }
+    if (D[key].indexOf(val) === -1) { D[key].push(val); }
   } else { 
     var idx = D[key].indexOf(val);
-    if (idx !== -1) {
-      D[key].splice(idx, 1);
-    }
+    if (idx !== -1) { D[key].splice(idx, 1); }
   }
 }
 
@@ -559,9 +553,7 @@ function clearChecks(key) {
   var els = document.querySelectorAll('.ci');
   for(var i=0; i<els.length; i++) {
     var attr = els[i].getAttribute('onclick');
-    if (attr && attr.indexOf("'" + key + "'") !== -1) { 
-      els[i].classList.remove('checked'); 
-    } 
+    if (attr && attr.indexOf("'" + key + "'") !== -1) { els[i].classList.remove('checked'); } 
   }
   D[key] = []; 
 }
@@ -581,12 +573,7 @@ function pickRace(val, btn) {
 function toggleGbsWhen(val, el) {
   if (!el) return;
   var isChecked = el.classList.contains('checked');
-  if (isChecked) {
-    el.classList.remove('checked');
-  } else {
-    el.classList.add('checked');
-  }
-  
+  if (isChecked) { el.classList.remove('checked'); } else { el.classList.add('checked'); }
   if (!Array.isArray(D.gbsWhen)) D.gbsWhen = [];
   
   if (!isChecked) { 
@@ -602,21 +589,13 @@ function toggleGbsWhen(val, el) {
      var w = D.gbsWhen[i];
      if(w && (w.indexOf('Previous') !== -1 || w.indexOf('lepas') !== -1)) hasPrev = true;
   }
-  if(hasPrev) {
-     if(rev) rev.classList.add('show');
-  } else {
-     if(rev) rev.classList.remove('show');
-  }
+  if(hasPrev) { if(rev) rev.classList.add('show'); } else { if(rev) rev.classList.remove('show'); }
 }
 
 function pickGbsWard(val, btn) {
   pick('gbsWard', val, btn);
   let rev = document.getElementById('gbsWardRev');
-  if(val === 'Yes' || val === 'Ya') {
-     if(rev) rev.classList.add('show');
-  } else {
-     if(rev) rev.classList.remove('show');
-  }
+  if(val === 'Yes' || val === 'Ya') { if(rev) rev.classList.add('show'); } else { if(rev) rev.classList.remove('show'); }
 }
 
 function pickGbsOut(val, btn) {
@@ -633,6 +612,15 @@ function pickGbsOut(val, btn) {
 
 function chooseLang(l) {
   try {
+    // AUDIO UNLOCKER: Mainkan audio kosong pada klik pertama supaya browser benarkan bunyi akhir kelak
+    var sSound = document.getElementById('successSound');
+    if(sSound) {
+       sSound.play().then(function(){
+          sSound.pause();
+          sSound.currentTime = 0;
+       }).catch(function(e){ console.log("Audio unlock failed:", e); });
+    }
+
     lang = l; 
     document.getElementById('langScreen').style.display = 'none';
     document.getElementById('appWrap').classList.add('show');
@@ -658,28 +646,23 @@ function buildAllSteps() {
   const wrap = document.getElementById('stepsWrap');
   wrap.innerHTML = '';
   
-  // NEW CORRECTED SEQUENCE (Symp & Fetal moved to end)
   stepsArr = [
     buildS0, buildS1, buildS3, buildS4, buildS5, buildS6, buildS7, buildS25, buildS8, buildS9, buildS26, buildS27, buildS18, buildS22, buildS19, buildS16, buildS17, buildS18b, buildS10, buildS11, buildS12, buildS13, buildS14, buildS15, buildS_MGTT, buildS20, buildS21, buildS23, buildS28, buildS30, buildS31, buildS_HusbLife, buildS_Symp, buildS_Fetal, buildS32
   ];
   
   TOTAL = stepsArr.length;
-
   stepsArr.forEach((fn, i) => {
     try {
       const div = document.createElement('div');
       div.className = 'step'; div.id = 's' + i;
       div.innerHTML = fn(L);
       wrap.appendChild(div);
-    } catch(err) {
-      console.error("Bypass Error Step " + i + ": ", err);
-    }
+    } catch(err) { console.error("Bypass Error Step " + i + ": ", err); }
   });
   
   document.getElementById('hTitle').textContent = L.hTitle;
   document.getElementById('hSub').textContent = L.hSub;
   document.getElementById('langToggle').textContent = L.langToggle;
-  
   renderObsList();
   restoreDynamicUI();
 }
@@ -699,7 +682,6 @@ function restoreDynamicUI() {
        if(m && det.meds) m.value = det.meds;
     }
   });
-  
   D.mgttTx.forEach(c => {
     let cleanId = c.replace(/[^A-Za-z0-9]/g, '');
     let btn = document.getElementById('btnMgttTx_' + cleanId);
@@ -708,59 +690,911 @@ function restoreDynamicUI() {
 }
 
 function card(badge, emoji, q, sub, body) {
-  return `<div class="step-card"><div class="sec-badge">${badge}</div><span class="step-emoji">${emoji}</span><div class="q-text">${q}</div>${sub?`<div class="q-sub">${sub}</div>`:''}<div class="q-body">${body}</div></div>`;
+  return '<div class="step-card"><div class="sec-badge">' + badge + '</div><span class="step-emoji">' + emoji + '</span><div class="q-text">' + q + '</div>' + (sub ? '<div class="q-sub">' + sub + '</div>' : '') + '<div class="q-body">' + body + '</div></div>';
 }
 
 function optBtn(label, value, key, autoNext=false, revealId='') {
   let selClass = (D[key] === value) ? 'sel' : '';
-  let clickLogic = `pick('${key}', '${value}', this);`;
-  if (revealId === 'show') clickLogic += `let r1=document.getElementById('${key}Rev'); if(r1) r1.classList.add('show');`;
-  if (revealId === 'hide') clickLogic += `let r2=document.getElementById('${key}Rev'); if(r2) r2.classList.remove('show');`;
-  if (autoNext) clickLogic += `setTimeout(next, 300);`;
-  
-  return `<button class="big-opt ${selClass}" onclick="${clickLogic}"><div class="radio-box">✓</div><div style="text-align:left"><span>${label}</span></div></button>`;
+  let clickLogic = "pick('" + key + "', '" + value + "', this);";
+  if (revealId === 'show') clickLogic += "let r1=document.getElementById('" + key + "Rev'); if(r1) r1.classList.add('show');";
+  if (revealId === 'hide') clickLogic += "let r2=document.getElementById('" + key + "Rev'); if(r2) r2.classList.remove('show');";
+  if (autoNext) clickLogic += "setTimeout(next, 300);";
+  return '<button class="big-opt ' + selClass + '" onclick="' + clickLogic + '"><div class="radio-box">✓</div><div style="text-align:left"><span>' + label + '</span></div></button>';
 }
 
-function buildS0(L) { return card(L.sAbout,'🌸',L.s0q,L.s0h, `<button class="big-opt" onclick="next()" style="border-color:var(--rose-d); background:var(--rose-pale); color:var(--rose-d); justify-content:center;">${L.s0btn}</button>`); }
-function buildS1(L) { return card(L.sAbout,'📝',L.s1q,L.s1h, `<input class="big-input" type="text" id="name" placeholder="${L.s1p}" autocomplete="name" oninput="D.name=this.value">`); }
+function buildS0(L) { return card(L.sAbout,'🌸',L.s0q,L.s0h, '<button class="big-opt" onclick="next()" style="border-color:var(--rose-d); background:var(--rose-pale); color:var(--rose-d); justify-content:center;">' + L.s0btn + '</button>'); }
+function buildS1(L) { return card(L.sAbout,'📝',L.s1q,L.s1h, '<input class="big-input" type="text" id="name" placeholder="' + L.s1p + '" autocomplete="name" oninput="D.name=this.value">'); }
 function buildS3(L) { 
-  let opts = `<select class="big-input" id="age" style="margin-bottom:12px; font-size:18px; padding:16px; font-weight:800;" onchange="D.age=this.value; setTimeout(next, 300);">`;
-  opts += `<option value="" disabled selected>${L.s3h}...</option>`;
-  for (let i=14; i<=55; i++) { opts += `<option value="${i}">${i}</option>`; }
-  opts += `</select>`;
+  let opts = '<select class="big-input" id="age" style="margin-bottom:12px; font-size:18px; padding:16px; font-weight:800;" onchange="D.age=this.value; setTimeout(next, 300);"><option value="" disabled selected>' + L.s3h + '...</option>';
+  for (let i=14; i<=55; i++) { opts += '<option value="' + i + '">' + i + '</option>'; }
+  opts += '</select>';
   return card(L.sAbout,'🎂',L.s3q,'',opts); 
 }
-
 function buildS4(L) { 
-  let html = `<div class="grid2" style="grid-template-columns:1fr;">`;
+  let html = '<div class="grid2" style="grid-template-columns:1fr;">';
   L.races.forEach(r => {
     let selC = (D.race === r) ? 'sel' : '';
-    html += `<button class="big-opt ${selC}" onclick="pickRace('${r}', this)"><div class="radio-box">✓</div><div style="text-align:left"><span>${r}</span></div></button>`;
+    html += '<button class="big-opt ' + selC + '" onclick="pickRace(\'' + r + '\', this)"><div class="radio-box">✓</div><div style="text-align:left"><span>' + r + '</span></div></button>';
   });
   let isRev = (D.race && (D.race.indexOf('Non-Malaysian') !== -1 || D.race.indexOf('Bukan Warganegara') !== -1)) ? 'show' : '';
-  html += `</div><div class="reveal ${isRev}" id="countryRev"><span class="mini-lbl">${L.s4country}</span><input class="big-input" type="text" id="raceCountry" placeholder="e.g. Indonesia" oninput="D.raceCountry=this.value"></div>`;
+  html += '</div><div class="reveal ' + isRev + '" id="countryRev"><span class="mini-lbl">' + L.s4country + '</span><input class="big-input" type="text" id="raceCountry" placeholder="e.g. Indonesia" oninput="D.raceCountry=this.value"></div>';
   return card(L.sAbout,'🌏',L.s4q,'', html); 
 }
-
-function buildS5(L) { return card(L.sAbout,'🕌',L.s5q,'', `<div class="grid2">${L.religions.map((r)=>optBtn(r, r, 'religion', true)).join('')}</div>`); }
-
+function buildS5(L) { return card(L.sAbout,'🕌',L.s5q,'', '<div class="grid2">' + L.religions.map(r=>optBtn(r, r, 'religion', true)).join('') + '</div>'); }
 function buildS6(L) { 
-  return card(L.sClinic,'🏥',L.s6q,L.s6h,`
-    <span class="mini-lbl">${L.lblCurrClinic}</span>
-    <input class="big-input" type="text" id="currentClinic" placeholder="e.g. KK Cheras" oninput="D.currentClinic=this.value" style="margin-bottom:12px">
-    <span class="mini-lbl">${L.lblBookClinic}</span>
-    <input class="big-input" type="text" id="bookingClinic" placeholder="e.g. KK Kajang" oninput="D.bookingClinic=this.value" style="margin-bottom:12px">
-    <div class="num-row">
-      <div class="num-group"><span class="nl">${L.lblBookPOA}</span><input class="big-input" type="number" inputmode="numeric" pattern="[0-9]*" id="bookingPOA" placeholder="${L.lblWks}" oninput="D.bookingPOA=this.value"></div>
-      <div class="num-group"><span class="nl">${L.lblBookHb}</span><input class="big-input" type="number" inputmode="decimal" step="0.1" id="bookingHb" placeholder="g/dL" oninput="D.bookingHb=this.value"></div>
+  return card(L.sClinic,'🏥',L.s6q,L.s6h,'<span class="mini-lbl">' + L.lblCurrClinic + '</span><input class="big-input" type="text" id="currentClinic" placeholder="e.g. KK Cheras" oninput="D.currentClinic=this.value" style="margin-bottom:12px"><span class="mini-lbl">' + L.lblBookClinic + '</span><input class="big-input" type="text" id="bookingClinic" placeholder="e.g. KK Kajang" oninput="D.bookingClinic=this.value" style="margin-bottom:12px"><div class="num-row"><div class="num-group"><span class="nl">' + L.lblBookPOA + '</span><input class="big-input" type="number" inputmode="numeric" pattern="[0-9]*" id="bookingPOA" placeholder="' + L.lblWks + '" oninput="D.bookingPOA=this.value"></div><div class="num-group"><span class="nl">' + L.lblBookHb + '</span><input class="big-input" type="number" inputmode="decimal" step="0.1" id="bookingHb" placeholder="g/dL" oninput="D.bookingHb=this.value"></div></div>'); 
+}
+function buildS7(L) { 
+  return card(L.sMeasure,'⚖️',L.s7q,L.s7h,'<div class="num-row" style="margin-bottom:12px;"> <div class="num-group full" style="grid-column:1/-1"><span class="nl">' + L.s7hgt + '</span><input class="big-input" type="number" inputmode="numeric" pattern="[0-9]*" id="height" placeholder="158" oninput="calcBMI()"></div> </div> <div class="num-row"><div class="num-group"><span class="nl">' + L.s7bookWgt + '</span><input class="big-input" type="number" inputmode="decimal" step="0.1" id="bookingWeight" placeholder="kg" oninput="calcBMI()"></div><div class="num-group"><span class="nl">' + L.s7currWgt + '</span><input class="big-input" type="number" inputmode="decimal" step="0.1" id="currentWeight" placeholder="kg" oninput="D.currentWeight=this.value"></div></div><div class="result-box" id="bmiBox"><div class="rl">' + L.bmiLabel + '</div><div class="rv" id="bmiVal">—</div><div class="rs" id="bmiCat"></div></div>'); 
+}
+function buildS8(L) { return card(L.sPreg,'🗓️',L.s8q,L.s8h,'<input class="big-input" type="date" id="lmp" onchange="calcEDD()"> <div class="result-box" id="eddBox"><div class="rl">' + L.eddLabel + '</div><div class="rv" id="eddVal">—</div><div class="rs" id="gaVal"></div></div>'); }
+
+function buildS_Symp(L) { 
+  return card(L.sSymp,'🩺',L.sSympQ,L.sSympH,`
+    <div class="check-grid" style="grid-template-columns:1fr 1fr">
+      <div class="ci ${D.sympAbd?'checked':''}" onclick="toggleSymp(this,'sympAbd')"><div class="cd">✓</div>${L.sympAbd}</div>
+      <div class="ci ${D.sympContraction?'checked':''}" onclick="toggleSymp(this,'sympContraction')"><div class="cd">✓</div>${L.sympContraction}</div>
+      <div class="ci ${D.sympBld?'checked':''}" onclick="toggleSymp(this,'sympBld')"><div class="cd">✓</div>${L.sympBld}</div>
+      <div class="ci ${D.sympLiquor?'checked':''}" onclick="toggleSymp(this,'sympLiquor')"><div class="cd">✓</div>${L.sympLiquor}</div>
+      <div class="ci ${D.sympHeadache?'checked':''}" onclick="toggleSymp(this,'sympHeadache')"><div class="cd">✓</div>${L.sympHeadache}</div>
+      <div class="ci ${D.sympVision?'checked':''}" onclick="toggleSymp(this,'sympVision')"><div class="cd">✓</div>${L.sympVision}</div>
+      <div class="ci ${D.sympDizzy?'checked':''}" onclick="toggleSymp(this,'sympDizzy')"><div class="cd">✓</div>${L.sympDizzy}</div>
+      <div class="ci ${D.sympPalp?'checked':''}" onclick="toggleSymp(this,'sympPalp')"><div class="cd">✓</div>${L.sympPalp}</div>
+      <div class="ci ${D.sympFatigue?'checked':''}" onclick="toggleSymp(this,'sympFatigue')"><div class="cd">✓</div>${L.sympFatigue}</div>
+      <div class="ci ${D.sympUri?'checked':''}" onclick="toggleSymp(this,'sympUri')"><div class="cd">✓</div>${L.sympUri}</div>
+      <div class="ci ${D.sympNau?'checked':''}" onclick="toggleSymp(this,'sympNau')"><div class="cd">✓</div>${L.sympNau}</div>
+    </div>
+    <div class="check-grid" style="grid-template-columns:1fr; margin-top:8px;">
+      <div class="ci" id="btnSympNone" onclick="clearSymp(this)"><div class="cd">✓</div>${L.sympNone}</div>
+    </div>
+    <span class="mini-lbl" style="margin-top:10px;">${L.sympLaborOtherLbl}</span>
+    <input class="big-input" type="text" id="sympLaborOther" oninput="D.sympLaborOther=this.value" style="margin-top:5px; padding:10px; font-size:14px;">
+  `); 
+}
+function toggleSymp(el, key) { 
+  el.classList.toggle('checked'); 
+  D[key] = el.classList.contains('checked');
+  if(D[key]) { document.getElementById('btnSympNone').classList.remove('checked'); }
+}
+function clearSymp(el) {
+  el.classList.add('checked'); 
+  D.sympAbd=false; D.sympContraction=false; D.sympBld=false; D.sympLiquor=false; D.sympHeadache=false; D.sympVision=false; D.sympDizzy=false; D.sympPalp=false; D.sympFatigue=false; D.sympUri=false; D.sympNau=false;
+  let checks = el.parentElement.parentElement.querySelectorAll('.ci');
+  for(let i=0; i<checks.length; i++) { if(checks[i].id !== 'btnSympNone') { checks[i].classList.remove('checked'); } }
+  setTimeout(next, 400);
+}
+
+function buildS_Fetal(L) {
+  return card(L.sPreg,'👶',L.sympFetalQ,'',`
+    ${optBtn(L.sympFetalActive, L.sympFetalActive, 'sympFetal', false)}
+    ${optBtn(L.sympFetalLess, L.sympFetalLess, 'sympFetal', false)}
+    <div style="margin-top:16px; padding:16px; background:var(--gray50); border:2px dashed var(--gray200); border-radius:12px;">
+      <span class="mini-lbl" style="margin-top:0;">${L.fmTimeQ}</span>
+      <input class="big-input" type="text" id="fmTime" placeholder="${L.fmTimeP}" oninput="D.fmTime=this.value" style="margin-bottom:12px; background:white; text-transform:none;">
+      <span class="mini-lbl">${L.fmCountQ}</span>
+      <input class="big-input" type="number" inputmode="numeric" id="fmCount" oninput="D.fmCount=this.value" style="background:white;">
+    </div>
+  `);
+}
+
+function calcPOG() {
+  const sdVal = document.getElementById('scanDate')?.value;
+  if (!sdVal) return;
+  D.scanDate = sdVal;
+  
+  let sd = new Date(sdVal);
+  sd.setHours(0,0,0,0);
+  let td = new Date();
+  td.setHours(0,0,0,0);
+  
+  let diff = Math.round((sd.getTime() - td.getTime()) / 86400000);
+  let pD = 280 - diff;
+  let pW = Math.floor(pD / 7);
+  let pDays = pD % 7;
+  
+  const bx = document.getElementById('pogBox');
+  const pv = document.getElementById('pogVal');
+  if (pD >= 0 && pv && bx) {
+    pv.textContent = pW + "w " + pDays + "d";
+    bx.classList.add('show');
+  } else if (pv && bx) {
+    pv.textContent = "—";
+    bx.classList.add('show');
+  }
+}
+
+function buildS9(L) { 
+  return card(L.sPreg,'🔬',L.s9q,'',` 
+    ${optBtn(L.btnYes,'Yes','scanYN',false,'show')} 
+    ${optBtn(L.s9no,'No','scanYN',true,'hide')} 
+    <div class="reveal ${D.scanYN==='Yes'?'show':''}" id="scanYNRev"> 
+      <span class="mini-lbl">${L.s9scanLbl}</span> 
+      <input class="big-input" type="date" id="scanDate" onchange="calcPOG()"> 
+      <div class="result-box" id="pogBox"><div class="rl">${L.lblPOG || 'CURRENT POG'}</div><div class="rv" id="pogVal">—</div></div>
+    </div>`); 
+}
+function buildS10(L) { return card(L.sBlood,'🩸',L.s10q,'', `<div class="grid2">${L.bgOpts.map(o=>{const[lbl,val]=o.split('|');return optBtn(lbl, val, 'bloodGroup', true);}).join('')}</div>`); }
+function buildS11(L) { return card(L.sBlood,'➕',L.s11q,L.s11h,` ${optBtn(L.s11pos, 'Positive (+ve)', 'rhesus', true)} ${optBtn(L.s11neg, 'Negative (−)', 'rhesus', true)} ${optBtn(L.s11unk, 'Unknown', 'rhesus', true)} `); }
+function buildS12(L) { return card(L.sTests,'🔴',L.s12q,L.s12h,` ${optBtn(L.s12pos, 'Positive', 'hiv', true)} ${optBtn(L.s12neg, 'Negative', 'hiv', true)} ${optBtn(L.s12unk, 'Unknown', 'hiv', true)} `); }
+function buildS13(L) { return card(L.sTests,'🟡',L.s13q,'',` ${optBtn(L.s13pos, 'Positive', 'hepB', true)} ${optBtn(L.s13neg, 'Negative', 'hepB', true)} ${optBtn(L.s13unk, 'Unknown', 'hepB', true)} `); }
+function buildS14(L) { return card(L.sTests,'🧪',L.s14q,'',` ${optBtn(L.s14pos, 'Reactive', 'vdrl', true)} ${optBtn(L.s14neg, 'Non-reactive', 'vdrl', true)} ${optBtn(L.s14unk, 'Unknown', 'vdrl', true)} `); }
+
+function buildS15(L) { 
+  let html = card(L.sTests,'🦠',L.s15q,L.s15h,
+    optBtn(L.btnYes, 'Yes', 'gbsYN', false, 'show') + " " +
+    optBtn(L.btnNo, 'No', 'gbsYN', true, 'hide') + " " +
+    optBtn(L.s15unk, 'Unknown', 'gbsYN', true, 'hide') +
+    '<div class="reveal ' + (D.gbsYN==='Yes'?'show':'') + '" id="gbsYNRev">' +
+      '<span class="mini-lbl">' + L.gbsWhenLbl + '</span>' +
+      '<div class="grid2">' +
+        `<div class="ci ${D.gbsWhen.indexOf(L.gbsThis)!==-1?'checked':''}" onclick="toggleGbsWhen('${L.gbsThis}', this)"><div class="cd">✓</div>${L.gbsThis}</div>` +
+        `<div class="ci ${D.gbsWhen.indexOf(L.gbsPrev)!==-1?'checked':''}" onclick="toggleGbsWhen('${L.gbsPrev}', this)"><div class="cd">✓</div>${L.gbsPrev}</div>` +
+      '</div>' +
+      '<div class="reveal ' + (D.gbsWhen && (D.gbsWhen.indexOf('Previous') !== -1 || D.gbsWhen.indexOf('lepas') !== -1) ? 'show' : '') + '" id="gbsPrevRev" style="margin-top:16px; padding:12px; border:2px dashed var(--rose); border-radius:12px; background:white;">' +
+         '<span class="mini-lbl">' + L.gbsWardQ + '</span>' +
+         '<div class="grid2">' + 
+           `<button class="big-opt ${D.gbsWard==='Yes'?'sel':''}" onclick="pickGbsWard('Yes', this)"><div class="radio-box">✓</div><div style="text-align:left"><span>${L.btnYes}</span></div></button>` +
+           `<button class="big-opt ${D.gbsWard==='No'?'sel':''}" onclick="pickGbsWard('No', this)"><div class="radio-box">✓</div><div style="text-align:left"><span>${L.btnNo}</span></div></button>` +
+         '</div>' +
+         '<div class="reveal ' + (D.gbsWard==='Yes'?'show':'') + '" id="gbsWardRev">' +
+           '<span class="mini-lbl" style="margin-top:12px;">' + L.gbsSepsisQ + '</span>' +
+           '<div class="grid2">' + optBtn(L.btnYes, 'Yes', 'gbsSepsis') + ' ' + optBtn(L.btnNo, 'No', 'gbsSepsis') + ' ' + optBtn(L.s15unk, 'Unknown', 'gbsSepsis') + '</div>' +
+           '<span class="mini-lbl" style="margin-top:12px;">' + L.gbsDurQ + '</span>' +
+           '<input class="big-input" type="text" placeholder="' + L.gbsDurP + '" id="gbsDur" oninput="D.gbsDur=this.value">' +
+           '<span class="mini-lbl" style="margin-top:12px;">' + L.gbsOutQ + '</span>' +
+           '<div class="grid2">' +
+             `<button class="big-opt ${D.gbsOutBtn==='Healthy'?'sel':''}" onclick="pickGbsOut('Healthy', this)"><div class="radio-box">✓</div><div style="text-align:left"><span>${L.optHealthy}</span></div></button>` +
+             `<button class="big-opt ${D.gbsOutBtn==='Not Healthy'?'sel':''}" onclick="pickGbsOut('Not Healthy', this)"><div class="radio-box">✓</div><div style="text-align:left"><span>${L.optNotHealthy}</span></div></button>` +
+           '</div>' +
+           '<div class="reveal ' + (D.gbsOutBtn==='Not Healthy'?'show':'') + '" id="gbsOutTextRev" style="margin-top:8px;">' +
+             '<input class="big-input mf-text" type="text" placeholder="' + L.pSpecify + '" oninput="D.gbsOutText=this.value">' +
+           '</div>' +
+         '</div>' +
+      '</div>' +
+      '<span class="mini-lbl" style="margin-top:16px;">' + L.gbsWhereLbl + '</span>' +
+      '<div class="grid2">' + optBtn(L.gbsUrine, L.gbsUrine, 'gbsWhere') + ' ' + optBtn(L.gbsHVS, L.gbsHVS, 'gbsWhere') + '</div>' +
+    '</div>'
+  );
+  return html;
+}
+
+function checkMgtt() {
+  let r1 = document.getElementById('mgtt1Res') ? document.getElementById('mgtt1Res').value : '';
+  let r2 = document.getElementById('mgtt2Res') ? document.getElementById('mgtt2Res').value : '';
+  if (r1 === 'Abnormal' || r1 === 'Tidak normal' || r2 === 'Abnormal' || r2 === 'Tidak normal') {
+    document.getElementById('mgttTxRev').classList.add('show');
+  } else {
+    document.getElementById('mgttTxRev').classList.remove('show');
+  }
+}
+
+function buildS_MGTT(L) {
+  let mgttShow = D.mgttYN === 'Yes' ? 'show' : '';
+  let r1 = D.mgtt1Res; let r2 = D.mgtt2Res;
+  let txShow = (r1 === 'Abnormal' || r1 === 'Tidak normal' || r2 === 'Abnormal' || r2 === 'Tidak normal') ? 'show' : '';
+  return card(L.sTests,'🥤',L.sMgttQ,'',`
+    ${optBtn(L.btnYes, 'Yes', 'mgttYN', false, 'show')}
+    ${optBtn(L.btnNo, 'No', 'mgttYN', true, 'hide')}
+    <div class="reveal ${mgttShow}" id="mgttYNRev">
+      <span class="mini-lbl">${L.sMgtt1}</span>
+      <div class="num-row">
+        <div class="num-group"><input class="big-input" type="number" inputmode="numeric" placeholder="${L.lblWks}" oninput="D.mgtt1Wks=this.value" id="mgtt1Wks"></div>
+        <div class="num-group">
+          <select class="big-input" onchange="D.mgtt1Res=this.value; checkMgtt();" id="mgtt1Res">
+            <option value="" disabled selected>${L.lblRes}...</option>
+            <option value="Normal" ${D.mgtt1Res==='Normal'?'selected':''}>${L.optNorm}</option>
+            <option value="Abnormal" ${D.mgtt1Res==='Abnormal'?'selected':''}>${L.optAbn}</option>
+          </select>
+        </div>
+      </div>
+      <span class="mini-lbl" style="margin-top:10px;">${L.sMgtt2}</span>
+      <div class="num-row">
+        <div class="num-group"><input class="big-input" type="number" inputmode="numeric" placeholder="${L.lblWks}" oninput="D.mgtt2Wks=this.value" id="mgtt2Wks"></div>
+        <div class="num-group">
+          <select class="big-input" onchange="D.mgtt2Res=this.value; checkMgtt();" id="mgtt2Res">
+            <option value="" disabled selected>${L.lblRes}...</option>
+            <option value="Normal" ${D.mgtt2Res==='Normal'?'selected':''}>${L.optNorm}</option>
+            <option value="Abnormal" ${D.mgtt2Res==='Abnormal'?'selected':''}>${L.optAbn}</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="reveal ${txShow}" id="mgttTxRev" style="margin-top:16px; padding:12px; border:2px dashed var(--rose); border-radius:12px; background:white;">
+         <span class="mini-lbl">${L.lblMgttTx}</span>
+         <div class="check-grid" style="grid-template-columns:1fr;">
+           <div class="ci ${D.mgttTx.indexOf(L.optDiet)!==-1?'checked':''}" id="btnMgttTx_Diet" onclick="toggleCheck(this,'mgttTx','${L.optDiet}')"><div class="cd">✓</div>${L.optDiet}</div>
+           <div class="ci ${D.mgttTx.indexOf(L.optMetformin)!==-1?'checked':''}" id="btnMgttTx_Metformin" onclick="toggleCheck(this,'mgttTx','${L.optMetformin}')"><div class="cd">✓</div>${L.optMetformin}</div>
+           <div class="ci ${D.mgttTx.indexOf(L.optInsulin)!==-1?'checked':''}" id="btnMgttTx_Insulin" onclick="toggleCheck(this,'mgttTx','${L.optInsulin}')"><div class="cd">✓</div>${L.optInsulin}</div>
+         </div>
+      </div>
+    </div>
+  `);
+}
+
+function buildS16(L) { return card(L.sAllergy,'🥜',L.s16q,'',` ${optBtn(L.btnYes, 'Yes', 'foodAllergyYN', false, 'show')} ${optBtn(L.btnNo, 'No', 'foodAllergyYN', true, 'hide')} <div class="reveal ${D.foodAllergyYN==='Yes'?'show':''}" id="foodAllergyYNRev"> <span class="mini-lbl">${L.s16lbl}</span> <input class="big-input" type="text" id="foodAllergy" placeholder="${L.s16p}" oninput="D.foodAllergy=this.value"> </div>`); }
+function buildS17(L) { return card(L.sAllergy,'💊',L.s17q,'',` ${optBtn(L.btnYes, 'Yes', 'medAllergyYN', false, 'show')} ${optBtn(L.btnNo, 'No', 'medAllergyYN', true, 'hide')} <div class="reveal ${D.medAllergyYN==='Yes'?'show':''}" id="medAllergyYNRev"> <span class="mini-lbl">${L.s17lbl}</span> <input class="big-input" type="text" id="medAllergy" placeholder="${L.s17p}" oninput="D.medAllergy=this.value"> </div>`); }
+
+function toggleChron(el, key) {
+  el.classList.toggle('checked');
+  let cleanId = key.replace(/[^A-Za-z0-9]/g, '');
+  let rev = document.getElementById('revChron_' + cleanId);
+  if(el.classList.contains('checked')) {
+     if(D.pmiChron.indexOf(key) === -1) D.pmiChron.push(key);
+     if(!D.chronDetails[key]) D.chronDetails[key] = {since:'', meds:''};
+     if(rev) rev.classList.add('show');
+  } else {
+     var idx = D.pmiChron.indexOf(key);
+     if(idx !== -1) D.pmiChron.splice(idx, 1);
+     if(rev) rev.classList.remove('show');
+  }
+}
+
+function clearChronChecks() {
+  D.pmiChron = [];
+  var els1 = document.querySelectorAll('.ci-chron');
+  for(var i=0; i<els1.length; i++) els1[i].classList.remove('checked');
+  var els2 = document.querySelectorAll('[id^="revChron_"]');
+  for(var j=0; j<els2.length; j++) els2[j].classList.remove('show');
+}
+
+function buildS18(L) { 
+  let html = '<span class="mini-lbl">' + L.lblChron + '</span><div class="check-grid" style="grid-template-columns:1fr;">';
+  L.pmiChron.forEach(p => {
+    let cleanId = p.replace(/[^A-Za-z0-9]/g, '');
+    let isChked = D.pmiChron.indexOf(p) !== -1 ? 'checked' : '';
+    let isRev = D.pmiChron.indexOf(p) !== -1 ? 'show' : '';
+    html += '<div style="background:white; border-radius:12px; margin-bottom:4px; box-shadow:0 2px 8px rgba(0,0,0,0.03);">' +
+              '<div class="ci ci-chron ' + isChked + '" id="btnChron_' + cleanId + '" onclick="toggleChron(this,\'' + p + '\'); document.getElementById(\'btnNone18\').classList.remove(\'sel\');" style="border:none; margin:0;"><div class="cd">✓</div>' + p + '</div>' +
+              '<div class="reveal ' + isRev + '" id="revChron_' + cleanId + '" style="padding:0 16px 16px;">' +
+                '<div class="divider" style="margin:0 0 12px 0;"></div>' +
+                '<span class="mini-lbl" style="margin-top:0;">' + L.lblSince + '</span>' +
+                '<input class="big-input" type="number" inputmode="numeric" pattern="[0-9]*" id="yr_' + cleanId + '" placeholder="' + L.pSince + '" oninput="if(D.chronDetails[\'' + p + '\']) D.chronDetails[\'' + p + '\'].since=this.value" style="margin-bottom:12px; background:var(--gray50);">' +
+                '<span class="mini-lbl">' + L.lblChronMeds + '</span>' +
+                '<input class="big-input" type="text" id="meds_' + cleanId + '" placeholder="' + L.pChronMeds + '" oninput="if(D.chronDetails[\'' + p + '\']) D.chronDetails[\'' + p + '\'].meds=this.value" style="background:var(--gray50);">' +
+              '</div>' +
+            '</div>';
+  });
+  html += '</div>' +
+    '<input class="big-input" type="text" id="pmiOthers" placeholder="' + L.s18other + '" style="margin-top:16px" oninput="D.pmiOthers=this.value; document.getElementById(\'btnNone18\').classList.remove(\'sel\');"> ' +
+    '<button id="btnNone18" class="big-opt" style="margin-top:12px" onclick="clearChronChecks(); document.getElementById(\'pmiOthers\').value=\'\'; D.pmiOthers=\'\'; this.classList.add(\'sel\'); setTimeout(next,300);"><div class="radio-box">✓</div><span>' + L.s18none + '</span></button>';
+  return card(L.sHealth,'📝',L.s18q,L.s18h, html); 
+}
+
+function buildS18b(L) {
+  return card(L.sHealth,'🤰',L.s18bq,L.s18bh,
+    '<span class="mini-lbl">' + L.lblNew + '</span>' +
+    '<div class="check-grid" style="grid-template-columns:1fr 1fr">' + L.pmiNew.map(p=>'<div class="ci ' + (D.pmiNew.indexOf(p)!==-1?'checked':'') + '" onclick="toggleCheck(this,\'pmiNew\',\'' + p + '\'); document.getElementById(\'btnNone18b\').classList.remove(\'sel\');"><div class="cd">✓</div>' + p + '</div>').join('') + '</div>' +
+    '<input class="big-input" type="text" id="pmiNewOthers" placeholder="' + L.s18other + '" style="margin-top:16px" oninput="D.pmiNewOthers=this.value; document.getElementById(\'btnNone18b\').classList.remove(\'sel\');"> ' +
+    '<button id="btnNone18b" class="big-opt" style="margin-top:12px" onclick="clearChecks(\'pmiNew\'); document.getElementById(\'pmiNewOthers\').value=\'\'; D.pmiNewOthers=\'\'; this.classList.add(\'sel\'); setTimeout(next,300);"><div class="radio-box">✓</div><span>' + L.s18none + '</span></button>'
+  );
+}
+
+function buildS19(L) { 
+  return card(L.sMental,'🧠',L.s19q,'',` 
+    ${optBtn(L.btnYes, 'Yes', 'psychYN', false, 'show')} 
+    ${optBtn(L.btnNo, 'No', 'psychYN', true, 'hide')} 
+    <div class="reveal ${D.psychYN==='Yes'?'show':''}" id="psychYNRev"> 
+      <span class="mini-lbl">${L.s19lbl}</span> 
+      <div class="check-grid" style="grid-template-columns:1fr 1fr">
+        ${L.psychList.map(p=>`<div class="ci ${D.psychDxList.indexOf(p)!==-1?'checked':''}" onclick="toggleCheck(this,'psychDxList','${p}')"><div class="cd">✓</div>${p}</div>`).join('')}
+      </div>
+      <input class="big-input" type="text" id="psychOthers" placeholder="${L.s19p}" style="margin-top:12px" oninput="D.psychOthers=this.value"> 
+    </div>
+  `); 
+}
+function buildS20(L) { return card(L.sMeds,'💊',L.s20q,'',` ${optBtn(L.btnYes, 'Yes', 'medsYN', false, 'show')} ${optBtn(L.btnNo, 'No', 'medsYN', true, 'hide')} <div class="reveal ${D.medsYN==='Yes'?'show':''}" id="medsYNRev"> <span class="mini-lbl">${L.s20lbl}</span> <textarea class="big-input big-textarea" id="medications" placeholder="${L.s20p}" oninput="D.medications=this.value"></textarea> </div>`); }
+function buildS21(L) { return card(L.sMeds,'🔵',L.s21q,'',` ${optBtn(L.btnYes, 'Yes', 'aspirinCa', true)} ${optBtn(L.btnNo, 'No', 'aspirinCa', true)} `); }
+
+function buildS22(L) { 
+  return card(L.sSurg,'🏥',L.s22q,'',` 
+    ${optBtn(L.btnYes, 'Yes', 'surgYN', false, 'show')} 
+    ${optBtn(L.btnNo, 'No', 'surgYN', true, 'hide')} 
+    <div class="reveal ${D.surgYN==='Yes'?'show':''}" id="surgYNRev"> 
+      <span class="mini-lbl">${L.s22lbl}</span> 
+      <input class="big-input mf-text" type="text" id="surgDetails" placeholder="${L.s22p}" oninput="D.surgDetails=this.value" value="${D.surgDetails||''}"> 
     </div>
   `); 
 }
 
-function buildS7(L) { 
-  return card(L.sMeasure,'⚖️',L.s7q,L.s7h,` 
-    <div class="num-row" style="margin-bottom:12px;"> 
-      <div class="num-group full" style="grid-column:1/-1"><span class="nl">${L.s7hgt}</span><input class="big-input" type="number" inputmode="numeric" pattern="[0-9]*" id="height" placeholder="158" oninput="calcBMI()"></div> 
-    </div> 
-    <div class="num-row">
-      <div class="num-group"><
+function buildS23(L) { 
+  return card(L.sFamily,'👨‍👩‍👧',L.s23q,L.s23h,
+    '<div class="check-grid" style="grid-template-columns:1fr 1fr">' + L.fhx.map(f=>'<div class="ci ' + (D.fhx.indexOf(f)!==-1?'checked':'') + '" onclick="toggleCheck(this,\'fhx\',\'' + f + '\'); document.getElementById(\'btnNone23\').classList.remove(\'sel\');"><div class="cd">✓</div>' + f + '</div>').join('') + '</div>' + 
+    '<input class="big-input" type="text" id="fhxCancerType" placeholder="' + L.s23cp + '" style="margin-top:10px" oninput="D.fhxCancerType=this.value; document.getElementById(\'btnNone23\').classList.remove(\'sel\');"> ' + 
+    '<button id="btnNone23" class="big-opt" style="margin-top:10px" onclick="clearChecks(\'fhx\'); document.getElementById(\'fhxCancerType\').value=\'\'; D.fhxCancerType=\'\'; this.classList.add(\'sel\'); setTimeout(next,300);"><div class="radio-box">✓</div><span>' + L.s23none + '</span></button>'
+  ); 
+}
+
+function renderObsList() {
+  const wrap = document.getElementById('obsListWrap');
+  if(!wrap) return;
+  const L = T[lang];
+  if(D.obsList.length === 0) {
+     wrap.innerHTML = `<div style="text-align:center; padding:16px; margin-bottom:16px; border:2px dashed var(--gray200); border-radius:12px; color:var(--gray400); font-weight:700; font-size:14px;">${L.lblNoChild}</div>`;
+     return;
+  }
+  let html = '';
+  D.obsList.forEach((r, i) => {
+     let selBoy = r.sex==='Boy' ? 'selected' : '';
+     let selGirl = r.sex==='Girl' ? 'selected' : '';
+     
+     let t1 = r.term==='< 37' ? 'selected' : '';
+     let t2 = r.term==='37-40' ? 'selected' : '';
+     let t3 = r.term==='> 40' ? 'selected' : '';
+     
+     let admitOpt = r.nicuYN==='Yes' ? 'selected' : '';
+     let noAdmitOpt = r.nicuYN==='No' ? 'selected' : '';
+
+     let nicuHtml = r.nicuYN === 'Yes' ? '<div class="mf full" style="animation:fadeIn 0.2s ease;"><label>' + L.lblAdmitDur + '</label><input type="text" placeholder="e.g. 5 Hari / Days" value="' + (r.nicuDur||'') + '" oninput="D.obsList[' + i + '].nicuDur=this.value"></div>' : '<div style="display:none;"></div>';
+
+     html += '<div style="background:var(--gray50); border:2px solid var(--gray200); border-radius:12px; padding:16px; margin-bottom:16px; box-shadow: 0 4px 10px rgba(0,0,0,0.02);">' +
+        '<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">' +
+           '<div style="font-size:15px; font-weight:900; color:var(--purple); text-transform:uppercase; letter-spacing:0.5px;">' + L.lblChild + ' ' + (i+1) + '</div>' +
+           '<button onclick="removeObsRecord(' + i + ')" style="background:var(--rose-pale); color:var(--rose-d); border:none; border-radius:50%; width:30px; height:30px; font-size:18px; font-weight:bold; cursor:pointer; touch-action:manipulation;">×</button>' +
+        '</div>' +
+        '<div class="birth-fields">' +
+           '<div class="mf"><label>' + L.lblYear + '</label><input type="number" inputmode="numeric" placeholder="YYYY" value="' + r.year + '" oninput="D.obsList[' + i + '].year=this.value"></div>' +
+           '<div class="mf"><label>' + L.lblGender + '</label>' +
+              '<select onchange="D.obsList[' + i + '].sex=this.value">' +
+                 '<option value="" ' + (r.sex===''?'selected':'') + '>-</option>' +
+                 '<option value="Boy" ' + selBoy + '>' + L.optBoy + '</option>' +
+                 '<option value="Girl" ' + selGirl + '>' + L.optGirl + '</option>' +
+              '</select>' +
+           '</div>' +
+           '<div class="mf full"><label>' + L.lblHosp + '</label><input type="text" class="mf-text" placeholder="e.g. HKL" value="' + r.hosp + '" oninput="D.obsList[' + i + '].hosp=this.value"></div>' +
+           '<div class="mf"><label>' + L.lblMode + '</label>' +
+              '<select onchange="D.obsList[' + i + '].mode=this.value">' +
+                 '<option value="" ' + (r.mode===''?'selected':'') + '>-</option>' +
+                 '<option value="SVD" ' + (r.mode==='SVD'?'selected':'') + '>SVD</option>' +
+                 '<option value="LSCS" ' + (r.mode==='LSCS'?'selected':'') + '>LSCS</option>' +
+                 '<option value="Forceps" ' + (r.mode==='Forceps'?'selected':'') + '>Forceps</option>' +
+                 '<option value="Vacuum" ' + (r.mode==='Vacuum'?'selected':'') + '>Vacuum</option>' +
+              '</select>' +
+           '</div>' +
+           '<div class="mf"><label>' + L.lblWgt + '</label><input type="number" inputmode="decimal" step="0.01" placeholder="3.2" value="' + r.wgt + '" oninput="D.obsList[' + i + '].wgt=this.value"></div>' +
+           
+           '<div class="mf full"><label>' + L.lblTerm + '</label>' +
+              '<select onchange="D.obsList[' + i + '].term=this.value;">' +
+                 '<option value="" ' + (r.term===''?'selected':'') + '>-</option>' +
+                 '<option value="< 37" ' + t1 + '>' + (L.optTerm1 || '< 37 weeks') + '</option>' +
+                 '<option value="37-40" ' + t2 + '>' + (L.optTerm2 || '37 - 40 weeks') + '</option>' +
+                 '<option value="> 40" ' + t3 + '>' + (L.optTerm3 || '> 40 weeks') + '</option>' +
+              '</select>' +
+           '</div>' +
+           
+           '<div class="mf full"><label>' + L.lblAdmit + '</label>' +
+              '<select onchange="D.obsList[' + i + '].nicuYN=this.value; renderObsList();">' +
+                 '<option value="" ' + (r.nicuYN===''?'selected':'') + '>-</option>' +
+                 '<option value="Yes" ' + admitOpt + '>' + L.btnYes + '</option>' +
+                 '<option value="No" ' + noAdmitOpt + '>' + L.btnNo + '</option>' +
+              '</select>' +
+           '</div>' +
+           nicuHtml +
+           
+           '<div class="mf full"><label>' + (L.lblOutcome || "Keadaan anak?") + '</label>' +
+              '<select onchange="D.obsList[' + i + '].outcBtn=this.value; renderObsList();">' +
+                 '<option value="" ' + (r.outcBtn===''?'selected':'') + '>-</option>' +
+                 '<option value="Healthy" ' + (r.outcBtn==='Healthy'?'selected':'') + '>' + L.optHealthy + '</option>' +
+                 '<option value="Not Healthy" ' + (r.outcBtn==='Not Healthy'?'selected':'') + '>' + L.optNotHealthy + '</option>' +
+              '</select>' +
+           '</div>' +
+           (r.outcBtn==='Not Healthy' ? '<div class="mf full" style="animation:fadeIn 0.2s ease;"><label>' + L.pSpecify + '</label><input type="text" class="mf-text" value="' + (r.outcText||'') + '" oninput="D.obsList[' + i + '].outcText=this.value"></div>' : '') +
+           
+           '<div class="mf full"><label>' + L.lblComp + '</label><input type="text" class="mf-text" placeholder="e.g. None / GDM / PPH" value="' + r.comp + '" oninput="D.obsList[' + i + '].comp=this.value"></div>' +
+        '</div>' +
+     '</div>';
+  });
+  wrap.innerHTML = html;
+}
+
+function addObsRecord() {
+  D.obsList.push({year:'', hosp:'', mode:'', sex:'', wgt:'', comp:'', term:'', nicuYN:'', nicuDur:'', outcBtn:'', outcText:''});
+  renderObsList();
+}
+
+function removeObsRecord(idx) {
+  D.obsList.splice(idx, 1);
+  renderObsList();
+}
+
+function buildS25(L) { 
+  return card(L.sBirth,'👶',L.s25q,L.s25h,` 
+    <div id="obsListWrap"></div>
+    <button class="add-birth-btn" onclick="addObsRecord()">${L.btnAddChild}</button>
+
+    <div class="divider"></div>
+    <div class="num-row"> 
+      <div class="num-group"><span class="nl" style="color:var(--rose-d);">${L.lblMisc}</span><input class="big-input" type="number" inputmode="numeric" pattern="[0-9]*" id="misc" oninput="D.misc=this.value"></div>
+      <div class="num-group"><span class="nl" style="color:var(--rose-d);">${L.lblEct}</span><input class="big-input" type="number" inputmode="numeric" pattern="[0-9]*" id="ect" oninput="D.ect=this.value"></div>
+    </div>
+  `); 
+}
+
+function buildS26(L) { return card(L.sPeriod,'🔄',L.s26q,'',` ${optBtn(L.s26reg, 'Regular', 'menses', true)} ${optBtn(L.s26irr, 'Irregular', 'menses', true)} `); }
+function buildS27(L) { return card(L.sContra,'💉',L.s27q,'',` ${optBtn(L.btnYes, 'Yes', 'contraYN', false, 'show')} ${optBtn(L.btnNo, 'No', 'contraYN', true, 'hide')} <div class="reveal ${D.contraYN==='Yes'?'show':''}" id="contraYNRev"> <span class="mini-lbl">${L.contraLbl}</span> <div class="check-grid" style="grid-template-columns:1fr 1fr">${L.contra.map(c=>`<div class="ci ${D.contra.indexOf(c)!==-1?'checked':''}" onclick="toggleCheck(this,'contra','${c}')"><div class="cd">✓</div>${c}</div>`).join('')}</div> </div>`); }
+
+function buildS28(L) { 
+  return card(L.sWork,'💼',L.s28q,L.s28h,` 
+    <div class="grid2" style="grid-template-columns:1fr;">
+      ${optBtn(L.s28hw, L.s28hw, 'empStatus', false, 'hide')}
+      ${optBtn(L.s28wk, L.s28wk, 'empStatus', false, 'show')}
+      ${optBtn(L.s28st, L.s28st, 'empStatus', false, 'hide')}
+    </div>
+    <div class="reveal ${D.empStatus==='Working' || D.empStatus==='Bekerja'?'show':''}" id="empStatusRev">
+      <span class="mini-lbl">${L.s28lbl}</span>
+      <input class="big-input" type="text" id="patientOcc" placeholder="${L.s28p}" oninput="D.patientOccupation=this.value" style="margin-bottom:16px;"> 
+    </div>
+    <span class="mini-lbl" style="margin-top:16px;">${L.s29lbl}</span>
+    <input class="big-input" type="text" id="husbOcc" placeholder="${L.s29p}" oninput="D.husbandOccupation=this.value">
+  `); 
+}
+
+function buildS30(L) { return card(L.sHousehold,'💰',L.s30q,'', L.income.map((inc)=>optBtn(inc, inc, 'income', true)).join('')); }
+
+function buildS31(L) { 
+  return card(L.sLife,'🌿',L.s31q,L.s31h,` 
+    <span class="mini-lbl">${L.vapeQ}</span> 
+    <div class="grid2"> ${optBtn(L.btnNo,'No','vape')} ${optBtn(L.btnYes,'Yes','vape')} ${optBtn(L.vapeEx,'Ex','vape')} </div> 
+    <div class="divider"></div> 
+    <span class="mini-lbl">${L.smokeQ}</span> 
+    <div class="grid2"> ${optBtn(L.btnNo,'No','smoker')} ${optBtn(L.btnYes,'Yes','smoker')} ${optBtn(L.smokeEx,'Ex','smoker')} </div> 
+    <div class="divider"></div> 
+    <span class="mini-lbl">${L.alcoholQ}</span> 
+    <div class="grid2"> ${optBtn(L.btnNo,'No','alcohol')} ${optBtn(L.btnYes,'Yes','alcohol')} ${optBtn(L.alcoholEx,'Ex','alcohol')} </div> 
+    <div class="divider"></div> 
+    <span class="mini-lbl">${L.drugsQ}</span> 
+    <div class="grid2"> ${optBtn(L.btnNo,'No','drugs')} ${optBtn(L.btnYes,'Yes','drugs')} ${optBtn(L.drugsEx,'Ex','drugs')} </div>
+  `); 
+}
+
+function buildS_HusbLife(L) {
+  return card(L.sLife,'🤵',L.sHusbLifeQ,L.s31h,` 
+    <span class="mini-lbl">${L.husbVapeQ || L.vapeQ}</span> 
+    <div class="grid2"> ${optBtn(L.btnNo,'No','husbVape')} ${optBtn(L.btnYes,'Yes','husbVape')} ${optBtn(L.vapeEx,'Ex','husbVape')} </div> 
+    <div class="divider"></div> 
+    <span class="mini-lbl">${L.husbSmokeQ || L.smokeQ}</span> 
+    <div class="grid2"> ${optBtn(L.btnNo,'No','husbSmoker')} ${optBtn(L.btnYes,'Yes','husbSmoker')} ${optBtn(L.smokeEx,'Ex','husbSmoker')} </div> 
+    <div class="divider"></div> 
+    <span class="mini-lbl">${L.husbAlcQ || L.alcoholQ}</span> 
+    <div class="grid2"> ${optBtn(L.btnNo,'No','husbAlcohol')} ${optBtn(L.btnYes,'Yes','husbAlcohol')} ${optBtn(L.alcoholEx,'Ex','husbAlcohol')} </div> 
+    <div class="divider"></div> 
+    <span class="mini-lbl">${L.husbDrugQ || L.drugsQ}</span> 
+    <div class="grid2"> ${optBtn(L.btnNo,'No','husbDrugs')} ${optBtn(L.btnYes,'Yes','husbDrugs')} ${optBtn(L.drugsEx,'Ex','husbDrugs')} </div>
+  `);
+}
+
+function buildS32(L) {
+  return '<div class="sum-hero"><div class="he">' + (L.sumHero||'🎊') + '</div><h2>' + (L.sumTitle||'Tahniah!') + '</h2><p>' + (L.sumSub||'') + '</p></div>' +
+         '<div class="act-btns" style="margin-bottom:20px;">' +
+           '<button class="act-btn" style="background:var(--teal-pale); color:var(--teal); border:2px solid var(--teal);" onclick="window.print()">' + (L.sumSaveBtn||'Save / Print') + '</button>' +
+         '</div>' +
+         '<div style="background:white; border-radius:12px; padding:16px; margin-bottom:20px; box-shadow:0 4px 12px rgba(0,0,0,0.05); text-align:left;">' +
+           '<span class="mini-lbl" style="margin-top:0; color:var(--purple);">' + (L.sumBoxLbl||'DRAF NOTA') + '</span>' +
+           '<textarea id="finalOutputText" class="big-input" style="height:350px; font-size:13px; line-height:1.5; font-family:monospace; margin-bottom:10px; padding:12px; text-transform:none;" oninput="updateQR()"></textarea>' +
+           '<button class="act-btn" style="background:var(--blue-pale); color:var(--blue); border:2px solid var(--blue);" onclick="copyText()">' + (L.sumCopyBtn||'Copy All Text') + '</button>' +
+         '</div>' +
+         '<div id="qrContainer"></div>' +
+         '<button class="act-btn" onclick="location.reload()">' + (L.sumRestart||'Mula Semula') + '</button>';
+}
+
+function next() { 
+  if (cur >= TOTAL-1) return; 
+  collectInputs(); 
+  
+  const currentStep = document.getElementById('s'+cur);
+  if (currentStep) currentStep.classList.remove('active'); 
+  
+  cur++; 
+  
+  let fetalIndex = stepsArr.indexOf(buildS_Fetal);
+  if (cur === fetalIndex) {
+    let tempWks = D.gaWeeks;
+    if ((isNaN(tempWks) || tempWks < 20) && (D.scanYN === 'Yes' || D.scanYN === 'Ya') && D.scanDate) {
+         let sd = new Date(D.scanDate);
+         sd.setHours(0,0,0,0);
+         let td = new Date();
+         td.setHours(0,0,0,0);
+         tempWks = Math.floor((280 - Math.round((sd.getTime() - td.getTime()) / 86400000)) / 7);
+    }
+    if (isNaN(tempWks) || tempWks < 20) {
+      cur++; 
+    }
+  }
+
+  const nextStep = document.getElementById('s'+cur);
+  if (nextStep) nextStep.classList.add('active'); 
+  
+  updateUI(); 
+  if (cur === TOTAL-1) buildSummary(); 
+  window.scrollTo(0,0); 
+}
+
+function prev() { 
+  if (cur <= 0) return; 
+  collectInputs(); 
+  
+  const currentStep = document.getElementById('s'+cur);
+  if (currentStep) currentStep.classList.remove('active'); 
+  
+  cur--; 
+  
+  let fetalIndex = stepsArr.indexOf(buildS_Fetal);
+  if (cur === fetalIndex) {
+    let tempWks = D.gaWeeks;
+    if ((isNaN(tempWks) || tempWks < 20) && (D.scanYN === 'Yes' || D.scanYN === 'Ya') && D.scanDate) {
+         let sd = new Date(D.scanDate);
+         sd.setHours(0,0,0,0);
+         let td = new Date();
+         td.setHours(0,0,0,0);
+         tempWks = Math.floor((280 - Math.round((sd.getTime() - td.getTime()) / 86400000)) / 7);
+    }
+    if (isNaN(tempWks) || tempWks < 20) {
+      cur--; 
+    }
+  }
+
+  const prevStep = document.getElementById('s'+cur);
+  if (prevStep) prevStep.classList.add('active'); 
+  
+  updateUI(); 
+  window.scrollTo(0,0); 
+}
+
+function nextBtn() { collectInputs(); next(); }
+
+function updateUI() { 
+  const L = T[lang]; 
+  const pct = Math.round((cur/(TOTAL-1))*100); 
+  
+  document.getElementById('pFill').style.width = pct+'%'; 
+  let pPctEl = document.getElementById('pPct');
+  if (pPctEl) pPctEl.textContent = pct + '%';
+  
+  if (L.pLabels && L.pLabels[cur]) {
+    document.getElementById('pLabel').textContent = L.pLabels[cur]; 
+  } else {
+    document.getElementById('pLabel').textContent = "..."; 
+  }
+  
+  document.getElementById('btnNext').textContent = cur===0 ? (L.s0btn || L.btnStart) : L.btnNext; 
+  document.getElementById('btnBack').textContent = L.btnBack; 
+  document.getElementById('btnBack').style.display = cur===0 ? 'none' : ''; 
+  document.getElementById('btnNext').style.display = cur===TOTAL-1 ? 'none' : ''; 
+  
+  if (pct >= 50 && !halfwayShown && cur !== TOTAL-1) {
+     halfwayShown = true;
+     let toast = document.getElementById('halfwayToast');
+     if(toast) {
+        toast.textContent = L.halfwayMsg || "🌟 Halfway there!";
+        toast.classList.add('show');
+        setTimeout(() => { toast.classList.remove('show'); }, 3000);
+     }
+  }
+}
+
+function collectInputs() {
+  [['name','name'],['currentClinic','currentClinic'],['bookingClinic','bookingClinic'],['bookingPOA','bookingPOA'],['bookingHb','bookingHb'],['currentWeight','currentWeight'],['sympLaborOther','sympLaborOther'],['fmTime','fmTime'],['fmCount','fmCount'],['mgtt1Wks','mgtt1Wks'],['mgtt1Res','mgtt1Res'],['mgtt2Wks','mgtt2Wks'],['mgtt2Res','mgtt2Res'],['foodAllergy','foodAllergy'],['medAllergy','medAllergy'],['pmiOthers','pmiOthers'],['pmiNewOthers','pmiNewOthers'],['psychOthers','psychOthers'],['medications','medications'],['surgDetails','surgDetails'],['fhxCancerType','fhxCancerType'],['patientOcc','patientOccupation'],['husbOcc','husbandOccupation'],['misc','misc'],['ect','ect'],['age','age'],['gbsDur','gbsDur']].forEach(([id,key])=>{ const el = document.getElementById(id); if (el) D[key] = el.value; });
+  const lmpEl = document.getElementById('lmp'); if (lmpEl?.value) D.lmp = lmpEl.value;
+  const scanEl = document.getElementById('scanDate'); if (scanEl?.value) D.scanDate = scanEl.value;
+  const hEl = document.getElementById('height'), wEl = document.getElementById('bookingWeight');
+  if (hEl?.value) D.height = hEl.value; if (wEl?.value) D.bookingWeight = wEl.value;
+  
+  if(D.empStatus === 'Housewife' || D.empStatus === 'Surirumah') D.patientOccupation = 'Housewife';
+  if(D.empStatus === 'Student' || D.empStatus === 'Pelajar') D.patientOccupation = 'Student';
+}
+
+function restoreInputs() {
+  const map = {name:D.name,currentClinic:D.currentClinic,bookingClinic:D.bookingClinic,bookingPOA:D.bookingPOA,bookingHb:D.bookingHb,currentWeight:D.currentWeight,sympLaborOther:D.sympLaborOther,fmTime:D.fmTime,fmCount:D.fmCount,mgtt1Wks:D.mgtt1Wks,mgtt2Wks:D.mgtt2Wks,foodAllergy:D.foodAllergy,medAllergy:D.medAllergy,pmiOthers:D.pmiOthers,pmiNewOthers:D.pmiNewOthers,psychOthers:D.psychOthers,medications:D.medications,surgDetails:D.surgDetails,fhxCancerType:D.fhxCancerType,patientOcc:D.patientOccupation,husbOcc:D.husbandOccupation,height:D.height,bookingWeight:D.bookingWeight,lmp:D.lmp,scanDate:D.scanDate,misc:D.misc,ect:D.ect,age:D.age,gbsDur:D.gbsDur};
+  Object.entries(map).forEach(([id,val])=>{ const el = document.getElementById(id); if (el && val && id !== 'patientOcc') el.value = val; });
+  if (D.height && D.bookingWeight) calcBMI(); if (D.lmp) calcEDD();
+  if (D.scanDate) calcPOG();
+}
+
+function calcBMI() { const h = parseFloat(document.getElementById('height')?.value); const w = parseFloat(document.getElementById('bookingWeight')?.value); if (!h||!w||h<50) return; const bmi = (w/((h/100)**2)).toFixed(1); D.bmi = bmi; const L = T[lang]; const el = document.getElementById('bmiVal'), ce = document.getElementById('bmiCat'), bx = document.getElementById('bmiBox'); if (!el) return; el.textContent = bmi+' kg/m²'; const idx = bmi<18.5?0:bmi<25?1:bmi<30?2:3; ce.textContent = L.bmiCats[idx]; bx.classList.add('show'); }
+function calcEDD() { 
+  const lmp = document.getElementById('lmp')?.value; if (!lmp) return; D.lmp = lmp; 
+  const edd = new Date(new Date(lmp).getTime()+280*86400000); D.edd = fmt(edd); 
+  const days = Math.floor((new Date()-new Date(lmp))/86400000); 
+  D.gaWeeks = Math.floor(days/7); const d = days%7; 
+  D.ga = days>=0 ? `${D.gaWeeks}w ${d}d` : `EDD in ${Math.floor(Math.abs(days)/7)}w`; 
+  const L = T[lang]; const ev = document.getElementById('eddVal'), gv = document.getElementById('gaVal'), bx = document.getElementById('eddBox'); if (!ev) return; 
+  ev.textContent = D.edd; gv.textContent = L.gaPrefix + D.ga; bx.classList.add('show'); 
+}
+function fmt(d) { 
+  if (!(d instanceof Date) || isNaN(d)) return '-';
+  return d.toLocaleDateString('en-MY',{day:'2-digit',month:'short',year:'numeric'}); 
+}
+
+function calcPOG() {
+  const sdVal = document.getElementById('scanDate')?.value;
+  if (!sdVal) return;
+  D.scanDate = sdVal;
+  
+  let sd = new Date(sdVal);
+  sd.setHours(0,0,0,0);
+  let td = new Date();
+  td.setHours(0,0,0,0);
+  
+  let diff = Math.round((sd.getTime() - td.getTime()) / 86400000);
+  let pD = 280 - diff;
+  let pW = Math.floor(pD / 7);
+  let pDays = pD % 7;
+  
+  const bx = document.getElementById('pogBox');
+  const pv = document.getElementById('pogVal');
+  if (pD >= 0 && pv && bx) {
+    pv.textContent = pW + "w " + pDays + "d";
+    bx.classList.add('show');
+  } else if (pv && bx) {
+    pv.textContent = "—";
+    bx.classList.add('show');
+  }
+}
+
+function generateSplitSummaries() {
+  let finalWks = D.gaWeeks;
+  let reddPOG = "";
+  
+  if (D.scanYN === 'Yes' || D.scanYN === 'Ya') {
+    if (D.scanDate) {
+      let sd = new Date(D.scanDate);
+      sd.setHours(0,0,0,0);
+      let td = new Date();
+      td.setHours(0,0,0,0);
+      let diff = Math.round((sd.getTime() - td.getTime()) / 86400000);
+      let pD = 280 - diff;
+      let pW = Math.floor(pD / 7);
+      let pDays = pD % 7;
+      if(pD >= 0) reddPOG = "at " + pW + "w " + pDays + "d POG\n";
+      if(isNaN(finalWks)) finalWks = pW;
+    }
+  }
+
+  let displayRace = txVal(D.race) || '-';
+  if(D.race === 'Non-Malaysian' || D.race === 'Bukan Warganegara' || D.race === 'Non-Msian') { displayRace = tc(D.raceCountry) || 'Non-Msian'; }
+  
+  // BAHAGIAN 1: BIODATA, KLINIK & UKURAN
+  var s1 = tc(D.name||'-') + "\n";
+  s1 += (D.age||'-') + " " + displayRace + " " + (txVal(D.religion)||'-') + "\n";
+  
+  let P = D.obsList.length;
+  let M = parseInt(D.misc) || 0;
+  let G = P + M + 1;
+  s1 += `G${G} P${P}+${M}\n`;
+  s1 += "at " + (D.ga||'-') + " POA\n";
+  s1 += "LMP: " + (D.lmp?fmt(new Date(D.lmp)):'-') + ", EDD: " + (D.edd||'-') + "\n";
+  
+  if (D.scanYN === 'Yes' || D.scanYN === 'Ya') {
+    s1 += "REDD Scan: " + (D.scanDate ? fmt(new Date(D.scanDate)) : '?') + "\n";
+    if (reddPOG) s1 += reddPOG;
+  }
+  
+  s1 += "Menses: " + (txVal(D.menses)||'-') + "\n";
+  s1 += "Contraception: " + (D.contraYN==='Yes' || D.contraYN==='Ya'?(txArr(D.contra).join(', ')||'Yes'):(txVal(D.contraYN)||'-')) + "\n";
+  
+  s1 += "Current KK: " + tc(D.currentClinic||'-') + "\n";
+  s1 += "Booking KK: " + tc(D.bookingClinic||'-') + " at " + (D.bookingPOA||'-') + " wks, Hb: " + (D.bookingHb||'-') + "\n";
+  
+  let weightGainStr = '-';
+  if(D.bookingWeight && D.currentWeight) {
+    let diff = parseFloat(D.currentWeight) - parseFloat(D.bookingWeight);
+    if(!isNaN(diff)) weightGainStr = (diff > 0 ? '+' : '') + diff.toFixed(1) + 'kg';
+  }
+  s1 += "Ht: " + (D.height?D.height+'cm':'-') + ", Bk Wt: " + (D.bookingWeight?D.bookingWeight+'kg':'-') + " (BMI: " + (D.bmi||'-') + "), Curr Wt: " + (D.currentWeight?D.currentWeight+'kg':'-') + " (Gain: " + weightGainStr + ")";
+
+  // BAHAGIAN 2: UJIAN DARAH, GBS & MGTT
+  var s2 = "Bld: " + (txVal(D.bloodGroup)||'-') + " " + (txVal(D.rhesus)||'-') + "\n";
+  s2 += "HIV: " + (txVal(D.hiv)||'-') + ", HepB: " + (txVal(D.hepB)||'-') + ", VDRL: " + (txVal(D.vdrl)||'-') + "\n";
+  
+  var gbsStr = '-';
+  if(D.gbsYN === 'Yes' || D.gbsYN === 'Ya') { 
+    let whenStr = (D.gbsWhen && D.gbsWhen.length > 0) ? txArr(D.gbsWhen).join(' & ') : '?';
+    gbsStr = 'Yes(' + whenStr + ', ' + (txVal(D.gbsWhere)||'?') + ')'; 
+    
+    let hasPrev = false;
+    if (D.gbsWhen && Array.isArray(D.gbsWhen)) {
+      for(let i=0; i<D.gbsWhen.length; i++) {
+         if (D.gbsWhen[i].indexOf('Previous') !== -1 || D.gbsWhen[i].indexOf('lepas') !== -1) hasPrev = true;
+      }
+    }
+    
+    if (hasPrev) {
+       gbsStr += ` [Ward:${txVal(D.gbsWard)||'-'}`;
+       if (D.gbsWard === 'Yes' || D.gbsWard === 'Ya') {
+           let outc = D.gbsOutBtn === 'Healthy' ? 'Healthy' : (D.gbsOutText ? tc(D.gbsOutText) : '?');
+           gbsStr += `, Sepsis:${txVal(D.gbsSepsis)||'-'}, Dur:${tc(D.gbsDur)||'-'}, Outc:${outc}`;
+       }
+       gbsStr += `]`;
+    }
+  } else if(D.gbsYN) { gbsStr = txVal(D.gbsYN); }
+  
+  var mgttStr = txVal(D.mgttYN) || '-';
+  if (D.mgttYN === 'Yes' || D.mgttYN === 'Ya') {
+    let m1 = D.mgtt1Wks ? `${D.mgtt1Wks}w-${txVal(D.mgtt1Res)||'?'}` : '';
+    let m2 = D.mgtt2Wks ? `${D.mgtt2Wks}w-${txVal(D.mgtt2Res)||'?'}` : '';
+    let mArr = [];
+    if(m1) mArr.push("1st: " + m1);
+    if(m2) mArr.push("2nd: " + m2);
+    let txStr = (D.mgttTx && D.mgttTx.length) ? ` [Tx: ${txArr(D.mgttTx).join('+')}]` : '';
+    if(mArr.length > 0) mgttStr = "Yes (" + mArr.join(", ") + ")" + txStr;
+  }
+  
+  s2 += "GBS: " + gbsStr + "\nMGTT: " + mgttStr;
+
+  // BAHAGIAN 3: ALAHAN, PENYAKIT, UBAT, PEMBEDAHAN
+  let chronArr = [];
+  D.pmiChron.forEach(c => {
+     let det = D.chronDetails[c] || {};
+     let str = txVal(c);
+     if(det.since || det.meds) {
+       str += ` (${det.since||'?'}, ${tc(det.meds)||'No meds'})`;
+     }
+     chronArr.push(str);
+  });
+  var chronIll = chronArr.length ? chronArr.join(', ') : 'Nil';
+  if (D.pmiOthers) { chronIll = (chronIll === 'Nil') ? tc(D.pmiOthers) : chronIll + ', ' + tc(D.pmiOthers); }
+  
+  let surgStr = 'Nil';
+  if (D.surgYN === 'Yes' || D.surgYN === 'Ya') {
+      surgStr = D.surgDetails ? tc(D.surgDetails) : 'Yes';
+  }
+
+  var psychJoin = (D.psychDxList&&D.psychDxList.length?txArr(D.psychDxList).join(', '):'');
+  var psychStr = (D.psychYN==='Yes' || D.psychYN==='Ya' ? (psychJoin||'Yes') + (D.psychOthers?', '+tc(D.psychOthers):'') : 'Nil');
+
+  var s3 = "Past Med Hx: " + chronIll + "\nSurg: " + surgStr + "\nPsych: " + psychStr + "\n";
+  s3 += "Allergy: Food(" + (D.foodAllergyYN==='Yes'||D.foodAllergyYN==='Ya'?tc(D.foodAllergy):'Nil') + "), Med(" + (D.medAllergyYN==='Yes'||D.medAllergyYN==='Ya'?tc(D.medAllergy):'Nil') + ")\n";
+
+  var newIll = (D.pmiNew&&D.pmiNew.length?txArr(D.pmiNew).join(', '):'Nil');
+  if (D.pmiNewOthers) { newIll = (newIll === 'Nil') ? tc(D.pmiNewOthers) : newIll + ', ' + tc(D.pmiNewOthers); }
+  s3 += "Cur Med Prob: " + newIll + "\n";
+  
+  let peProph = (D.aspirinCa === 'Yes' || D.aspirinCa === 'Ya') ? "On PE prophylaxis" : "Not on PE prophylaxis";
+  s3 += "Meds: " + (D.medsYN==='Yes'||D.medsYN==='Ya'?tc(D.medications):'Nil') + ", " + peProph + "\n";
+  
+  var fhxJoin = (D.fhx&&D.fhx.length?txArr(D.fhx).join(', '):'');
+  s3 += "FamHx: " + (fhxJoin ? fhxJoin + (D.fhxCancerType ? ' - ' + tc(D.fhxCancerType) : '') : 'Nil');
+
+  // BAHAGIAN 4: REKOD BERSALIN
+  var s4 = "Past Obstetric History:\n";
+  
+  if (D.obsList.length > 0) {
+    D.obsList.forEach((r, i) => {
+      let cLow = r.comp ? r.comp.toLowerCase().trim() : '';
+      let compStr = (!cLow || cLow === 'none' || cLow === 'no' || cLow === 'tiada' || cLow === 'nil' || cLow === 'tidak' || cLow === 'takde') ? 'No complication' : 'Comp: ' + tc(r.comp);
+      let outc = r.outcBtn === 'Healthy' ? 'Healthy' : (r.outcText ? tc(r.outcText) : '?');
+      let termInfo = r.term ? txVal(r.term) + 'w' : '?';
+      let nicuInfo = (r.nicuYN === 'Yes' || r.nicuYN === 'Ya') ? `Ward(${tc(r.nicuDur)||'?'})` : ((r.nicuYN === 'No' || r.nicuYN === 'Tidak') ? 'Not warded' : '?');
+      s4 += `${r.year||'?'}, ${tc(r.hosp)||'?'}, ${r.mode||'?'}, ${txVal(r.sex)||'?'}, ${r.wgt||'?'}kg, ${termInfo}, ${nicuInfo}, Outc: ${outc}, ${compStr}\n`;
+    });
+  } else {
+    s4 += "Nil\n";
+  }
+  
+  s4 += "Miscarriage: " + (D.misc||'0');
+  if (parseInt(D.ect) > 0) {
+     s4 += ", Ectopic: " + D.ect;
+  }
+
+  // BAHAGIAN 5: SOSIAL, LIFESTYLE, SYMPTOM & FM
+  var s5 = "Wife Occ: " + tc(D.patientOccupation||'-') + ", Husb Occ: " + tc(D.husbandOccupation||'-') + "\n";
+  s5 += "Income: " + (txVal(D.income)||'-') + "\n";
+  s5 += "Wife: Vape:" + (txVal(D.vape)||'-') + ", Smoking:" + (txVal(D.smoker)||'-') + ", Alc:" + (txVal(D.alcohol)||'-') + ", Drug:" + (txVal(D.drugs)||'-') + "\n";
+  s5 += "Husb: Vape:" + (txVal(D.husbVape)||'-') + ", Smoking:" + (txVal(D.husbSmoker)||'-') + ", Alc:" + (txVal(D.husbAlcohol)||'-') + ", Drug:" + (txVal(D.husbDrugs)||'-') + "\n\n";
+
+  let symps = [];
+  if(D.sympAbd) symps.push("Stomach pain");
+  if(D.sympContraction) symps.push("Contractions");
+  if(D.sympBld) symps.push("Bleeding");
+  if(D.sympLiquor) symps.push("Leaking water");
+  if(D.sympHeadache) symps.push("Headache");
+  if(D.sympVision) symps.push("Blurred vision");
+  if(D.sympDizzy) symps.push("Dizziness");
+  if(D.sympPalp) symps.push("Palpitations");
+  if(D.sympFatigue) symps.push("Fatigue");
+  if(D.sympUri) symps.push("Urinary Symp");
+  if(D.sympNau) symps.push("Nausea/Vomit");
+  if(D.sympLaborOther) symps.push(tc(D.sympLaborOther));
+  if(symps.length===0) symps.push("Nil");
+  
+  s5 += "Symp: " + symps.join(', ') + "\n";
+  if(finalWks >= 20 && !isNaN(finalWks)) {
+     let fmStatus = txVal(D.sympFetal) || '-';
+     let time = D.fmTime ? tc(D.fmTime) : '?';
+     let count = D.fmCount ? D.fmCount : '?';
+     s5 += `FM: ${fmStatus} (10 moves by ${time}, Today: ${count}x)\n`;
+  }
+  
+  let fullText = "[SCAN 1]\n" + s1 + "\n\n[SCAN 2]\n" + s2 + "\n\n[SCAN 3]\n" + s3 + "\n\n[SCAN 4]\n" + s4 + "\n\n[SCAN 5]\n" + s5;
+  return [s1, s2, s3, s4, s5, fullText];
+}
+
+function updateQR() {
+  try {
+      let el = document.getElementById('finalOutputText');
+      if(!el) return;
+      let text = el.value;
+      if(!text) return;
+      
+      text = text.replace(/\r\n/g, '\n');
+      
+      let parts = [];
+      if (text.indexOf("[SCAN 1]") !== -1) {
+         let rawParts = text.split(/\[SCAN \d+\]\n?/);
+         for(let i=1; i<rawParts.length; i++) {
+            if(rawParts[i].trim()) parts.push(rawParts[i].trim());
+         }
+      } else {
+         let lines = text.split('\n');
+         let chunk = Math.ceil(lines.length / 5);
+         if (chunk < 1) chunk = 1;
+         parts.push(lines.slice(0, chunk).join('\n').trim());
+         parts.push(lines.slice(chunk, chunk*2).join('\n').trim());
+         parts.push(lines.slice(chunk*2, chunk*3).join('\n').trim());
+         parts.push(lines.slice(chunk*3, chunk*4).join('\n').trim());
+         parts.push(lines.slice(chunk*4).join('\n').trim());
+      }
+
+      let container = document.getElementById('qrContainer');
+      if(!container) return;
+      container.innerHTML = '';
+      
+      parts.forEach((chunk, idx) => {
+          if(!chunk) return;
+          let box = document.createElement('div');
+          box.className = 'qr-box';
+          box.innerHTML = '<div class="qr-title">SCAN ' + (idx+1) + ' / ' + parts.length + '</div>' +
+                          '<div style="background:white; display:inline-block; padding:10px; border-radius:10px;">' +
+                          '<canvas id="qrCanvas' + idx + '"></canvas></div>';
+          container.appendChild(box);
+          
+          let qrText = chunk.replace(/\n/g, "\r\n");
+          
+          try {
+             if(typeof QRious !== 'undefined') {
+                new QRious({ element: document.getElementById('qrCanvas'+idx), value: qrText, size: 300, level: 'L' });
+             }
+          } catch(e) { console.log("QR Render Error:", e); }
+      });
+  } catch(e) {
+      console.log("QR Function Error:", e);
+  }
+}
+
+function copyText() {
+  var copyText = document.getElementById('finalOutputText');
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); 
+  document.execCommand("copy");
+  alert("Draf nota telah disalin! Boleh terus Paste.");
+}
+
+function buildSummary() {
+  try {
+      var textArray = generateSplitSummaries();
+      var outArea = document.getElementById('finalOutputText');
+      if(outArea) { 
+         outArea.value = textArray[5]; 
+         updateQR();
+      }
+      
+      // CONFETTI CELEBRATION!
+      if(typeof confetti === 'function') {
+         confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 }, colors: ['#ff9fb8', '#7b42f6', '#4299f5', '#10b981'] });
+      }
+      
+      // AUDIO SUCCESS (Telah di-unlock pada skrin pertama)
+      var sSound = document.getElementById('successSound');
+      if(sSound) {
+         sSound.currentTime = 0;
+         sSound.play().catch(function(e){ console.log("Audio play prevented:", e); });
+      }
+      
+  } catch(err) {
+      var errBox = document.getElementById('finalOutputText');
+      if(errBox) { errBox.value = "RALAT SISTEM (System Error): " + err.message; }
+      console.log(err);
+  }
+}
+</script>
+</body>
+</html>
