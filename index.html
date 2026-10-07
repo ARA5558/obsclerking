@@ -226,6 +226,14 @@ const T = {
     sPeriod:"🔄 Period History", sContra:"🔄 Birth Control",
     sLife:"🌿 Lifestyle",
     
+    sObsHistTop: "Pregnancy History",
+    sHivTop: "HIV Status",
+    sHepBTop: "Hepatitis B Status",
+    sSyphilisTop: "Syphilis Status",
+    sGbsTop: "GBS Status",
+    sMgttTop: "MGTT",
+    sFmTop: "Fetal Movement",
+
     s0q:"Ready to fill in the form?",
     s0h:"✨ Your help allows doctors to review your details instantly!<br><br>💡 <strong>Tip:</strong> You can find most of this information in your <strong>Antenatal / Pink Book</strong>. Please try your best to look for it and fill it in. If you are unsure, just skip and leave it blank.",
     s0btn:"I'm ready to start",
@@ -357,6 +365,14 @@ const T = {
     sObstet:"🤰 Sejarah Mengandung", sPeriod:"🔄 Haid", sContra:"🔄 Perancang",
     sLife:"🌿 Gaya Hidup",
     
+    sObsHistTop: "Sejarah Kehamilan",
+    sHivTop: "Status HIV",
+    sHepBTop: "Status Hep B",
+    sSyphilisTop: "Status Sifilis",
+    sGbsTop: "Status GBS",
+    sMgttTop: "MGTT",
+    sFmTop: "Pergerakan Bayi",
+
     s0q:"Sedia untuk mula isikan borang?",
     s0h:"✨ Bantuan anda membolehkan doktor merawat anda dengan lebih pantas!<br><br>💡 <strong>Tips:</strong> Anda boleh dapati maklumat ini daripada <strong>buku antenatal (buku pink)</strong> anda. Sila cuba cari dan isikan maklumat jika boleh. Jika anda tidak pasti, abaikan sahaja dan terus ke soalan seterusnya.",
     s0btn:"Saya bersedia",
@@ -807,7 +823,7 @@ function clearSymp(el) {
 }
 
 function buildS_Fetal(L) {
-  return card(L.sPreg,'👶',L.sympFetalQ,'',`
+  return card(L.sFmTop,'👶',L.sympFetalQ,'',`
     ${optBtn(L.sympFetalActive, L.sympFetalActive, 'sympFetal', false)}
     ${optBtn(L.sympFetalLess, L.sympFetalLess, 'sympFetal', false)}
     <div style="margin-top:16px; padding:16px; background:var(--gray50); border:2px dashed var(--gray200); border-radius:12px;">
@@ -857,12 +873,12 @@ function buildS9(L) {
 }
 function buildS10(L) { return card(L.sBlood,'🩸',L.s10q,'', `<div class="grid2">${L.bgOpts.map(o=>{const[lbl,val]=o.split('|');return optBtn(lbl, val, 'bloodGroup', true);}).join('')}</div>`); }
 function buildS11(L) { return card(L.sBlood,'➕',L.s11q,L.s11h,` ${optBtn(L.s11pos, 'Positive', 'rhesus', true)} ${optBtn(L.s11neg, 'Negative', 'rhesus', true)} ${optBtn(L.s11unk, 'Unknown', 'rhesus', true)} `); }
-function buildS12(L) { return card(L.sTests,'🔴',L.s12q,L.s12h,` ${optBtn(L.s12pos, 'Positive', 'hiv', true)} ${optBtn(L.s12neg, 'Negative', 'hiv', true)} ${optBtn(L.s12unk, 'Unknown', 'hiv', true)} `); }
-function buildS13(L) { return card(L.sTests,'🟡',L.s13q,'',` ${optBtn(L.s13pos, 'Positive', 'hepB', true)} ${optBtn(L.s13neg, 'Negative', 'hepB', true)} ${optBtn(L.s13unk, 'Unknown', 'hepB', true)} `); }
-function buildS14(L) { return card(L.sTests,'🧪',L.s14q,'',` ${optBtn(L.s14pos, 'Reactive', 'vdrl', true)} ${optBtn(L.s14neg, 'Non-reactive', 'vdrl', true)} ${optBtn(L.s14unk, 'Unknown', 'vdrl', true)} `); }
+function buildS12(L) { return card(L.sHivTop,'🔴',L.s12q,L.s12h,` ${optBtn(L.s12pos, 'Positive', 'hiv', true)} ${optBtn(L.s12neg, 'Negative', 'hiv', true)} ${optBtn(L.s12unk, 'Unknown', 'hiv', true)} `); }
+function buildS13(L) { return card(L.sHepBTop,'🟡',L.s13q,'',` ${optBtn(L.s13pos, 'Positive', 'hepB', true)} ${optBtn(L.s13neg, 'Negative', 'hepB', true)} ${optBtn(L.s13unk, 'Unknown', 'hepB', true)} `); }
+function buildS14(L) { return card(L.sSyphilisTop,'🧪',L.s14q,'',` ${optBtn(L.s14pos, 'Reactive', 'vdrl', true)} ${optBtn(L.s14neg, 'Non-reactive', 'vdrl', true)} ${optBtn(L.s14unk, 'Unknown', 'vdrl', true)} `); }
 
 function buildS15(L) { 
-  let html = card(L.sTests,'🦠',L.s15q,'',
+  let html = card(L.sGbsTop,'🦠',L.s15q,'',
     optBtn(L.btnYes, 'Yes', 'gbsCurrYN', false, 'show') + " " +
     optBtn(L.btnNo, 'No', 'gbsCurrYN', true, 'hide') + " " +
     optBtn(L.s15unk, 'Unknown', 'gbsCurrYN', true, 'hide') +
@@ -911,7 +927,7 @@ function buildS15(L) {
 
 function buildS_MGTT(L) {
   let mgttShow = D.mgttYN === 'Yes' ? 'show' : '';
-  return card(L.sTests,'🥤',L.sMgttQ,'',`
+  return card(L.sMgttTop,'🥤',L.sMgttQ,'',`
     ${optBtn(L.btnYes, 'Yes', 'mgttYN', false, 'show')}
     ${optBtn(L.btnNo, 'No', 'mgttYN', true, 'hide')}
     <div class="reveal ${mgttShow}" id="mgttYNRev">
@@ -1380,7 +1396,7 @@ function removePregRecord(idx) {
 }
 
 function buildS25(L) { 
-  return card(L.sBirth,'👶',L.s25q,L.s25h,` 
+  return card(L.sObsHistTop,'👶',L.s25q,L.s25h,` 
     <div id="pregListWrap"></div>
     <button class="add-birth-btn" onclick="addPregRecord()">${L.btnAddChild}</button>
   `); 
