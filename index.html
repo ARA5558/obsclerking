@@ -3,27 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<!-- KOD ANTI CACHE SUPAYA PHONE SENTIASA GUNA VERSI TERBARU -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Expires" content="0" />
 <title>NOCA - New Obstetric Clerking Apps</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900;1000&display=swap" rel="stylesheet">
-<!-- QR Code Library -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
-<!-- Confetti Animation Library -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 <style>
 :root {
-  /* VIBRANT BELACAN PINK & PURPLE PALETTE */
   --rose: #ff6b8b; 
-  --rose-d: #ed1c5b; /* Belacan dark */
+  --rose-d: #ed1c5b; 
   --rose-pale: #fff0f3;
   --purple: #7048e8; 
+  --purple-d: #5c33d1;
   --purple-pale: #f3f0ff;
   --blue: #339af0; 
+  --blue-d: #1c7ed6;
   --blue-pale: #e7f5ff;
   --teal: #20c997; 
+  --teal-d: #2b8a3e;
   --teal-pale: #e6fcf5;
   --gray50: #f8fafc; 
   --gray100: #f1f5f9; 
@@ -38,7 +37,6 @@
 
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 
-/* VIBRANT MESH GRADIENT BACKGROUND */
 html, body {
   font-family: var(--font); 
   color: var(--gray800); 
@@ -53,7 +51,6 @@ html, body {
   background-attachment: fixed;
 }
 
-/* HALFWAY BANNER (TOAST) */
 .toast {
   position: fixed; top: calc(20px + env(safe-area-inset-top)); left: 50%; transform: translateX(-50%) translateY(-150px);
   background: linear-gradient(135deg, var(--rose-d) 0%, var(--purple) 100%);
@@ -66,74 +63,78 @@ html, body {
 
 a[href*="netlify.com"], #netlify-badge { display: none !important; opacity: 0 !important; pointer-events: none !important; }
 
-/* FRONT PAGE / LANG SCREEN LAYOUT - ENHANCED READABILITY */
 .lang-screen {
   min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; 
-  padding: 36px 20px; text-align: center; max-width: 520px; margin: 0 auto;
+  padding: 36px 20px; text-align: center; max-width: 520px; margin: 0 auto; position: relative;
 }
 
-.hero-block {
-  background: linear-gradient(135deg, var(--purple) 0%, var(--rose-d) 100%);
-  border-radius: 28px; padding: 36px 24px; width: 100%; margin-bottom: 20px;
-  color: white; box-shadow: 0 20px 45px rgba(112, 72, 232, 0.3);
-  position: relative; overflow: hidden;
+.top-toggle-container {
+  position: absolute; top: calc(20px + env(safe-area-inset-top)); right: 20px; z-index: 100;
 }
-.hero-block::before {
-  content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-  background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%); pointer-events: none;
-}
-.lang-logo { font-size: 72px; margin-bottom: 12px; animation: float 3s ease-in-out infinite; position: relative; z-index: 2;}
-@keyframes float { 0% {transform: translateY(0px);} 50% {transform: translateY(-8px);} 100% {transform: translateY(0px);} }
-
-.noca-acronym {
-  font-size: 38px; font-weight: 1000; letter-spacing: -1px; line-height: 1; margin-bottom: 6px;
-  text-shadow: 0 4px 12px rgba(0,0,0,0.15); position: relative; z-index: 2;
-}
-.noca-fulltitle {
-  font-size: 20px; font-weight: 800; letter-spacing: -0.2px; line-height: 1.3; opacity: 0.98;
-  position: relative; z-index: 2; margin-bottom: 4px;
-}
-.lang-sub { 
-  font-size: 17px; font-weight: 700; opacity: 0.9; position: relative; z-index: 2; margin-top: 4px; 
-}
-.hero-badge { 
-  display: inline-block; background: rgba(255,255,255,0.25); color: white; 
-  padding: 8px 18px; border-radius: 24px; font-size: 14px; font-weight: 800; margin-top: 18px; 
-  backdrop-filter: blur(8px); position: relative; z-index: 2; border: 1px solid rgba(255,255,255,0.3);
-}
-
-.info-card {
-  background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(12px); border: 2px solid white;
-  border-radius: 22px; padding: 22px; box-shadow: 0 12px 32px rgba(0,0,0,0.05);
-  margin-bottom: 18px; text-align: left; font-size: 14px; color: var(--gray800); font-weight: 700; width: 100%; line-height: 1.6;
-}
-
-/* MAIN APP */
-.app { display: none; }
-.app.show { display: block; }
-.header { 
-  background: rgba(255,255,255,0.92); backdrop-filter: blur(15px);
-  padding: calc(20px + env(safe-area-inset-top)) 20px 24px; color: var(--gray800); 
-  position: sticky; top: 0; z-index: 50; border-bottom-left-radius: 32px; border-bottom-right-radius: 32px; 
-  box-shadow: 0 10px 30px rgba(237, 28, 91, 0.08); border-bottom: 1px solid rgba(255,255,255,0.8);
-}
-.header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
-.header h1 { font-size: 22px; font-weight: 900; color: var(--rose-d); }
-.header p { font-size: 13px; color: var(--gray600); margin-top: 2px; font-weight: 700; }
 
 .lang-switch-btn { 
   background: var(--rose-pale); border: none; color: var(--rose-d); border-radius: 20px; 
   padding: 8px 16px; font-family: var(--font); font-size: 14px; font-weight: 900; 
-  cursor: pointer; touch-action: manipulation; transition: all 0.2s; position: relative; z-index: 100; pointer-events: auto;
+  cursor: pointer; touch-action: manipulation; transition: all 0.2s; pointer-events: auto;
 }
 .lang-switch-btn:active { transform: scale(0.95); }
 .lang-switch-btn.front-page-toggle {
   background: rgba(255,255,255,0.9); color: var(--purple); box-shadow: 0 4px 15px rgba(0,0,0,0.08); border: 2px solid white;
 }
 
-.progress-track { background: var(--gray200); border-radius: 10px; height: 10px; overflow: hidden; margin-top: 10px; }
+.hero-block {
+  margin-top: 40px; margin-bottom: 20px;
+}
+.lang-logo { font-size: 72px; margin-bottom: 12px; animation: float 3s ease-in-out infinite; color: var(--purple);}
+@keyframes float { 0% {transform: translateY(0px);} 50% {transform: translateY(-8px);} 100% {transform: translateY(0px);} }
+
+.noca-acronym {
+  font-size: 42px; font-weight: 1000; letter-spacing: -1px; line-height: 1; margin-bottom: 6px;
+  color: var(--purple); text-shadow: 0 4px 12px rgba(112, 72, 232, 0.15);
+}
+.noca-fulltitle {
+  font-size: 18px; font-weight: 800; letter-spacing: -0.2px; line-height: 1.3; color: var(--gray600); margin-bottom: 20px;
+}
+
+.info-card {
+  background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border: 2px solid white;
+  border-radius: 22px; padding: 22px; box-shadow: 0 12px 32px rgba(0,0,0,0.05);
+  margin-bottom: 24px; text-align: left; font-size: 14px; color: var(--gray800); font-weight: 700; width: 100%; line-height: 1.6;
+}
+
+.lang-btns-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%; margin-bottom: 20px;
+}
+
+.btn-en-start {
+  background: linear-gradient(135deg, var(--purple) 0%, var(--purple-d) 100%);
+  color: white; border: none; border-radius: 20px; padding: 24px 12px; cursor: pointer;
+  box-shadow: 0 10px 24px rgba(112, 72, 232, 0.3); transition: all 0.2s; display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.btn-ms-start {
+  background: linear-gradient(135deg, var(--blue) 0%, var(--blue-d) 100%);
+  color: white; border: none; border-radius: 20px; padding: 24px 12px; cursor: pointer;
+  box-shadow: 0 10px 24px rgba(51, 154, 240, 0.3); transition: all 0.2s; display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.btn-en-start:active, .btn-ms-start:active { transform: scale(0.96); }
+.btn-start-title { font-size: 20px; font-weight: 900; margin-bottom: 4px; font-family: var(--font); text-shadow: 0 2px 4px rgba(0,0,0,0.1);}
+.btn-start-sub { font-size: 13px; font-weight: 700; opacity: 0.9; font-family: var(--font); }
+
+.app { display: none; }
+.app.show { display: block; }
+.header { 
+  background: rgba(255,255,255,0.92); backdrop-filter: blur(15px);
+  padding: calc(20px + env(safe-area-inset-top)) 20px 20px; color: var(--gray800); 
+  position: sticky; top: 0; z-index: 50; border-bottom-left-radius: 32px; border-bottom-right-radius: 32px; 
+  box-shadow: 0 10px 30px rgba(237, 28, 91, 0.08); border-bottom: 1px solid rgba(255,255,255,0.8);
+}
+.header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.header h1 { font-size: 22px; font-weight: 900; color: var(--rose-d); }
+.header p { font-size: 13px; color: var(--gray600); margin-top: 2px; font-weight: 700; }
+
+.progress-track { background: var(--gray200); border-radius: 10px; height: 10px; overflow: hidden; margin-top: 6px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); }
 .progress-fill { height: 100%; background: linear-gradient(90deg, var(--rose-d), var(--purple)); border-radius: 10px; transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-.progress-info { display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; font-weight: 900; color: var(--gray400); }
+.progress-info { display: flex; justify-content: space-between; margin-top: 8px; font-size: 12px; font-weight: 900; color: var(--gray600); }
 
 .steps-wrap { padding: 24px 16px calc(100px + env(safe-area-inset-bottom)); max-width: 560px; margin: 0 auto; }
 .step { display: none; animation: stepIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.1); }
@@ -146,7 +147,6 @@ a[href*="netlify.com"], #netlify-badge { display: none !important; opacity: 0 !i
 .q-text { font-size: 22px; font-weight: 900; color: var(--gray800); line-height: 1.3; margin-bottom: 10px; text-align: center; }
 .q-sub { font-size: 14px; color: var(--gray400); margin-bottom: 24px; font-weight: 700; text-align: center; }
 
-/* INPUTS & BUTTONS */
 .big-opt { padding: 16px 18px; border: 2px solid transparent; border-radius: var(--rsm); background: white; font-family: var(--font); font-size: 16px; font-weight: 800; color: var(--gray800); cursor: pointer; text-align: left; display: flex; align-items: center; gap: 16px; transition: all 0.2s; width: 100%; margin-bottom: 12px; touch-action: manipulation; user-select: none; box-shadow: 0 8px 20px rgba(0,0,0,0.04); }
 .big-opt:last-child { margin-bottom: 0; }
 .big-opt:active { transform: scale(0.97); }
@@ -196,7 +196,6 @@ input[type="text"].mf-text { text-transform: capitalize; }
 .add-birth-btn { width: 100%; padding: 16px; border: 2px dashed var(--purple); border-radius: var(--rsm); background: var(--purple-pale); font-family: var(--font); font-size: 15px; font-weight: 900; color: var(--purple); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.2s; touch-action: manipulation; }
 .add-birth-btn:hover { background: #e2d4f8; border-style: solid; }
 
-/* BOTTOM BAR */
 .bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.92); backdrop-filter: blur(15px); padding: 14px 16px calc(14px + env(safe-area-inset-bottom)); display: flex; gap: 12px; z-index: 999999; border-top: 1px solid rgba(255,255,255,0.8); box-shadow: 0 -10px 30px rgba(0,0,0,0.05); }
 .btn-back { padding: 16px 22px; border-radius: var(--rsm); border: 2px solid transparent; background: white; font-family: var(--font); font-size: 16px; font-weight: 900; color: var(--gray600); cursor: pointer; flex-shrink: 0; touch-action: manipulation; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: all 0.2s; }
 .btn-back:hover, .btn-back:active { transform: scale(0.96); }
@@ -206,7 +205,6 @@ input[type="text"].mf-text { text-transform: capitalize; }
 .act-btn { width: 100%; padding: 20px; border-radius: var(--rsm); border: 2px solid transparent; background: white; font-family: var(--font); font-size: 18px; font-weight: 900; color: var(--gray800); cursor: pointer; text-align: center; transition: all 0.2s; touch-action: manipulation; box-shadow: 0 10px 25px rgba(0,0,0,0.06); position: relative; z-index: 100; pointer-events: auto;}
 .act-btn:hover, .act-btn:active { transform: scale(0.97); }
 
-/* SUMMARY & SPLIT QR SCREEN */
 .sum-hero { text-align: center; padding: 10px 0 20px; }
 .sum-hero .he { font-size: 64px; animation: float 3s ease-in-out infinite; }
 .sum-hero h2 { font-size: 26px; font-weight: 900; margin-top: 12px; color: var(--purple); }
@@ -220,7 +218,6 @@ input[type="text"].mf-text { text-transform: capitalize; }
   .num-row { grid-template-columns: 1fr; }
 }
 
-/* PRINT STYLES FOR SAVING AS PDF */
 @media print {
   body { background: white !important; }
   .lang-screen, .header, .bottom-bar, .act-btns, .progress-track, .progress-info { display: none !important; }
@@ -233,14 +230,12 @@ input[type="text"].mf-text { text-transform: capitalize; }
 </head>
 <body>
 
-<!-- AUDIO PELINDUNG UNTUK IOS/ANDROID (SUCCESS/TADA) -->
 <audio id="successSound" preload="auto">
   <source src="https://www.myinstants.com/media/sounds/tada.mp3" type="audio/mpeg">
 </audio>
 
 <div class="toast" id="halfwayToast">🌟 You're halfway there!</div>
 
-<!-- LANDING PAGE WITH TOGGLE -->
 <div class="lang-screen" id="langScreen">
   <div style="width:100%; display:flex; justify-content:flex-end; margin-bottom:12px;">
      <button class="lang-switch-btn front-page-toggle" onclick="toggleFrontLang()" id="frontLangBtn"></button>
@@ -250,7 +245,7 @@ input[type="text"].mf-text { text-transform: capitalize; }
      <div class="lang-logo">🤰👶</div>
      <div class="noca-acronym">NOCA</div>
      <div class="noca-fulltitle">New Obstetric Clerking Apps</div>
-     <div class="lang-sub" id="frontTitle">Antenatal Health Form</div>
+     <div class="lang-sub" id="frontTitle">Borang Kesihatan Ibu Hamil</div>
      <div class="hero-badge">✨ We are here to help you</div>
   </div>
   
@@ -264,9 +259,16 @@ input[type="text"].mf-text { text-transform: capitalize; }
     <span style="color:var(--gray600);" id="frontPdpaDesc"></span>
   </div>
 
-  <button class="act-btn" onclick="startApp()" style="background: linear-gradient(135deg, var(--rose-d) 0%, var(--purple) 100%); color:white; font-size:18px; padding:20px; border-radius: 24px; box-shadow: 0 10px 25px rgba(112, 72, 232, 0.3); margin-top: 10px;">
-    <strong id="frontStartBtnText"></strong>
-  </button>
+  <div class="lang-btns-grid">
+    <button class="btn-en-start" onclick="startApp('en')">
+      <div class="btn-start-title" id="frontBtnEn">English</div>
+      <div class="btn-start-sub" id="frontBtnEnSub">Continue in English</div>
+    </button>
+    <button class="btn-ms-start" onclick="startApp('ms')">
+      <div class="btn-start-title" id="frontBtnMs">Bahasa Melayu</div>
+      <div class="btn-start-sub" id="frontBtnMsSub">Teruskan dalam BM</div>
+    </button>
+  </div>
 </div>
 
 <div class="app" id="appWrap">
@@ -290,26 +292,27 @@ input[type="text"].mf-text { text-transform: capitalize; }
 </div>
 
 <script>
-// FRONT PAGE LOGIC
-let frontLang = 'en';
+let frontLang = 'ms'; // Default language set to BM per request
 const frontTexts = {
   en: {
     toggleBtn: "🇲🇾 BM",
     title: "Antenatal Health Form",
     impTitle: "💡 Important",
     impDesc: "Please refer to your Antenatal Book (Pink Book) while filling out this form. If you are unsure about any question, just leave it blank.",
-    pdpaTitle: "🔒 Privacy & PDPA",
-    pdpaDesc: "Your data is strictly confidential and is <strong>NOT saved</strong> on this device, the doctor's device, or any external cloud database. It is transferred directly into your official hospital records. If you choose to download or save a copy of this summary on your personal device, it will be considered unverified data. By proceeding, you consent to the processing of your health information for clinical clerking purposes in accordance with the Personal Data Protection Act 2010.",
-    startBtn: "Start Now →"
+    pdpaTitle: "🔒 Privacy & Security:",
+    pdpaDesc: "Your data is extremely secure. It is <strong>NOT</strong> saved to your phone, any website, or any external database. The QR code transfers data directly into the secure hospital records. You may save a copy, but it will remain as <strong>unverified data</strong> until reviewed by a doctor.",
+    btnEn: "English", btnEnSub: "Continue in English",
+    btnMs: "Bahasa Melayu", btnMsSub: "Teruskan dalam BM"
   },
   ms: {
     toggleBtn: "🇬🇧 EN",
     title: "Borang Kesihatan Ibu Hamil",
     impTitle: "💡 Penting",
     impDesc: "Sila rujuk Buku Antenatal (Buku Pink) anda semasa mengisi borang ini. Jika anda tidak pasti mengenai mana-mana maklumat, abaikan sahaja dan biarkan ia kosong.",
-    pdpaTitle: "🔒 Privasi & PDPA",
-    pdpaDesc: "Data anda adalah sangat sulit dan <strong>TIDAK disimpan</strong> di dalam peranti ini, peranti doktor, atau mana-mana pangkalan data awan (cloud). Ia dipindahkan terus ke dalam rekod rasmi hospital anda. Jika anda memilih untuk memuat turun atau menyimpan salinan pada peranti peribadi anda, ia akan dianggap sebagai data pesakit yang belum disahkan. Dengan meneruskan, anda bersetuju dengan pemprosesan maklumat kesihatan anda untuk tujuan rekod klinikal selaras dengan Akta Perlindungan Data Peribadi 2010.",
-    startBtn: "Mula Sekarang →"
+    pdpaTitle: "🔒 Privasi & Keselamatan:",
+    pdpaDesc: "Data anda amat selamat. Ia <strong>TIDAK</strong> disimpan di dalam telefon, tapak web, atau pangkalan data luar. Kod QR memindahkan data terus ke rekod hospital yang selamat. Anda boleh menyimpan salinan, namun ia berstatus <strong>data tidak disahkan</strong> sehingga disemak oleh doktor.",
+    btnEn: "English", btnEnSub: "Continue in English",
+    btnMs: "Bahasa Melayu", btnMsSub: "Teruskan dalam BM"
   }
 };
 
@@ -321,7 +324,10 @@ function updateFrontPage() {
   document.getElementById('frontImpDesc').innerHTML = t.impDesc;
   document.getElementById('frontPdpaTitle').innerHTML = t.pdpaTitle;
   document.getElementById('frontPdpaDesc').innerHTML = t.pdpaDesc;
-  document.getElementById('frontStartBtnText').innerHTML = t.startBtn;
+  document.getElementById('frontBtnEn').innerHTML = t.btnEn;
+  document.getElementById('frontBtnEnSub').innerHTML = t.btnEnSub;
+  document.getElementById('frontBtnMs').innerHTML = t.btnMs;
+  document.getElementById('frontBtnMsSub').innerHTML = t.btnMsSub;
 }
 
 function toggleFrontLang() {
@@ -329,16 +335,20 @@ function toggleFrontLang() {
   updateFrontPage();
 }
 
-function startApp() {
-  chooseLang(frontLang);
+function startApp(selectedLang) {
+  chooseLang(selectedLang);
 }
 
-// MAIN APP DICTIONARY
+// Called automatically on load
+window.onload = function() {
+  updateFrontPage();
+}
+
 const T = {
   en: {
     hTitle:"👋 Hello Mommy!", hSub:"Let's check on you and baby 💕",
     langToggle:"🇲🇾 BM", btnNext:"Next →", btnStart:"Let's start →", btnBack:"← Back", btnYes:"Yes", btnNo:"No",
-    pLabels:["Welcome","Name","IC/Passport","Age & Marriage","Race","Religion","Clinic","Measurements","Birth History","Dates","Scan Date","Periods","Birth Control","Current Illness","Admissions","Health History","Surgery","Mental Health","Food Allergies","Med Allergies","Blood","Rhesus","HIV","Hepatitis","Syphilis","GBS","MGTT","Medicine","Family Health","Lifestyle","Husband Info","Symptoms","Fetal Move","Summary"],
+    pLabels:["Welcome","Name","IC/Passport","Age & Marriage","Race","Religion","Clinic","Measurements","Birth History","Dates","Scan Date","Periods","Birth Control","Current Illness","Admissions","Health History","Surgery","Mental Health","Food Allergies","Med Allergies","Blood","Rhesus","HIV","Hepatitis","Syphilis","GBS","MGTT","Medicine","Family Health","Lifestyle","Husband Info","Symptoms","Fetal Move","VTE Risk","Summary"],
     sAbout:"👤 About You", sClinic:"🏥 Clinic Details", sMeasure:"📏 Measurements",
     sPreg:"📅 Your Pregnancy", sSymp:"🩺 Current Symptoms", sBlood:"🩸 Blood & Tests",
     sAllergy:"⚠️ Allergies", sHealth:"🏥 Your Health", sMental:"🧠 Mental Health",
@@ -354,6 +364,7 @@ const T = {
     sGbsTop: "GBS Status",
     sMgttTop: "MGTT",
     sFmTop: "Fetal Movement",
+    sVteTop: "VTE Risk Assessment",
 
     s0q:"Ready to fill in the form?",
     s0h:"✨ Your help allows doctors to review your details instantly!<br><br>💡 <strong>Tip:</strong> You can find most of this information in your <strong>Antenatal / Pink Book</strong>. Please try your best to look for it and fill it in. If you are unsure, just skip and leave it blank.",
@@ -467,6 +478,9 @@ const T = {
     husbAgeQ:"His Age", husbOccQ:"His Occupation",
     husbVapeQ:"Does he vape?", husbSmokeQ:"Does he smoke?", husbAlcQ:"Does he drink alcohol?", husbDrugQ:"Does he use recreational drugs?",
     
+    sVteQ: "Any other VTE risk factors?", sVteH: "Tick all that apply for automatic scoring (Malaysia CPG 2018).",
+    vteList: ["Previous VTE (DVT / PE)", "High-risk Thrombophilia", "Low-risk Thrombophilia", "High-risk Medical Conditions (Cancer, SLE, Heart Failure, Nephrotic)", "Family history of VTE", "Gross varicose veins", "Immobility / Paraplegia", "Current systemic infection", "Hyperemesis / Dehydration", "IVF / ART pregnancy", "Multiple pregnancy"],
+
     sumTitle:"You're all done! Well done! 🎉", sumSub:"Have a lovely day! 💕 Please Screenshot this page or tap 'Save' below to keep a copy of your record.",
     sumRestart:"🔄 Start Over (Clear Data)", sumHero:"🎊",
     sumBoxLbl:"📝 EDITABLE TEXT (Edit before scanning if needed)\nNote: Keep the [SCAN] tags intact.", sumCopyBtn:"📋 Copy All Text", sumSaveBtn:"💾 Save / Print (PDF)",
@@ -478,7 +492,7 @@ const T = {
   ms: {
     hTitle:"👋 Hai Mommy!", hSub:"Mari periksa kesihatan ibu dan bayi 💕",
     langToggle:"🇬🇧 EN", btnNext:"Seterusnya →", btnStart:"Mari mulakan →", btnBack:"← Kembali", btnYes:"Ya", btnNo:"Tidak",
-    pLabels:["Mula","Nama","IC/Pasport","Umur & Kahwin","Bangsa","Agama","Klinik","Ukuran","Sejarah Kandungan","Tarikh Penentuan","Tarikh Scan","Haid","Perancang","Penyakit Hamil","Masuk Wad","Penyakit Kronik","Pembedahan","Kesihatan Mental","Alahan Makanan","Alahan Ubat","Darah","Rhesus","Ujian HIV","Hepatitis","Sifilis","GBS","MGTT","Ubat","Keluarga","Gaya Hidup Isteri", "Maklumat Suami", "Simptom", "Gerak Bayi", "Siap!"],
+    pLabels:["Mula","Nama","IC/Pasport","Umur & Kahwin","Bangsa","Agama","Klinik","Ukuran","Sejarah Kandungan","Tarikh Penentuan","Tarikh Scan","Haid","Perancang","Penyakit Hamil","Masuk Wad","Penyakit Kronik","Pembedahan","Kesihatan Mental","Alahan Makanan","Alahan Ubat","Darah","Rhesus","Ujian HIV","Hepatitis","Sifilis","GBS","MGTT","Ubat","Keluarga","Gaya Hidup Isteri", "Maklumat Suami", "Simptom", "Gerak Bayi", "Risiko VTE", "Siap!"],
     sAbout:"👤 Tentang Anda", sClinic:"🏥 Maklumat Klinik", sMeasure:"📏 Ukuran",
     sPreg:"📅 Kehamilan Anda", sSymp:"🩺 Simptom Semasa", sBlood:"🩸 Ujian Darah", sTests:"🧫 Ujian",
     sAllergy:"⚠️ Alahan", sHealth:"🏥 Kesihatan", sMental:"🧠 Mental",
@@ -493,6 +507,7 @@ const T = {
     sGbsTop: "Status GBS",
     sMgttTop: "MGTT",
     sFmTop: "Pergerakan Bayi",
+    sVteTop: "Penilaian Risiko VTE",
 
     s0q:"Sedia untuk mula isikan borang?",
     s0h:"✨ Bantuan anda membolehkan doktor merawat anda dengan lebih pantas!<br><br>💡 <strong>Tips:</strong> Anda boleh dapati maklumat ini daripada <strong>buku antenatal (buku pink)</strong> anda. Sila cuba cari dan isikan maklumat jika boleh. Jika anda tidak pasti, abaikan sahaja dan terus ke soalan seterusnya.",
@@ -564,7 +579,7 @@ const T = {
     s19q:"Pernahkah anda mendapat rawatan untuk masalah kesihatan mental / psikiatri?", s19lbl:"MASALAH APA?", s19p:"Lain-lain...",
     psychList:["Kebimbangan (Anxiety)", "Kecelaruan Penyesuaian (Adjustment disorder)", "Kemurungan (Depression)", "Bipolar disorder", "Skizofrenia"],
     
-    s20q:"Ada ambil mana-mana ubat ini secara terkini?", s20lbl:"UBAT LAIN", s20p:"cth. Simvastatin",
+    s20q:"Ada ambil mana-mana ubat ini sekarang?", s20lbl:"UBAT LAIN", s20p:"cth. Simvastatin",
     medList:["Folic acid", "Iron tablets", "Zincofer", "Obimin", "Iberet", "Maltofer", "Aspirin", "Calcium", "Metformin", "Insulin", "Labetalol", "Nifedipine", "Methyldopa"],
     
     s22q:"Ada apa-apa pembedahan sebelum ini?", s22lbl:"SILA PILIH / NYATAKAN", sSurgOther:"Pembedahan lain:",
@@ -605,6 +620,9 @@ const T = {
     husbAgeQ:"Umur Pasangan", husbOccQ:"Pekerjaan Pasangan",
     husbVapeQ:"Adakah suami menghisap vape?", husbSmokeQ:"Adakah suami merokok?", husbAlcQ:"Adakah suami minum alkohol?", husbDrugQ:"Adakah suami ambil dadah?",
     
+    sVteQ: "Ada faktor risiko VTE yang lain?", sVteH: "Tandakan semua yang berkaitan untuk pengiraan automatik (CPG Malaysia 2018).",
+    vteList: ["Sejarah VTE (DVT / PE)", "Trombofilia Berisiko Tinggi", "Trombofilia Berisiko Rendah", "Penyakit Berisiko Tinggi (Kanser, SLE, Jantung, Nefrotik)", "Sejarah keluarga VTE", "Urat simpul yang teruk (Varicose veins)", "Masalah Pergerakan / Paraplegia", "Jangkitan sistemik", "Muntah teruk / Dehidrasi", "Kehamilan IVF / ART", "Kehamilan Kembar"],
+
     sumTitle:"Syabas! Anda telah melengkapkan borang ini! 🎉", sumSub:"Semoga hari anda indah! 💕 Sila \"Screenshot\" halaman ini atau tekan butang Save di bawah untuk menyimpan rekod anda.",
     sumRestart:"🔄 Mula Semula (Padam Data)", sumHero:"🎊",
     sumBoxLbl:"📝 DRAF NOTA (Boleh diedit. Jangan buang tag [SCAN])", sumCopyBtn:"📋 Salin Semua Teks", sumSaveBtn:"💾 Save / Print (PDF)",
@@ -614,7 +632,7 @@ const T = {
   }
 };
 
-let lang = 'en';
+let lang = 'ms'; // Default BM as per request
 let cur = 0;
 let TOTAL = 0;
 let stepsArr = []; 
@@ -645,7 +663,8 @@ const D = {
   menses:'', contraYN:'', contra:[],
   vape:'', smoker:'', alcohol:'', drugs:'',
   patOccList: [], patOccStudent: '', patOccWorking: '',
-  husbAge:'', husbOcc:'', husbVape:'', husbSmoker:'', husbAlcohol:'', husbDrugs:''
+  husbAge:'', husbOcc:'', husbVape:'', husbSmoker:'', husbAlcohol:'', husbDrugs:'',
+  vteFactors: []
 };
 
 function tc(str) {
@@ -769,18 +788,13 @@ function switchLang() {
   restoreInputs();
 }
 
-// FRONT PAGE LOGIC (Called automatically on load)
-window.onload = function() {
-  updateFrontPage();
-}
-
 function buildAllSteps() {
   const L = T[lang];
   const wrap = document.getElementById('stepsWrap');
   wrap.innerHTML = '';
   
   stepsArr = [
-    buildS0, buildS1, buildS2, buildS3, buildS4, buildS5, buildS6, buildS7, buildS25, buildS8, buildS9, buildS26, buildS27, buildS18b, buildS_Admit, buildS18, buildS22, buildS19, buildS16, buildS17, buildS10, buildS11, buildS12, buildS13, buildS14, buildS15, buildS_MGTT, buildS20, buildS23, buildS31, buildS_HusbLife, buildS_Symp, buildS_Fetal, buildS32
+    buildS0, buildS1, buildS2, buildS3, buildS4, buildS5, buildS6, buildS7, buildS25, buildS8, buildS9, buildS26, buildS27, buildS18b, buildS_Admit, buildS18, buildS22, buildS19, buildS16, buildS17, buildS10, buildS11, buildS12, buildS13, buildS14, buildS15, buildS_MGTT, buildS20, buildS23, buildS31, buildS_HusbLife, buildS_Symp, buildS_Fetal, buildS_VTE, buildS32
   ];
   
   TOTAL = stepsArr.length;
@@ -861,6 +875,14 @@ function restoreDynamicUI() {
       if(sRev) { if(D.patOccList.includes(L.optOccStudent)) sRev.classList.add('show'); }
       let wRev = document.getElementById('patOccWorkingRev');
       if(wRev) { if(D.patOccList.includes(L.optOccWorking)) wRev.classList.add('show'); }
+  }
+  if(D.vteFactors) {
+      D.vteFactors.forEach(val => {
+          let els = document.querySelectorAll('#s33 .ci');
+          els.forEach(el => {
+              if(el.textContent.includes(val)) el.classList.add('checked');
+          });
+      });
   }
 }
 
@@ -972,6 +994,16 @@ function buildS_Fetal(L) {
       <span class="mini-lbl">${L.fmCountQ}</span>
       <input class="big-input" type="number" inputmode="numeric" id="fmCount" oninput="D.fmCount=this.value" style="background:white;">
     </div>
+  `);
+}
+
+function buildS_VTE(L) {
+  return card(L.sVteTop,'🩸',L.sVteQ,L.sVteH,`
+    <div class="check-grid" style="grid-template-columns:1fr; margin-bottom:16px;" id="s33">
+       ${L.vteList.map(v => `<div class="ci ${D.vteFactors.includes(v) ? 'checked' : ''}" onclick="toggleCheck(this, 'vteFactors', '${v}')"><div class="cd">✓</div>${v}</div>`).join('')}
+    </div>
+    <div class="divider"></div>
+    <button class="big-opt" onclick="clearChecks('vteFactors'); setTimeout(next, 300);"><div class="radio-box">✓</div><span>${L.s18none}</span></button>
   `);
 }
 
@@ -1614,12 +1646,22 @@ function buildS_HusbLife(L) {
   `);
 }
 
+function buildS_VTE(L) {
+  return card(L.sVteTop,'🩸',L.sVteQ,L.sVteH,`
+    <div class="check-grid" style="grid-template-columns:1fr; margin-bottom:16px;" id="s33">
+       ${L.vteList.map(v => `<div class="ci ${D.vteFactors.includes(v) ? 'checked' : ''}" onclick="toggleCheck(this, 'vteFactors', '${v}')"><div class="cd">✓</div>${v}</div>`).join('')}
+    </div>
+    <div class="divider"></div>
+    <button class="big-opt" onclick="clearChecks('vteFactors'); setTimeout(next, 300);"><div class="radio-box">✓</div><span>${L.s18none}</span></button>
+  `);
+}
+
 function buildS32(L) {
   return '<div class="sum-hero"><div class="he">' + (L.sumHero||'🎊') + '</div><h2>' + (L.sumTitle||'Tahniah!') + '</h2><p>' + (L.sumSub||'') + '</p></div>' +
          '<div class="act-btns" style="margin-bottom:20px;">' +
            '<button class="act-btn" style="background:var(--teal-pale); color:var(--teal); border:2px solid var(--teal);" onclick="window.print()">' + (L.sumSaveBtn||'Save / Print') + '</button>' +
          '</div>' +
-         '<div class="clay-card" style="padding:16px; margin-bottom:20px; text-align:left;">' +
+         '<div style="background:white; border-radius:12px; padding:16px; margin-bottom:20px; box-shadow:0 4px 12px rgba(0,0,0,0.05); text-align:left;">' +
            '<span class="mini-lbl" style="margin-top:0; color:var(--purple);">' + (L.sumBoxLbl||'DRAF NOTA') + '</span>' +
            '<textarea id="finalOutputText" class="big-input" style="height:450px; font-size:14px; line-height:1.6; font-family:var(--font); margin-bottom:10px; padding:12px; text-transform:none; border:2px solid var(--gray200);" oninput="updateQR()"></textarea>' +
            '<button class="act-btn" style="background:var(--blue-pale); color:var(--blue); border:2px solid var(--blue);" onclick="copyText()">' + (L.sumCopyBtn||'Copy All Text') + '</button>' +
@@ -1733,6 +1775,7 @@ function updateUI() {
      if(toast) {
         toast.textContent = L.halfwayMsg || "🌟 Halfway there!";
         toast.classList.add('show');
+        if(typeof confetti === 'function') confetti({ particleCount: 50, spread: 60, origin: { y: 0.8 } });
         setTimeout(() => { toast.classList.remove('show'); }, 3000);
      }
   }
@@ -2056,7 +2099,59 @@ function generateSplitSummaries() {
       }
       issues.push(prevStr);
   }
+
+  // --- VTE SCORE CALCULATION ---
+  let vScore = 0;
+  let vFactors = [];
   
+  if (parseInt(D.age) >= 35) { vScore += 1; vFactors.push("Age >= 35"); }
+  if (parseFloat(D.bmi) >= 40) { vScore += 2; vFactors.push("BMI >= 40"); }
+  else if (parseFloat(D.bmi) >= 30) { vScore += 1; vFactors.push("BMI >= 30"); }
+  
+  let pDelivery = D.pregList.filter(p => p.type === 'Delivery').length;
+  if (pDelivery >= 3) { vScore += 1; vFactors.push("Parity >= 3"); }
+  
+  if (D.smoker === 'Yes' || D.smoker === 'Ya' || D.smoker === 'Ex' || D.smoker === 'Bekas perokok') {
+      vScore += 1; vFactors.push("Smoker");
+  }
+  
+  if (D.pmiNew.includes('Pre Eclampsia')) {
+      vScore += 1; vFactors.push("Pre Eclampsia");
+  }
+
+  const vteScores = {
+      'Previous VTE (DVT / PE)': 4, 'Sejarah VTE (DVT / PE)': 4,
+      'High-risk Medical Conditions (Cancer, SLE, Heart Failure, Nephrotic)': 3, 'Penyakit Berisiko Tinggi (Kanser, SLE, Jantung, Nefrotik)': 3,
+      'High-risk Thrombophilia': 3, 'Trombofilia Berisiko Tinggi': 3,
+      'Low-risk Thrombophilia': 1, 'Trombofilia Berisiko Rendah': 1,
+      'Family history of VTE': 1, 'Sejarah keluarga VTE': 1,
+      'Gross varicose veins': 1, 'Urat simpul yang teruk (Varicose veins)': 1,
+      'Immobility / Paraplegia': 1, 'Masalah Pergerakan / Paraplegia': 1,
+      'Current systemic infection': 1, 'Jangkitan sistemik': 1,
+      'Hyperemesis / Dehydration': 1, 'Muntah teruk / Dehidrasi': 1,
+      'IVF / ART pregnancy': 1, 'Kehamilan IVF / ART': 1,
+      'Multiple pregnancy': 1, 'Kehamilan Kembar': 1
+  };
+
+  if(D.vteFactors) {
+      D.vteFactors.forEach(f => {
+          if(vteScores[f]) {
+              vScore += vteScores[f];
+              vFactors.push(f.split(' (')[0]); 
+          }
+      });
+  }
+
+  let vteRec = "";
+  if (vScore >= 4 || (D.vteFactors && D.vteFactors.some(f => f.includes('Previous VTE') || f.includes('Sejarah VTE')))) {
+      vteRec = "High Risk. Consider Thromboprophylaxis from 1st trimester.";
+  } else if (vScore === 3) {
+      vteRec = "Intermediate Risk. Consider Thromboprophylaxis from 28 weeks.";
+  } else {
+      vteRec = "Low Risk. Mobilisation and hydration.";
+  }
+
+  // Inject VTE at the end of Scan 4
   issues = issues.filter(iss => iss && iss.trim() !== '' && iss.trim() !== '-');
 
   if (issues.length === 0) {
@@ -2067,6 +2162,11 @@ function generateSplitSummaries() {
          if(cleanIss && cleanIss !== '-') s4 += "- " + cleanIss + "\n";
       });
   }
+  
+  s4 += "\nVTE Assessment (CPG Malaysia 2018):\n";
+  s4 += "- Total Score: " + vScore + "\n";
+  if(vFactors.length > 0) s4 += "- Factors: " + vFactors.join(', ') + "\n";
+  s4 += "- Plan: " + vteRec + "\n";
 
   // SCAN 5: Family History & Medications
   var s5 = "";
@@ -2113,22 +2213,22 @@ function generateSplitSummaries() {
      let wkd = D.patOccWorking ? ` (${tc(D.patOccWorking)})` : '';
      occArr.push('Working' + wkd);
   }
-  
-  if(occArr.length > 0) {
-      s6 += "Wife Occupation: " + occArr.join(', ') + "\n";
-  }
+  let wOcc = occArr.length > 0 ? occArr.join(', ') : '-';
+  s6 += "Wife Occ: " + wOcc;
   if (D.husbOcc && D.husbOcc.trim()) {
-      s6 += "Husband Occupation: " + tc(D.husbOcc.trim()) + "\n";
+      s6 += ", Husb Occ: " + tc(D.husbOcc.trim()) + "\n";
+  } else {
+      s6 += ", Husb Occ: -\n";
   }
   
   let lifeArr = [];
   if(D.smoker === 'Yes' || D.smoker === 'Ya') lifeArr.push("Active smoker");
-  else if (D.smoker === 'Ex') lifeArr.push("ex-smoker");
+  else if (D.smoker === 'Ex' || D.smoker === 'Bekas perokok') lifeArr.push("ex-smoker");
   if(D.vape === 'Yes' || D.vape === 'Ya') lifeArr.push("Active vape");
-  else if (D.vape === 'Ex') lifeArr.push("ex-vaper");
+  else if (D.vape === 'Ex' || D.vape === 'Bekas pengguna') lifeArr.push("ex-vaper");
   
-  let exAl = (D.alcohol === 'Ex');
-  let exDr = (D.drugs === 'Ex');
+  let exAl = (D.alcohol === 'Ex' || D.alcohol === 'Pernah');
+  let exDr = (D.drugs === 'Ex' || D.drugs === 'Pernah');
   
   if(D.alcohol === 'Yes' || D.alcohol === 'Ya') lifeArr.push("Active drinker");
   if(D.drugs === 'Yes' || D.drugs === 'Ya') lifeArr.push("Drug abuse");
