@@ -639,10 +639,6 @@ input[type="text"].mf-text { text-transform: capitalize; }
   <source src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" type="audio/mpeg">
 </audio>
 
-<audio id="emergencyAlarm" loop preload="auto">
-  <source src="https://assets.mixkit.co/active_storage/sfx/2864/2864-preview.mp3" type="audio/mpeg">
-</audio>
-
 <div class="toast" id="halfwayToast">🌟 You're halfway there!</div>
 
 <div id="codeRedBtn" class="code-red-btn" onclick="toggleEmergency()">🚨</div>
@@ -946,6 +942,118 @@ let TOTAL = 0;
 let stepsArr = []; 
 let halfwayShown = false; 
 
+// --- CODE RED SOUND SYNTHESIS ENGINE (WEB AUDIO API) ---
+let alarmAudioCtx = null;
+let alarmOscillator = null;
+let alarmGainNode = null;
+let alarmLfo = null;
+let alarmTimer = null;
+let isAlarmRunning = false;
+
+function startShrillAlarm() {
+  try {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContext) return;
+    
+    if (!alarmAudioCtx) {
+      alarmAudioCtx = new AudioContext();
+    }
+    
+    if (alarmAudioCtx.state === 'suspended') {
+      alarmAudioCtx.resume();
+    }
+
+    // Master Gain for maximum clear output without digital clipping
+    alarmGainNode = alarmAudioCtx.createGain();
+    alarmGainNode.gain.setValueAtTime(0.85, alarmAudioCtx.currentTime);
+
+    // Primary High-Pitch Shrill Tone (Square wave for piercing clarity)
+    alarmOscillator = alarmAudioCtx.createOscillator();
+    alarmOscillator.type = 'square';
+    alarmOscillator.frequency.setValueAtTime(950, alarmAudioCtx.currentTime);
+
+    // High-tempo LFO (Modulation Oscillator) for fast, shrill siren warble (5.5 Hz rapid pulse)
+    alarmLfo = alarmAudioCtx.createOscillator();
+    alarmLfo.type = 'sine';
+    alarmLfo.frequency.setValueAtTime(5.5, alarmAudioCtx.currentTime); // Fast tempo
+
+    const lfoGain = alarmAudioCtx.createGain();
+    lfoGain.gain.setValueAtTime(450, alarmAudioCtx.currentTime); // Wide sweep between 500Hz - 1400Hz
+
+    alarmLfo.connect(lfoGain);
+    lfoGain.connect(alarmOscillator.frequency);
+
+    alarmOscillator.connect(alarmGainNode);
+    alarmGainNode.connect(alarmAudioCtx.destination);
+
+    alarmOscillator.start();
+    alarmLfo.start();
+    isAlarmRunning = true;
+
+    // Automatically turn off after exactly 30 seconds if not cancelled
+    if (alarmTimer) clearTimeout(alarmTimer);
+    alarmTimer = setTimeout(() => {
+      if (isAlarmRunning) {
+        stopShrillAlarm();
+        showToast(lang === 'ms' ? 'Penggera Kod Merah tamat (30s).' : 'Code Red alarm ended (30s).');
+      }
+    }, 30000);
+
+  } catch (err) {
+    console.error("Audio Synthesis Error:", err);
+  }
+}
+
+function stopShrillAlarm() {
+  if (alarmTimer) {
+    clearTimeout(alarmTimer);
+    alarmTimer = null;
+  }
+  
+  if (alarmOscillator) {
+    try {
+      alarmOscillator.stop();
+      alarmOscillator.disconnect();
+    } catch(e) {}
+    alarmOscillator = null;
+  }
+  
+  if (alarmLfo) {
+    try {
+      alarmLfo.stop();
+      alarmLfo.disconnect();
+    } catch(e) {}
+    alarmLfo = null;
+  }
+  
+  if (alarmGainNode) {
+    try {
+      alarmGainNode.disconnect();
+    } catch(e) {}
+    alarmGainNode = null;
+  }
+
+  isAlarmRunning = false;
+
+  const btn = document.getElementById('codeRedBtn');
+  if (btn) {
+    btn.classList.remove('active-alarm');
+    btn.innerHTML = '🚨';
+  }
+}
+
+function toggleEmergency() {
+  const btn = document.getElementById('codeRedBtn');
+  
+  if (!isAlarmRunning) {
+    btn.classList.add('active-alarm');
+    btn.innerHTML = 'STOP<br>ALARM';
+    startShrillAlarm();
+  } else {
+    stopShrillAlarm();
+  }
+}
+
 const D = {
   name:'', icPassport:'', age:'', maritalStatus:'', stablePartner:'', marriedYear:'', race:'', raceCountry:'', religion:'', 
   currentClinic:'', bookingClinic:'', bookingPOA:'', bookingHb:'', bookingBP:'',
@@ -1069,29 +1177,6 @@ function dismissBanner(type) {
     let b = document.getElementById('fmWarningBanner');
     if(b) b.style.display = 'none';
     if(fmTimer) { clearTimeout(fmTimer); fmTimer = null; }
-  }
-}
-
-function toggleEmergency() {
-  let alarm = document.getElementById('emergencyAlarm');
-  let btn = document.getElementById('codeRedBtn');
-  
-  if(!btn.classList.contains('active-alarm')) {
-    btn.classList.add('active-alarm');
-    btn.innerHTML = 'STOP<br>ALARM';
-    alarm.volume = 1.0;
-    alarm.currentTime = 0;
-    let playPromise = alarm.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(error => { 
-        showToast(lang === 'ms' ? 'Sila kuatkan bunyi pembesar suara anda.' : 'Please raise your device volume.');
-      });
-    }
-  } else {
-    btn.classList.remove('active-alarm');
-    btn.innerHTML = '🚨';
-    alarm.pause();
-    alarm.currentTime = 0;
   }
 }
 
